@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Contact from "@/pages/Contact";
 import ComingSoon from "@/pages/ComingSoon";
+
 import Technovation from "./pages/Technovation";
 import Workshops from "@/pages/Workshop";
 
@@ -28,6 +29,7 @@ const ExternalRedirect = ({ url }: { url: string }) => {
 function App() {
   return (
     <Router>
+
       {/* <div className="min-h-screen flex flex-col"> */}
         <Navbar />
 
@@ -65,6 +67,7 @@ function App() {
 
         <Footer />
       {/* </div> */}
+
     </Router>
   );
 }
