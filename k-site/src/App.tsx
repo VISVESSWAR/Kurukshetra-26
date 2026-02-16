@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import Contact from "@/pages/Contact";
 import ComingSoon from "@/pages/ComingSoon";
 import Technovation from "./pages/Technovation";
+import Workshops from "@/pages/Workshop";
 
 const comingSoonPaths = [
   "/accommodation",
@@ -51,7 +52,8 @@ function App() {
             <Route
               path="/workshops"
               element={
-                <ExternalRedirect url="https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664" />
+                <Workshops />
+                // <ExternalRedirect url="https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664" />
               }
             />
             <Route path="/technovation" element={<Technovation />} />

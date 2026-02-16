@@ -35,6 +35,7 @@ export default function GridScanLoader({ onFinish }: GridScanLoaderProps) {
           chromaticAberration={0.002}
           noiseIntensity={0.01}
           scanDuration={1.5}
+          enableGyro={true} 
         />
       </div>
 
