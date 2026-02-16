@@ -1,180 +1,210 @@
-import { useState } from 'react';
-import { Mail, User, Phone, CreditCard, Building2, GraduationCap, BookOpen, MapPin, Lock, Tag, Menu } from 'lucide-react';
-import spaceBg from '@/assets/k-site_registration_bg.png'; 
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { 
+  Mail, Phone, Eye, EyeOff, ChevronDown, School, Lock, Ticket, MapPin
+} from 'lucide-react';
+import Background from '@/pages/Background';
+
+import {
+  indianStates,
+  indianCities,
+  dateMonths,
+  dateYears,
+  dateDays,
+  academicYears,
+} from "../constants/locations";
+
+// ================= VALIDATION SCHEMA =================
+const registerSchema = z.object({
+  activeTab: z.enum(["cegian", "others"]),
+  email: z.string().email("Invalid email"),
+  firstName: z.string().min(1, "Required"),
+  lastName: z.string().min(1, "Required"),
+  mobile: z.string().regex(/^[6-9]\d{9}$/, "Invalid mobile"),
+  rollNumber: z.string().optional(),
+  college: z.string().optional(),
+  department: z.string().min(1, "Required"),
+  year: z.string().min(1, "Required"),
+  dobDay: z.string().optional(),
+  dobMonth: z.string().optional(),
+  dobYear: z.string().optional(),
+  state: z.string().optional(),
+  city: z.string().optional(),
+  referralCode: z.string().optional(),
+  password: z.string().min(6, "Min 6 characters"),
+  confirmPassword: z.string(),
+  acceptTerms: z.literal(true, { errorMap: () => ({ message: "Required" }) }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+}).superRefine((data, ctx) => {
+  if (data.activeTab === "cegian") {
+    if (!data.rollNumber) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Required", path: ["rollNumber"] });
+    if (!data.dobDay || !data.dobMonth || !data.dobYear) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Required", path: ["dobDay"] });
+    }
+  } else {
+    if (!data.college) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Required", path: ["college"] });
+    if (!data.state) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Required", path: ["state"] });
+    if (!data.city) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Required", path: ["city"] });
+  }
+});
+
+type RegisterValues = z.infer<typeof registerSchema>;
 
 export default function Register() {
-  const [activeTab, setActiveTab] = useState<'cegian' | 'others'>('cegian');
+  const [showPassword, setShowPassword] = useState(false);
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<RegisterValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { activeTab: "cegian", state: indianStates[0].name },
+  });
 
-  const iconClass = "absolute left-3 top-1/2 -translate-y-1/2 text-purple-500 w-4 h-4";
-  const inputClass = "w-full bg-slate-900/40 border border-white/20 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-purple-500 transition-all text-sm hover:border-purple-500";
-  const labelClass = "block text-white/90 text-[10px] uppercase tracking-wider mb-1";
-  const navItemClass = "text-white/90 hover:text-purple-400 transition-colors text-xs cursor-pointer uppercase tracking-tight";
+  const selectedState = watch("state");
+  const activeTab = watch("activeTab");
+
+  useEffect(() => {
+    if (activeTab === 'others' && selectedState && indianCities[selectedState]) {
+      setValue("city", indianCities[selectedState][0]);
+    }
+  }, [selectedState, activeTab, setValue]);
+
+  const onSubmit = (data: RegisterValues) => {
+    console.log("Registering User:", data);
+    alert("Registration data logged to console!");
+  };
+
+  const inputBase = "w-full bg-[#1A0B2E]/40 border-[0.5px] border-white/40 rounded-[15px] text-white text-sm focus:outline-none focus:border-purple-500 transition-all shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] appearance-none";
+  const inputWithIcon = `${inputBase} pl-12 pr-5 py-2.5`;
+  const inputNormal = `${inputBase} px-5 py-2.5`;
 
   return (
-    /* ADDED font-semibold HERE TO CHANGE EVERYTHING AT ONCE */
-    <div className="min-h-screen relative flex flex-col items-center justify-start overflow-x-hidden font-semibold"
-      style={{
-        backgroundImage: `url(${spaceBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
-      }}>
+    <div className="min-h-screen relative flex flex-col items-center justify-center px-4 bg-black font-sans pb-12">
+      <Background />
       
-      {/* 1. STRETCHED NAVBAR */}
-      <nav className="w-full relative z-20 px-8 py-5 flex items-center bg-black/50 backdrop-blur-xl border-b border-white/10">
-        <div className="text-2xl font-black bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mr-10">K! 26</div>
-        <div className="hidden lg:flex flex-1 items-center justify-between">
-          <div className="flex gap-6">
-            {['Home', 'Events', 'Workshops', 'Guest Lectures', 'Technovation', 'Projects', 'Accommodation', 'Contacts'].map((item) => (
-              <span key={item} className={navItemClass}>{item}</span>
-            ))}
-          </div>
-          <button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-2 rounded-full text-xs font-black transition-all border border-white/20 uppercase">
-            Login
-          </button>
+      <div className="w-full max-w-4xl flex flex-col items-center relative z-10 mt-12">
+        <h1 className="text-3xl md:text-5xl font-bold text-center text-white tracking-widest mb-6 uppercase" style={{ fontFamily: 'Orbitron' }}>
+          Register for <span className="text-purple-500">K!26</span>
+        </h1>
+
+        <div className="flex gap-4 mb-8">
+          <button type="button" onClick={() => setValue('activeTab', 'cegian')} className={`px-12 md:px-16 py-2 rounded-full font-bold transition-all ${activeTab === 'cegian' ? 'bg-purple-600 text-white border-2 border-purple-400 shadow-lg' : 'bg-white/5 text-purple-300'}`}>CEGian</button>
+          <button type="button" onClick={() => setValue('activeTab', 'others')} className={`px-12 md:px-16 py-2 rounded-full font-bold transition-all ${activeTab === 'others' ? 'bg-purple-600 text-white border-2 border-purple-400 shadow-lg' : 'bg-white/5 text-purple-300'}`}>Others</button>
         </div>
-        <Menu className="lg:hidden ml-auto text-white w-6 h-6" />
-      </nav>
+      </div>
 
-      {/* 2. REGISTRATION BOX */}
-      <div className="flex-1 flex items-center justify-center w-full p-6 relative z-10">
-        <div className="w-full max-w-5xl relative z-10 bg-slate-900/70 backdrop-blur-3xl rounded-2xl p-8 border border-white/20 shadow-2xl">
-          
-          <h1 className="text-3xl md:text-4xl font-black text-center mb-8 text-white tracking-widest uppercase"
-              style={{ fontFamily: "'Stalinist One', ui-serif, Georgia, serif" }}>
-            REGISTER FOR K! 26
-          </h1>
+      <div className="w-full max-w-5xl relative z-10">
+        <form onSubmit={handleSubmit(onSubmit)} className="rounded-[15px] p-8 border-[0.5px] border-white/40 bg-white/[0.02] backdrop-blur-xl shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+            
+            {/* COLUMN 1 */}
+            <div className="space-y-4">
+              <Field label="Email Address" error={errors.email?.message}>
+                <div className="relative"><Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><input {...register('email')} className={inputWithIcon} placeholder="email@example.com" /></div>
+              </Field>
 
-          <div className="flex justify-center gap-4 mb-10">
-            {['cegian', 'others'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab as any)}
-                className={`px-12 py-2.5 rounded-lg transition-all uppercase text-xs tracking-widest border ${
-                  activeTab === tab 
-                  ? 'bg-purple-600 text-white border-purple-400 shadow-[0_0_20px_rgba(147,51,234,0.3)]' 
-                  : 'text-white/40 border-white/10 hover:border-white/30'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
-          <form className="text-white">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-6">
-              
-              {/* LEFT COLUMN */}
-              <div className="space-y-5">
-                <div>
-                  <label className={labelClass}>Email ID</label>
-                  <div className="relative"><Mail className={iconClass} /><input type="email" className={inputClass} /></div>
-                </div>
-
+              <Field label="Full Name">
                 <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className={labelClass}>First Name</label>
-                    <div className="relative"><User className={iconClass} /><input type="text" className={inputClass} /></div>
-                  </div>
-                  <div>
-                    <label className={labelClass}>Last Name</label>
-                    <input type="text" className="w-full bg-slate-900/40 border border-white/20 rounded-lg px-4 py-2.5 text-white text-sm hover:border-purple-500 transition-all" />
-                  </div>
+                  <input {...register('firstName')} className={inputNormal} placeholder="First" />
+                  <input {...register('lastName')} className={inputNormal} placeholder="Last" />
+                </div>
+              </Field>
+
+              <Field label="Mobile Number" error={errors.mobile?.message}>
+                <div className="relative"><Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><input {...register('mobile')} className={inputWithIcon} placeholder="9876543210" /></div>
+              </Field>
+
+              {activeTab === 'cegian' ? (
+                <>
+                  <Field label="Roll Number" error={errors.rollNumber?.message}><input {...register('rollNumber')} className={inputNormal} placeholder="2023000000" /></Field>
+                  <Field label="Date of Birth" error={errors.dobDay?.message}>
+                    <div className="grid grid-cols-3 gap-2">
+                      <select {...register('dobDay')} className={inputNormal}><option value="" className="bg-black">Day</option>{dateDays.map(d => <option key={d.day} value={d.day} className="bg-black">{d.day}</option>)}</select>
+                      <select {...register('dobMonth')} className={inputNormal}><option value="" className="bg-black">Month</option>{dateMonths.map(m => <option key={m.number} value={m.number} className="bg-black">{m.month}</option>)}</select>
+                      <select {...register('dobYear')} className={inputNormal}><option value="" className="bg-black">Year</option>{dateYears.map(y => <option key={y.year} value={y.year} className="bg-black">{y.year}</option>)}</select>
+                    </div>
+                  </Field>
+                </>
+              ) : (
+                <>
+                  <Field label="College Name" error={errors.college?.message}>
+                    <div className="relative"><School className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><input {...register('college')} className={inputWithIcon} placeholder="Enter College Name" /></div>
+                  </Field>
+                  <Field label="Department" error={errors.department?.message}><input {...register('department')} className={inputNormal} placeholder="e.g. Mechanical" /></Field>
+                  <Field label="Year of Study">
+                    <select {...register('year')} className={inputNormal}><option value="" className="bg-black">Select</option>{academicYears.map(y => <option key={y.value} value={y.value} className="bg-black">{y.name}</option>)}</select>
+                  </Field>
+                </>
+              )}
+            </div>
+
+            {/* COLUMN 2 */}
+            <div className="space-y-4">
+              {activeTab === 'cegian' ? (
+                <>
+                  <Field label="Department" error={errors.department?.message}><input {...register('department')} className={inputNormal} placeholder="e.g. CSE" /></Field>
+                  <Field label="Year of Study">
+                    <select {...register('year')} className={inputNormal}><option value="" className="bg-black">Select</option>{academicYears.map(y => <option key={y.value} value={y.value} className="bg-black">{y.name}</option>)}</select>
+                  </Field>
+                </>
+              ) : (
+                <>
+                  <Field label="State">
+                    <div className="relative"><MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><select {...register('state')} className={inputWithIcon}>{indianStates.map(s => <option key={s.code} value={s.name} className="bg-black">{s.name}</option>)}</select><ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4 pointer-events-none" /></div>
+                  </Field>
+                  <Field label="City">
+                    <div className="relative"><MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><select {...register('city')} className={inputWithIcon}>{(indianCities[selectedState || ""] || []).map(c => <option key={c} value={c} className="bg-black">{c}</option>)}</select><ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4 pointer-events-none" /></div>
+                  </Field>
+                  <Field label="Referral Code (Optional)">
+                    <div className="relative"><Ticket className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><input {...register('referralCode')} className={inputWithIcon} placeholder="K26-XXXX" /></div>
+                  </Field>
+                </>
+              )}
+
+              <Field label="Password" error={errors.password?.message}>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" />
+                  <input type={showPassword ? 'text' : 'password'} {...register('password')} className={inputWithIcon} />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50">{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button>
+                </div>
+              </Field>
+
+              <Field label="Confirm Password" error={errors.confirmPassword?.message}>
+                <div className="relative"><Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 w-4 h-4" /><input type="password" {...register('confirmPassword')} className={inputWithIcon} /></div>
+              </Field>
+
+              {/* ACTION AREA */}
+              <div className="pt-2 space-y-3">
+                <div className="flex items-center justify-center gap-2">
+                    <input type="checkbox" {...register('acceptTerms')} className="w-3.5 h-3.5 accent-purple-600 rounded" id="terms" />
+                    <label htmlFor="terms" className="text-white/80 text-[11px] font-bold uppercase cursor-pointer tracking-tighter">I Accept the Terms & Conditions</label>
                 </div>
 
-                <div>
-                  <label className={labelClass}>Mobile</label>
-                  <div className="relative">
-                    <Phone className={iconClass} />
-                    <span className="absolute left-9 top-1/2 -translate-y-1/2 text-white/60 text-xs">+91</span>
-                    <input type="tel" className={inputClass.replace('pl-10', 'pl-16')} />
-                  </div>
-                </div>
-
-                {activeTab === 'cegian' ? (
-                  <>
-                    <div>
-                      <label className={labelClass}>Roll Number</label>
-                      <div className="relative"><CreditCard className={iconClass} /><input type="text" className={inputClass} /></div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Date of Birth</label>
-                      <div className="grid grid-cols-3 gap-2">
-                        <input type="number" placeholder="DD" className={inputClass.replace('pl-10', 'px-3')} />
-                        <select className="bg-slate-900/90 border border-white/20 rounded-lg px-2 text-white text-xs outline-none"><option>Month</option></select>
-                        <input type="number" placeholder="YYYY" className="bg-slate-900/40 border border-white/20 rounded-lg px-2 text-white text-xs outline-none" />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div>
-                      <label className={labelClass}>College</label>
-                      <div className="relative"><Building2 className={iconClass} /><input type="text" className={inputClass} /></div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Department</label>
-                      <div className="relative"><BookOpen className={iconClass} /><input type="text" className={inputClass} /></div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Year</label>
-                      <div className="relative"><GraduationCap className={iconClass} /><select className={inputClass}><option>Select Year</option></select></div>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* RIGHT COLUMN */}
-              <div className="space-y-5">
-                {activeTab === 'others' ? (
-                  <>
-                    <div><label className={labelClass}>State</label><div className="relative"><MapPin className={iconClass} /><input type="text" className={inputClass} /></div></div>
-                    <div><label className={labelClass}>City</label><div className="relative"><MapPin className={iconClass} /><input type="text" className={inputClass} /></div></div>
-                    <div><label className={labelClass}>Password</label><div className="relative"><Lock className={iconClass} /><input type="password" className={inputClass} /></div></div>
-                    <div><label className={labelClass}>Confirm Password</label><div className="relative"><Lock className={iconClass} /><input type="password" className={inputClass} /></div></div>
-                    <div><label className={labelClass}>Referral Code</label><div className="relative"><Tag className={iconClass} /><input type="text" className={inputClass} /></div></div>
-                  </>
-                ) : (
-                  <>
-                    <div>
-                      <label className={labelClass}>Department</label>
-                      <div className="relative"><Building2 className={iconClass} /><input type="text" className={inputClass} /></div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Year of Study</label>
-                      <div className="relative"><GraduationCap className={iconClass} /><select className={inputClass}><option>Select Year</option></select></div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Password</label>
-                      <div className="relative"><Lock className={iconClass} /><input type="password" className={inputClass} /></div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Confirm Password</label>
-                      <div className="relative"><Lock className={iconClass} /><input type="password" className={inputClass} /></div>
-                    </div>
-                  </>
-                )}
-
-                <div className="pt-1 flex flex-col gap-3">
-                  <div className="flex items-center gap-2">
-                    <input type="checkbox" className="w-4 h-4 accent-purple-600 rounded border-white/20" />
-                    <label className="text-white/60 text-[9px] uppercase tracking-widest">Accept Terms & Conditions</label>
-                  </div>
-
-                  <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3.5 rounded-lg transition-all text-xs tracking-[0.3em] shadow-lg shadow-purple-900/40 active:scale-95 border border-white/10 uppercase">
-                    REGISTER
-                  </button>
-
-                  <p className="text-center text-white/50 text-[10px] uppercase">
-                    Already have an account? <a href="/login" className="text-purple-500 hover:text-purple-400 transition-colors underline underline-offset-4">Login</a>
-                  </p>
-                </div>
+                <button type="submit" className="w-full bg-purple-700 hover:bg-purple-600 text-white py-3 rounded-[15px] font-bold shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all uppercase tracking-widest">
+                  REGISTER
+                </button>
+                
+                <p className="text-center text-gray-400 text-xs">
+                  Already have an account? 
+                  <a href="/login" className="text-[#D81B60] font-bold hover:underline ml-1">Login</a>
+                </p>
               </div>
 
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
+    </div>
+  );
+}
+
+function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+  return (
+    <div className="w-full">
+      <label className="text-white text-[11px] font-bold uppercase tracking-wider ml-2 mb-1 block">{label}</label>
+      {children}
+      {error && <p className="text-red-400 text-[10px] mt-1 ml-2 font-medium">{error}</p>}
     </div>
   );
 }
