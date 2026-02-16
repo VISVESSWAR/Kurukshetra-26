@@ -70,10 +70,41 @@
 
 
 
+// import Register from "./pages/Register";
+
+// function App() {
+//   return <Register />;
+// }
+
+// export default App;
+
+
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+// import Login from "./pages/Login"; // Add this once your Login page is ready
 
 function App() {
-  return <Register />;
+  return (
+    <Router>
+      <Routes>
+        {/* Default route redirects to Register */}
+        <Route path="/" element={<Navigate to="/register" />} />
+        
+        {/* Registration Page */}
+        <Route path="/register" element={<Register />} />
+        
+        {/* Forgot Password Page */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* Login Page Placeholder */}
+        <Route path="/login" element={<div className="text-white">Login Page coming soon...</div>} />
+        
+        {/* 404 Fallback */}
+        <Route path="*" element={<Navigate to="/register" />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
