@@ -110,6 +110,7 @@ h1, h2, h3, h4, h5, h6, img, button {
   --glitch-purple: #9b4dff;
   --glitch-magenta: #ff5fd2;
   --glitch-lavender: rgba(179, 107, 255, 0.6);
+
   --contact-bg:
     radial-gradient(
       1200px 600px at 20% 20%,
@@ -122,10 +123,39 @@ h1, h2, h3, h4, h5, h6, img, button {
       transparent 55%
     ),
     linear-gradient(180deg, #1a002a 0%, #0c0015 100%);
+
+  --radius-toggle: 0.9375rem;
+
 }
 .gradient-border {
   position: relative;
   border-radius: 15px;
+}
+
+.glass-tab {
+  position: relative;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    inset 0 -2px 4px rgba(0,0,0,0.35),
+    inset 0 2px 4px rgba(255,255,255,0.15);
+}
+
+/* ACTIVE tab (purple glow exactly like design) */
+.glass-tab-active {
+  border-radius: 999px;
+
+  background: linear-gradient(90deg,#8A05FF,#E900BD);
+  border-color: white;
+  box-shadow:
+    0 0 18px rgba(168,85,247,0.6),
+    inset 0 -2px 4px rgba(0,0,0,0.35),
+    inset 0 2px 4px rgba(255,255,255,0.2);
 }
 
 .gradient-border::before {
