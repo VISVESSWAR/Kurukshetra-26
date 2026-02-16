@@ -449,26 +449,27 @@ export default function EventsNew() {
           </div>
 
           {/* REGISTRATION BUTTON - OUTSIDE CARD */}
-          <motion.div
-            className="mt-6 flex justify-center"
-            variants={slideInFromLeftStaggered(0.5)}
-            initial="hidden"
-            animate="visible"
-            custom={0}
-          >
-            {/* {console.log("Registration Link:", event)} */}
-            <a
-              href={event.registrationLink || GLOBAL_REGISTRATION_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-linear-to-r from-purple-600 to-fuchsia-500 
-                         text-white font-semibold rounded-full hover:shadow-[0_0_30px_#a855f7] 
-                         transition-all duration-300 hover:scale-105"
+          {event.registrationLink && (
+            <motion.div
+              className="mt-6 flex justify-center"
+              variants={slideInFromLeftStaggered(0.5)}
+              initial="hidden"
+              animate="visible"
+              custom={0}
             >
-              Register Now
-              <ExternalLink size={18} />
-            </a>
-          </motion.div>
+              <a
+                href={event.registrationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-linear-to-r from-purple-600 to-fuchsia-500 
+                           text-white font-semibold rounded-full hover:shadow-[0_0_30px_#a855f7] 
+                           transition-all duration-300 hover:scale-105"
+              >
+                Register Now
+                <ExternalLink size={18} />
+              </a>
+            </motion.div>
+          )}
         </div>
       </div>
 

@@ -39,9 +39,9 @@ export default function Workshops() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden font-sans selection:bg-purple-500/30">
+    <div className="relative min-h-screen text-white overflow-hidden font-sans selection:bg-purple-500/30">
       <div className="absolute inset-0 z-0">
-        <div
+        {/* <div
           className="absolute inset-0"
           style={{
             backgroundImage: `url(${backBp})`,
@@ -50,7 +50,7 @@ export default function Workshops() {
             opacity: 1,
             zIndex: 0,
           }}
-        />
+        /> */}
 
         <div
           className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
@@ -81,7 +81,7 @@ export default function Workshops() {
           <div className="text-center mb-12">
             <div className={`relative ${glitch ? "glitch-active" : ""}`}>
               <h1
-                className="sponsor-glitch text-4xl md:text-7xl font-bold tracking-[0.15em] mb-2 font-(family-name:--wallpoet)"
+                className="sponsor-glitch text-4xl md:text-7xl font-bold tracking-[0.15em] mb-2 font-(family-name:--orbitron)"
                 data-text="WORKSHOPS"
               >
                 WORKSHOPS
@@ -89,14 +89,14 @@ export default function Workshops() {
             </div>
           </div>
 
-          <div className="relative w-full max-w-6xl h-96 mb-16">
+          <div className="relative w-full max-w-6xl h-80 mb-16">
             <div
-              className="hidden lg:block absolute top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
+              className="hidden lg:block lg:w-[42%] absolute top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
               onClick={() => setIndex(getLeftIndex())}
               style={{
-                width: "550px",
-                height: "360px",
-                transform: "translate(calc(-50% - 400px), -50%) scale(0.9)",
+                // width: "550px",
+                // height: "360px",
+                transform: "translate(calc(-50% - 400px), -50%) scale(0.85)",
                 opacity: 1,
                 zIndex: 10,
               }}
@@ -105,8 +105,8 @@ export default function Workshops() {
                 className="w-full h-full rounded-[40px] overflow-hidden flex flex-col"
                 style={{
                   background: "rgba(109, 40, 217, 0.25)",
-                  backdropFilter: "blur(15px) saturate(50%)",
-                  WebkitBackdropFilter: "blur(15px) saturate(50%)",
+                  backdropFilter: "blur(50px) saturate(50%)",
+                  WebkitBackdropFilter: "blur(50px) saturate(50%)",
                   border: "2px solid rgba(168, 85, 247, 0.7)",
                   boxShadow: "none",
                 }}
@@ -115,7 +115,7 @@ export default function Workshops() {
                   <img
                     src={workshops[getLeftIndex()].image}
                     alt={workshops[getLeftIndex()].title}
-                    className="max-w-full max-h-full object-contain opacity-40"
+                    className="w-56 h-48 object-contain opacity-40"
                     style={{
                       filter: "none",
                     }}
@@ -129,8 +129,8 @@ export default function Workshops() {
                       background:
                         "linear-gradient(90deg, #a855f7 0%, #8A05FF 100%)",
                       boxShadow: "none",
-                      fontFamily: "var(--wallpoet)",
-                      fontSize: "1.05rem",
+                      fontFamily: "var(--orbitron)",
+                      fontSize: "1.02rem",
                       color: "#fff",
                     }}
                   >
@@ -141,31 +141,31 @@ export default function Workshops() {
             </div>
 
             <div
-              className="absolute w-full h-full lg:w-[40%] top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
+              className="absolute w-full h-full lg:w-[42%] top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
               onClick={handleCenterCardClick}
               style={{
                 // width: "600px",
                 // height: "380px",
-                transform: "translate(-50%, -50%) scale(1)",
+                transform: "translate(-50%, -50%) scale(1.05)",
                 opacity: 1,
                 zIndex: 20,
               }}
             >
               <div
-                className="w-[90%] h-[90%] mx-auto lg:w-full lg:h-full rounded-[40px] overflow-hidden flex flex-col"
+                className="w-[95%] h-[95%] md:w-[70%] mx-auto lg:w-full lg:h-full rounded-[40px] overflow-hidden flex flex-col"
                 style={{
                   background: "rgba(109, 40, 217, 0.3)",
-                  backdropFilter: "blur(1px) saturate(50%)",
+                  backdropFilter: "blur(5px) saturate(50%)",
                   WebkitBackdropFilter: "blur(20px) saturate(180%)",
                   border: "1px solid rgba(168, 85, 247, 0.7)",
                   boxShadow: "none",
                 }}
               >
-                <div className="flex items-center justify-center p-5 h-[80%]">
+                <div className="flex items-center justify-center p-4 h-[80%]">
                   <img
                     src={currentWorkshop.image}
                     alt={currentWorkshop.title}
-                    className="max-h-full object-contain"
+                    className="w-64 h-52 object-contain"
                   />
                 </div>
 
@@ -177,7 +177,7 @@ export default function Workshops() {
                         "linear-gradient(90deg, #a855f7 0%, #8A05FF 100%)",
                       boxShadow: "none",
                       fontFamily: "var(--orbitron)",
-                      fontSize: "1.1rem",
+                      fontSize: "0.8rem",
                       color: "#fff",
                     }}
                   >
@@ -188,12 +188,12 @@ export default function Workshops() {
             </div>
 
             <div
-              className="hidden lg:block absolute top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
+              className="hidden lg:block lg:w-[42%] absolute top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
               onClick={() => setIndex(getRightIndex())}
               style={{
-                width: "550px",
-                height: "360px",
-                transform: "translate(calc(-50% + 400px), -50%) scale(0.9)",
+                // width: "550px",
+                // height: "360px",
+                transform: "translate(calc(-50% + 400px), -50%) scale(0.85)",
                 opacity: 1,
                 zIndex: 10,
               }}
@@ -202,8 +202,8 @@ export default function Workshops() {
                 className="w-full h-full rounded-[40px] overflow-hidden flex flex-col"
                 style={{
                   background: "rgba(109, 40, 217, 0.25)",
-                  backdropFilter: "blur(15px) saturate(50%)",
-                  WebkitBackdropFilter: "blur(15px) saturate(50%)",
+                  backdropFilter: "blur(50px) saturate(50%)",
+                  WebkitBackdropFilter: "blur(50px) saturate(50%)",
                   border: "2px solid rgba(168, 85, 247, 0.7)",
                   boxShadow: "none",
                 }}
@@ -212,7 +212,7 @@ export default function Workshops() {
                   <img
                     src={workshops[getRightIndex()].image}
                     alt={workshops[getRightIndex()].title}
-                    className="max-w-full max-h-full object-contain opacity-40"
+                    className="w-56 h-48 object-contain opacity-40"
                     style={{
                       filter: "none",
                     }}
@@ -225,8 +225,8 @@ export default function Workshops() {
                       background:
                         "linear-gradient(90deg, #a855f7 0%, #8A05FF 100%)",
                       boxShadow: "none",
-                      fontFamily: "var(--wallpoet)",
-                      fontSize: "1.05rem",
+                      fontFamily: "var(--orbitron)",
+                      fontSize: "1.02rem",
                       color: "#fff",
                     }}
                   >

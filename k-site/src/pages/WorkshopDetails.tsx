@@ -384,7 +384,7 @@ export default function WorkshopsDetails() {
               {/* BOTTOM ROW - IMAGE LEFT, CONTENT RIGHT */}
               <div className="flex gap-6 lg:gap-8">
                 {/* IMAGE - FIXED LEFT */}
-                <div className="w-64 h-64 rounded-2xl overflow-hidden bg-gray-800 shrink-0">
+                <div className="w-52 h-52 lg:w-64 lg:h-64 rounded-2xl overflow-hidden bg-gray-800 shrink-0">
                   {workshop.image && (
                     <img
                       src={workshop.image}
@@ -447,28 +447,30 @@ export default function WorkshopsDetails() {
             </div>
 
             {/* REGISTRATION BUTTON - OUTSIDE CARD */}
-            <motion.div
-              className="mt-6 flex justify-center"
-              variants={slideInFromLeftStaggered(0.5)}
-              initial="hidden"
-              animate="visible"
-              custom={0}
-            >
-              <a
-                href={workshop.registrationLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 
+            {workshop.registrationLink && (
+              <motion.div
+                className="mt-6 flex justify-center"
+                variants={slideInFromLeftStaggered(0.5)}
+                initial="hidden"
+                animate="visible"
+                custom={0}
+              >
+                <a
+                  href={workshop.registrationLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 
                           bg-linear-to-r from-purple-600 to-fuchsia-500
                           px-6 md:px-8 py-3 md:py-4 rounded-full
                           shadow-[0_0_25px_#a855f7]
                           font-semibold tracking-wide text-sm md:text-base
                           hover:shadow-[0_0_35px_#a855f7] transition-all"
-              >
-                <span>REGISTER NOW</span>
-                <ExternalLink size={18} />
-              </a>
-            </motion.div>
+                >
+                  <span>REGISTER NOW</span>
+                  <ExternalLink size={18} />
+                </a>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

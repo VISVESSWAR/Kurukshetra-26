@@ -1,4 +1,4 @@
-import type { EventDetailsRecord, EventCategoriesRecord} from "./eventTypes";
+import type { EventDetailsRecord, EventCategoriesRecord } from "./eventTypes";
 export const EVENT_DETAILS: EventDetailsRecord = {
   "Water Rocketry": {
     title: "Water Rocketry",
@@ -487,6 +487,98 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     ],
     contact: ["Guharaj T G M - 9994271835", "Sri Aishwarya M - 8825775704"],
   },
+  "Ultimate Line Tracer": {
+    title: "Ultimate Line Tracer",
+    description:
+      "Ultimate Line Tracer is a competitive robotics event where teams design and build autonomous robots capable of accurately following a predefined line track. This event tests precision, sensor calibration, algorithm optimization, and mechanical design to create robots that can navigate complex path layouts efficiently and accurately.",
+    participation: "Team of 3",
+    image: "/Events/LineTracer.webp",
+    registrationLink:
+      "https://unstop.com/competitions/ultimate-line-tracer-kurukshetra-2026-anna-university-ceg-guindy-1633089",
+    rounds: [
+      "Round 1: Participate in time trials on predefined line tracks. Fastest time wins. Top teams advance to finals.",
+      "Round 2: Final round with more complex track layout. Precision and speed determine rankings.",
+    ],
+    rules: [
+      "Team size: Maximum 3 members.",
+      "Robot must fit within specified dimensions.",
+      "Fully autonomous navigation required.",
+      "No wireless communication allowed.",
+      "Organizer decisions are final.",
+    ],
+    prize: ["Prize Pool: 30000 INR", "Entry Fee: TBD"],
+    schedule: ["March 7-9, 2026 - TBD"],
+    contact: ["TBD"],
+  },
+  "Robo Rush": {
+    title: "Robo Rush",
+    description:
+      "Robo Rush is an exciting remote-controlled robotic racing event where participants operate high-speed electric bots. The event tests participants' skills in precise control, design, and innovation in robotic racing. Navigate through challenging tracks with sharp turns and obstacles to complete the race in the fastest time.",
+    participation: "Team of 2",
+    image: "/Events/RoboRush.webp",
+    registrationLink:
+      "https://unstop.com/competitions/robo-rush-kurukshetra-2026-anna-university-ceg-guindy-1633067",
+    rounds: [
+      "Round 1: Time trials on the track. Teams race to complete the course in fastest time.",
+      "Round 2: Final racing round with obstacles and challenging terrain for top qualifiers.",
+    ],
+    rules: [
+      "Team size: 2 members.",
+      "Remote-controlled electric bots only.",
+      "Participants must follow track boundaries.",
+      "Collisions with obstacles result in time penalties.",
+      "Organizer decisions are final.",
+    ],
+    prize: ["Prize Pool: 27000 INR", "Entry Fee: TBD"],
+    schedule: ["March 7-9, 2026 - TBD"],
+    contact: ["TBD"],
+  },
+  "Steam Quest": {
+    title: "Steam Quest",
+    description:
+      "Steam Quest is an online riddle game set in a world of brass gears and steam engines. Participants must pilot their virtual submersible through water levels while solving intricate puzzles and challenges. Use logic, creativity, and problem-solving skills to navigate through the Steampunk-themed underwater world.",
+    participation: "Individual",
+    image: "/Events/SteamQuest.webp",
+    registrationLink:
+      "https://unstop.com/competitions/steam-quest-kurukshetra-2026-anna-university-ceg-guindy-1634139",
+    rounds: [
+      "Single online round: Navigate through multiple levels of puzzles and challenges.",
+      "Participate anytime during the event window. Fastest completion time determines ranking.",
+    ],
+    rules: [
+      "Individual participation only.",
+      "Online submission required.",
+      "Time-based leaderboard ranking.",
+      "No external assistance allowed.",
+      "Organizer decisions are final.",
+    ],
+    prize: ["Prize Pool: 10000 INR", "Entry Fee: Free"],
+    schedule: ["March 1-10, 2026 - Online"],
+    contact: ["TBD"],
+  },
+  "Netrunner's Gauntlet": {
+    title: "Netrunner's Gauntlet",
+    description:
+      "Netrunner's Gauntlet is a full-scale Vulnerability Assessment challenge. Your mission is to audit the system, expose the flaws, and report the glitches before the system goes critical. This event tests cybersecurity expertise, ethical hacking skills, and the ability to identify and document security vulnerabilities in a competitive environment.",
+    participation: "Individual",
+    image: "/Events/NetRunnersGauntlet.webp",
+    registrationLink:
+      "https://unstop.com/hackathons/netrunners-gauntlet-capture-the-flag-kurukshetra-2026-anna-university-ceg-tech-forum-1633006",
+    rounds: [
+      "Online vulnerability assessment: Identify and document security flaws in provided systems.",
+      "Submit findings with detailed reports explaining each vulnerability discovered.",
+    ],
+    rules: [
+      "Individual participation only.",
+      "Ethical hacking practices must be followed.",
+      "No unauthorized access or system damage.",
+      "All findings must be documented in submission.",
+      "Organizer decisions are final.",
+    ],
+    prize: ["Prize Pool: 15000 INR", "Entry Fee: TBD"],
+    schedule: ["March 1-10, 2026 - Online"],
+    contact: ["TBD"],
+  },
 };
 
 export const EVENTS_CATEGORIES: EventCategoriesRecord = {
@@ -530,7 +622,13 @@ export const EVENTS_CATEGORIES: EventCategoriesRecord = {
     label: "ROBOTICS EVENTS",
     description:
       "Witness future of automation and artificial intelligence as machines come to life. Compete in high-octane battles, intricate challenges, and innovative designs in our robotics events.",
-    events: ["Robosoccer", "MICROMOUSE - Maze Solver", "Pac Bot"],
+    events: [
+      "Robosoccer",
+      "MICROMOUSE - Maze Solver",
+      "Pac Bot",
+      "Ultimate Line Tracer",
+      "Robo Rush",
+    ],
   },
   Coding: {
     label: "CODING EVENTS",
@@ -541,6 +639,6 @@ export const EVENTS_CATEGORIES: EventCategoriesRecord = {
   Online: {
     label: "ONLINE EVENTS",
     description: "Compete from anywhere in these online-only events.",
-    events: ["Neon Wallstreet"],
+    events: ["Neon Wallstreet", "Steam Quest", "Netrunner's Gauntlet"],
   },
 };
