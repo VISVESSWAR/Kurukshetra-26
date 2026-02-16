@@ -165,22 +165,39 @@ export default function EventsNew() {
   const tabContent: Record<TabKey, React.ReactNode> = {
     description: (
       <>
+        {/* IMAGE */}
+        {event.image && (
+          <motion.div
+            className="lg:hidden w-full h-[25vh] rounded-xl overflow-hidden mb-4"
+            variants={slideInFromLeftStaggered(0.2)}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+          >
+            <img
+              src={event.image}
+              alt={event.title}
+              className="w-[80%] h-[80%] m-auto object-cover"
+            />
+          </motion.div>
+        )}
+
         <motion.h2
-          className="text-md md:text-lg font-normal flex items-center text-justify lg:justify-start justify-center gap-3 mb-3"
+          className="text-md md:text-lg font-normal text-justify"
           variants={slideInFromLeftStaggered(0.3)}
           initial="hidden"
           animate="visible"
-          custom={0}
+          custom={1}
         >
           {event.description}
         </motion.h2>
 
         <motion.p
-          className="text-base md:text-lg text-gray-300 mt-4 lg:text-left text-justify"
+          className="text-base md:text-lg text-gray-300 mt-4"
           variants={slideInFromLeftStaggered(0.3)}
           initial="hidden"
           animate="visible"
-          custom={1}
+          custom={2}
         >
           Participation: {event.participation}
         </motion.p>
@@ -313,18 +330,20 @@ export default function EventsNew() {
             {/* DESKTOP/LANDSCAPE LAYOUT (lg and above) */}
             <div className="hidden lg:flex flex-row gap-6 lg:gap-8">
               {/* IMAGE SIDE */}
-              <div className="w-full md:w-56 h-52 md:h-56 bg-gray-800 rounded-2xl shrink-0 overflow-hidden">
-                {event.image ? (
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-500">
-                    <span className="text-sm">No image available</span>
-                  </div>
-                )}
+              <div className="w-full md:w-56 h-56 md:h-64 rounded-2xl overflow-hidden bg-transparent flex flex-col">
+                {/* top empty space (30%) */}
+                <div className="h-[30%]" />
+
+                {/* image area (70%) */}
+                <div className="h-[70%] overflow-hidden rounded-2xl bg-gray-800">
+                  {event.image && (
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
               </div>
 
               {/* RIGHT SIDE */}

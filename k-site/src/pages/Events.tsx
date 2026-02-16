@@ -9,7 +9,7 @@ import Robotics from "../assets/Events/Robot.svg";
 import Coding from "../assets/Events/coding.svg";
 import Engineering from "../assets/Events/engineering.svg";
 import Online from "../assets/Events/online.svg";
-import { EVENTS_CATEGORIES } from "../constants/events.tsx";
+import { EVENTS_CATEGORIES,EVENT_DETAILS } from "../constants/events.tsx";
 
 const EVENTS_DATA = EVENTS_CATEGORIES;
 
@@ -18,7 +18,8 @@ export default function Events() {
   const navigate = useNavigate();
   const [rotation, setRotation] = useState(0);
   const [glitch, setGlitch] = useState(false);
-  const [selectedType, setSelectedType] = useState<keyof typeof EVENTS_DATA>("Robotics");
+  const [selectedType, setSelectedType] =
+    useState<keyof typeof EVENTS_DATA>("Robotics");
 
   useEffect(() => {
     const interval = setInterval(
@@ -57,7 +58,7 @@ export default function Events() {
   const handleCategoryChange = (eventType: keyof typeof EVENTS_DATA) => {
     // Find the index of this event type in the petal array
     const index = iconToEventType.indexOf(eventType);
-    
+
     // Calculate rotation to align the petal at targetIndex
     const anglePerPetal = 360 / total;
     const newRotation = (targetIndex - index) * anglePerPetal;
@@ -140,7 +141,9 @@ export default function Events() {
                 {menuItems.map((item) => (
                   <li
                     key={item}
-                    onClick={() => handleCategoryChange(item as keyof typeof EVENTS_DATA)}
+                    onClick={() =>
+                      handleCategoryChange(item as keyof typeof EVENTS_DATA)
+                    }
                     className={`text-sm rounded-lg px-3 py-2 cursor-pointer transition-all duration-700 ease-in-out
                         ${
                           selectedType === item
@@ -178,19 +181,36 @@ export default function Events() {
 
             {/* ⭐ RESPONSIVE GRID */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 justify-items-center">
-              {EVENTS_DATA[selectedType].events.map((title: string) => (
-                <div
-                  key={title}
-                  onClick={() =>
-                    navigate(`/events/${encodeURIComponent(title)}`)
-                  }
-                  className="w-84 h-60 border border-purple-500/40 rounded-xl flex items-end justify-center p-3 hover:border-purple-400 transition cursor-pointer"
-                >
-                  <span className="bg-purple-600 text-white text-sm font-semibold px-5 py-2 rounded-full w-[90%] text-center">
-                    {title}
-                  </span>
-                </div>
-              ))}
+              {EVENTS_DATA[selectedType].events.map((title: string) => {
+                const event = EVENT_DETAILS[title]; // assuming same key names
+
+                return (
+                  <div
+                    key={title}
+                    onClick={() =>
+                      navigate(`/events/${encodeURIComponent(title)}`)
+                    }
+                    className="w-84 h-60 relative border border-purple-500/40 rounded-xl overflow-hidden hover:border-purple-400 transition cursor-pointer"
+                  >
+                    {/* IMAGE */}
+                    <img
+                      src={event?.image}
+                      alt={title}
+                      className="absolute inset-0 w-[90%] h-[90%] m-auto item-center object-cover"
+                    />
+
+                    {/* DARK OVERLAY */}
+                    <div className="absolute inset-0 bg-black/20" />
+
+                    {/* TITLE */}
+                    <div className="relative z-10 w-full h-full flex items-end justify-center p-3">
+                      <span className="bg-purple-600 text-white text-sm font-semibold px-5 py-2 rounded-full w-[90%] text-center">
+                        {title}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
