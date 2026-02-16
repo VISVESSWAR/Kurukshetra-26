@@ -178,7 +178,7 @@ export default function Events() {
 
             {/* ⭐ RESPONSIVE GRID */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 justify-items-center">
-              {EVENTS_DATA[selectedType].events.map((title) => (
+              {EVENTS_DATA[selectedType].events.map((title: string) => (
                 <div
                   key={title}
                   onClick={() =>

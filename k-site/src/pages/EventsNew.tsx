@@ -85,18 +85,18 @@ export default function EventsNew() {
     items: string[],
     Icon: React.ComponentType<{ size: number; className: string }>
   ) => (
-    <ul className="mt-4 text-gray-300 space-y-2 text-sm md:text-base overflow-x-hidden lg:text-left text-center">
+    <ul className="mt-4 text-gray-300 space-y-2 text-sm md:text-base overflow-x-hidden lg:text-left text-justify">
       {items.map((item, index) => (
         <motion.li
           key={index}
-          className="flex flex-wrap gap-2 items-start lg:justify-start justify-center min-w-0"
+          className="flex gap-2 items-start justify-start min-w-0"
           variants={slideInFromLeftStaggered(0.3)}
           initial="hidden"
           animate="visible"
           custom={index}
         >
           <Icon size={18} className="text-purple-400 shrink-0 mt-0.5" />
-          <span className="min-w-0" style={{ wordBreak: "break-word" }}>
+          <span className="flex-1 min-w-0" style={{ wordBreak: "break-word" }}>
             {item}
           </span>
         </motion.li>
@@ -189,7 +189,7 @@ export default function EventsNew() {
 
     rounds: (
       <>
-        <motion.h2
+        {/* <motion.h2
           className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
           variants={slideInFromLeftStaggered(0.2)}
           initial="hidden"
@@ -197,14 +197,14 @@ export default function EventsNew() {
           custom={0}
         >
           Event Rounds
-        </motion.h2>
+        </motion.h2> */}
         {renderListWithIcon(event.rounds, Zap)}
       </>
     ),
 
     rules: (
       <>
-        <motion.h2
+        {/* <motion.h2
           className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
           variants={slideInFromLeftStaggered(0.2)}
           initial="hidden"
@@ -212,14 +212,14 @@ export default function EventsNew() {
           custom={0}
         >
           Rules
-        </motion.h2>
+        </motion.h2> */}
         {renderListWithIcon(event.rules, CheckCircle2)}
       </>
     ),
 
     prize: (
       <>
-        <motion.h2
+        {/* <motion.h2
           className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
           variants={slideInFromLeftStaggered(0.2)}
           initial="hidden"
@@ -227,14 +227,14 @@ export default function EventsNew() {
           custom={0}
         >
           Prize Pool
-        </motion.h2>
+        </motion.h2> */}
         {renderListWithIcon(event.prize, Award)}
       </>
     ),
 
     schedule: (
       <>
-        <motion.h2
+        {/* <motion.h2
           className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
           variants={slideInFromLeftStaggered(0.2)}
           initial="hidden"
@@ -242,14 +242,14 @@ export default function EventsNew() {
           custom={0}
         >
           Schedule
-        </motion.h2>
+        </motion.h2> */}
         {renderListWithIcon(event.schedule, Calendar)}
       </>
     ),
 
     contact: (
       <>
-        <motion.h2
+        {/* <motion.h2
           className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
           variants={slideInFromLeftStaggered(0.2)}
           initial="hidden"
@@ -257,7 +257,7 @@ export default function EventsNew() {
           custom={0}
         >
           Contact
-        </motion.h2>
+        </motion.h2> */}
         {renderContacts(event.contact)}
       </>
     ),
@@ -437,6 +437,7 @@ export default function EventsNew() {
             animate="visible"
             custom={0}
           >
+            {/* {console.log("Registration Link:", event)} */}
             <a
               href={event.registrationLink || GLOBAL_REGISTRATION_URL}
               target="_blank"

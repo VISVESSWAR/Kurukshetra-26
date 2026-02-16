@@ -75,7 +75,7 @@ export default function Accommodation() {
               className="sponsor-glitch text-center mx-auto text-white max-w-285 text-[1.15rem] tracking-[0.005em] xs:text-[1.35rem] xs:tracking-[0.01em] sm:text-[1.8rem] sm:tracking-[0.035em] md:text-[2.4rem] md:tracking-[0.06em]"
               data-text="ACCOMMODATION"
               style={{
-                fontFamily: "Orbitron, sans-serif",
+                fontFamily: "Wallpoet, sans-serif",
                 fontWeight: 700,
               }}
             >
