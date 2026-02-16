@@ -21,6 +21,8 @@ import {
   Zap,
   CheckCircle2,
   Award,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { slideInFromLeftStaggered } from "@/lib/animations";
@@ -104,7 +106,7 @@ export default function EventsNew() {
     </ul>
   );
 
-  // Render contacts with phone/email links
+  // Render contacts with phone/email links and icons
   const renderContacts = (contacts: string[]) => (
     <ul className="mt-4 text-gray-300 space-y-2 text-sm md:text-base overflow-x-hidden lg:text-left text-justify">
       {contacts.map((contact, index) => {
@@ -113,14 +115,18 @@ export default function EventsNew() {
         const href = isLinkable ? getContactHref(parsed) : "#";
 
         const content = isLinkable ? (
-          <a
-            href={href}
-            target={parsed.type === "email" ? "_blank" : undefined}
-            rel={parsed.type === "email" ? "noopener noreferrer" : undefined}
-            className="text-purple-400 hover:text-purple-300 hover:underline transition"
-          >
-            {parsed.displayText}
-          </a>
+          <span className="flex items-center gap-2 min-w-0">
+            {parsed.type === "phone" && <Phone size={16} className="text-purple-400 shrink-0" />}
+            {parsed.type === "email" && <Mail size={16} className="text-purple-400 shrink-0" />}
+            <a
+              href={href}
+              target={parsed.type === "email" ? "_blank" : undefined}
+              rel={parsed.type === "email" ? "noopener noreferrer" : undefined}
+              className="text-purple-400 hover:text-purple-300 hover:underline transition min-w-0"
+            >
+              {parsed.displayText}
+            </a>
+          </span>
         ) : (
           <span className="min-w-0" style={{ wordBreak: "break-word" }}>
             {parsed.displayText}
@@ -328,14 +334,60 @@ export default function EventsNew() {
             </motion.div>
 
             {/* DESKTOP/LANDSCAPE LAYOUT (lg and above) */}
-            <div className="hidden lg:flex flex-row gap-6 lg:gap-8">
-              {/* IMAGE SIDE */}
-              <div className="w-full md:w-56 h-56 md:h-64 rounded-2xl overflow-hidden bg-transparent flex flex-col">
-                {/* top empty space (30%) */}
-                <div className="h-[30%]" />
+            <div className="hidden lg:flex flex-col gap-6">
+              {/* TOP ROW - TABS (CENTERED) */}
+              <div className="flex items-center justify-center gap-3">
+                {/* Tabs */}
+                <div className="flex gap-3 overflow-x-hidden whitespace-nowrap scrollbar-hide mx-auto">
+                  {tabs.map((tab, index) => {
+                    const Icon = tab.icon;
+                    const isActive = index === activeIndex;
 
-                {/* image area (70%) */}
-                <div className="h-[70%] overflow-hidden rounded-2xl bg-gray-800">
+                    return (
+                      <button
+                        key={tab.key}
+                        onClick={() => setActiveIndex(index)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm
+                        border transition-all duration-300 shrink-0
+                        ${
+                          isActive
+                            ? "bg-purple-600 border-purple-400 shadow-[0_0_15px_#a855f7]"
+                            : "border-purple-400/40 hover:bg-purple-600 hover:shadow-[0_0_12px_#a855f7]"
+                        }`}
+                      >
+                        <Icon size={14} />
+                        {tab.name}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Arrow Buttons */}
+                <div className="flex gap-3 shrink-0">
+                  <button
+                    onClick={prevTab}
+                    className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
+                              rounded-full border border-purple-400/40
+                              hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+
+                  <button
+                    onClick={nextTab}
+                    className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
+                              rounded-full border border-purple-400/40
+                              hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              {/* BOTTOM ROW - IMAGE LEFT, CONTENT RIGHT */}
+              <div className="flex gap-6 lg:gap-8">
+                {/* IMAGE - FIXED LEFT */}
+                <div className="w-64 h-64 rounded-2xl overflow-hidden bg-gray-800 shrink-0">
                   {event.image && (
                     <img
                       src={event.image}
@@ -344,62 +396,10 @@ export default function EventsNew() {
                     />
                   )}
                 </div>
-              </div>
 
-              {/* RIGHT SIDE */}
-              <div className="flex-1 min-w-0">
-                {/* Tabs + Arrows */}
-                <div className="flex items-center mb-6 pr-2 md:pr-4">
-                  {/* Tabs */}
-                  <div className="flex gap-3 overflow-x-hidden whitespace-nowrap scrollbar-hide flex-1">
-                    {tabs.map((tab, index) => {
-                      const Icon = tab.icon;
-                      const isActive = index === activeIndex;
-
-                      return (
-                        <button
-                          key={tab.key}
-                          onClick={() => setActiveIndex(index)}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm
-                          border transition-all duration-300 shrink-0
-                          ${
-                            isActive
-                              ? "bg-purple-600 border-purple-400 shadow-[0_0_15px_#a855f7]"
-                              : "border-purple-400/40 hover:bg-purple-600 hover:shadow-[0_0_12px_#a855f7]"
-                          }`}
-                        >
-                          <Icon size={14} />
-                          {tab.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Arrow Buttons */}
-                  <div className="ml-3 mr-4 md:mr-6 flex gap-3 shrink-0">
-                    <button
-                      onClick={prevTab}
-                      className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
-                                rounded-full border border-purple-400/40
-                                hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
-                    >
-                      <ChevronLeft size={18} />
-                    </button>
-
-                    <button
-                      onClick={nextTab}
-                      className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
-                                rounded-full border border-purple-400/40
-                                hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
-                    >
-                      <ChevronRight size={18} />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Content */}
+                {/* CONTENT - RIGHT */}
                 <div
-                  className="transition-all duration-300 overflow-y-auto overflow-x-hidden lg:text-left text-center scrollbar-hide"
+                  className="transition-all duration-300 overflow-y-auto overflow-x-hidden text-left scrollbar-hide flex-1"
                   style={{ maxHeight: "50vh" }}
                 >
                   <div className="space-y-2">{tabContent[activeTab]}</div>

@@ -172,7 +172,7 @@ export default function Events() {
                     What to Expect?
                   </h2>
 
-                  <p className="text-gray-100 text-md mt-2 mx-auto ">
+                  <p className="text-gray-100 text-md mt-2 mx-auto text-justify">
                     {EVENTS_DATA[selectedType].description}
                   </p>
                 </div>
