@@ -16,7 +16,7 @@ import takIcon from "@/assets/workshop/svgs/takeways.svg";
 import phone from "@/assets/workshop/svgs/phone.svg";
 import arrow1 from "@/assets/workshop/svgs/arrow-right 1.svg";
 import arrow2 from "@/assets/workshop/svgs/arrow-right 2.svg";
-import drone from '@/assets/workshop/Workshop_Images/Underwater_Drone.jpg';
+import drone from "@/assets/workshop/Workshop_Images/Underwater_Drone.jpg";
 
 interface Workshop {
   id: string;
@@ -381,17 +381,16 @@ export default function Workshops() {
             </div>
 
             <div className="w-full flex justify-center mb-20 px-4">
-  <div
-    className="
+              <div
+                className="
       relative w-full max-w-[1200px]
       rounded-[26px] border gradient-border
       backdrop-blur-md
       shadow-[inset_0_-2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(255,255,255,0.2)]
       p-4 sm:p-6 lg:p-10
     "
-  >
+              >
                 <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start">
-                  {/* LEFT IMAGE + ARROWS (mobile) */}
                   <div className="flex flex-col items-center shrink-0">
                     <div className="w-[260px] sm:w-[300px] aspect-square rounded-[24px] overflow-hidden">
                       <img
@@ -400,7 +399,7 @@ export default function Workshops() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    {/* ARROWS - mobile only, centered below image */}
+
                     <div className="flex gap-3 mt-3 lg:hidden">
                       <button
                         onClick={prev}
@@ -417,9 +416,8 @@ export default function Workshops() {
                     </div>
                   </div>
 
-                  {/* RIGHT CONTENT */}
-                 <div className="flex-1 pt-1">
-                    {/* TABS */}
+                  <div className="flex-1 pt-1">
+                 
                     <div className="flex flex-wrap gap-3 mb-5">
                       {[
                         { label: "Description", icon: descIcon, active: true },
@@ -453,38 +451,32 @@ export default function Workshops() {
                       ))}
                     </div>
 
-                    {/* TITLE ROW */}
-                   <div className="flex items-start sm:items-center gap-4 mb-4">
-  {/* Phone Icon */}
-  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-2 border-white">
-    <img src={phone} className="w-4 h-4 sm:w-5 sm:h-5" />
-  </div>
+                    <div className="flex items-start sm:items-center gap-4 mb-4">
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-2 border-white">
+                        <img src={phone} className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </div>
 
-  {/* Title + Participation */}
-  <div className="flex flex-col justify-center">
-    <h3 className="text-[20px] sm:text-[24px] lg:text-[28px] leading-tight font-bold tracking-tight font-(family-name:--jost)">
-      {currentWorkshop.subtitle}
-    </h3>
+                    
+                      <div className="flex flex-col justify-center">
+                        <h3 className="text-[20px] sm:text-[24px] lg:text-[28px] leading-tight font-bold tracking-tight font-(family-name:--jost)">
+                          {currentWorkshop.subtitle}
+                        </h3>
 
-    <p className="text-white/90 text-[14px] sm:text-[16px] lg:text-[18px] mt-1 font-(family-name:--jost)">
-      Participation: {currentWorkshop.participants}
-    </p>
-  </div>
-</div>
+                        <p className="text-white/90 text-[14px] sm:text-[16px] lg:text-[18px] mt-1 font-(family-name:--jost)">
+                          Participation: {currentWorkshop.participants}
+                        </p>
+                      </div>
+                    </div>
 
-
-                    {/* DESCRIPTION */}
                     <p className="mt-7 text-[18px] leading-[1] text-white/90 max-w-[810px] font-(family-name:--jost)">
                       {currentWorkshop.details}
                     </p>
 
-                    {/* RIGHT ARROWS - desktop only */}
-                   <div className="hidden lg:flex absolute right-4 top-[35%] translate-y-[-50%] gap-2 z-20">
+                    <div className="hidden lg:flex absolute right-4 top-[35%] translate-y-[-50%] gap-2 z-20">
                       <button
                         onClick={prev}
                         className="backdrop-blur-md w-[30px] h-[20px] lg:w-[48px] lg:h-[48px] rounded-full flex items-center justify-center
          transition-all duration-300"
-                        
                       >
                         <img src={arrow2} className="w-[40px] h-[40px]" />
                       </button>
@@ -493,7 +485,6 @@ export default function Workshops() {
                         onClick={next}
                         className="w-[30px] h-[20px] lg:w-[48px] lg:h-[48px] rounded-full flex items-center justify-center
                backdrop-blur-md transition-all duration-300"
-
                       >
                         <img src={arrow1} className="w-[40px] h-[40px]" />
                       </button>
@@ -502,18 +493,6 @@ export default function Workshops() {
                 </div>
               </div>
             </div>
-            {/* <button
-              onClick={() => setShowDetail(false)}
-              className="px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105"
-              style={{
-                background: "rgba(168, 85, 247, 0.2)",
-                border: "2px solid rgba(168, 85, 247, 0.6)",
-                color: "#a855f7",
-                fontFamily: "var(--wallpoet)",
-              }}
-            >
-              ← Back to Workshops
-            </button> */}
           </div>
         )}
       </div>
