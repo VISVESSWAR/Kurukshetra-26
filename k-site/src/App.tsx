@@ -82,13 +82,14 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
-// import Login from "./pages/Login"; // Add this once your Login page is ready
+import Profile from "./pages/Profile"; // Import the new Profile page
+// import Login from "./pages/Login"; 
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Default route redirects to Register */}
+        {/* Default route */}
         <Route path="/" element={<Navigate to="/register" />} />
         
         {/* Registration Page */}
@@ -97,10 +98,13 @@ function App() {
         {/* Forgot Password Page */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
+        {/* Profile Page */}
+        <Route path="/profile" element={<Profile />} />
+
         {/* Login Page Placeholder */}
-        <Route path="/login" element={<div className="text-white">Login Page coming soon...</div>} />
+        <Route path="/login" element={<div className="text-white flex h-screen items-center justify-center">Login Page coming soon...</div>} />
         
-        {/* 404 Fallback */}
+        {/* 404 Fallback - Redirects to register if page not found */}
         <Route path="*" element={<Navigate to="/register" />} />
       </Routes>
     </Router>
