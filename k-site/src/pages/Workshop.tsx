@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useFullNavbar from "@/hooks/useFullNavbar";
 import workshopBg from "@/assets/workshop/Workshop.png";
-import backBp from "@/assets/workshop/Img.png";
 import { WORKSHOPS_DATA } from "@/constants/workshopsData";
 
 export default function Workshops() {
