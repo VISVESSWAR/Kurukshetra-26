@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense,useState } from "react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,7 +20,11 @@ const NotFound = lazy(() => import("@/pages/NotFound"));
 const WorkshopsList = lazy(() => import("@/pages/Workshop"));
 const WorkshopsDetails = lazy(() => import("@/pages/WorkshopDetails"));
 
+//loader
+import VideoLoader from "@/components/Loader/VideoLoader";
+
 const COMING_SOON_PATHS = ["/login", "/register", "/guest-lectures"] as const;
+// const LOADER2_PATHS = ["/events","/workshops","/contact","/accommodation","/sponsors","/technovation"] as const;
 
 // const UNSTOP_URL =
 //   "https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664";
@@ -43,7 +47,13 @@ function PageLoader() {
 }
 
 function App() {
+
+  const [loading,setLoading]=useState(true);
+
   return (
+    // <>
+    // {loading  && <VideoLoader onFinish={()=>setLoading(false)} />}
+
     <Router>
       <MagicBento
         className="z-2"
@@ -84,6 +94,7 @@ function App() {
 
       <Footer />
     </Router>
+    // </>
   );
 }
 

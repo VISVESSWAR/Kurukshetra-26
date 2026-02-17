@@ -9,7 +9,11 @@ import Robotics from "../assets/Events/Robot.svg";
 import Coding from "../assets/Events/coding.svg";
 import Engineering from "../assets/Events/engineering.svg";
 import Online from "../assets/Events/online.svg";
+
+import GridScanLoader from "@/components/Loader/Loader.tsx";
+
 import { EVENTS_CATEGORIES,EVENT_DETAILS } from "../constants/events.tsx";
+
 
 const EVENTS_DATA = EVENTS_CATEGORIES;
 
@@ -18,6 +22,7 @@ export default function Events() {
   const navigate = useNavigate();
   const [rotation, setRotation] = useState(0);
   const [glitch, setGlitch] = useState(false);
+  const [loading,setLoading] = useState(true);
   const [selectedType, setSelectedType] =
     useState<keyof typeof EVENTS_DATA>("Robotics");
 
@@ -76,6 +81,8 @@ export default function Events() {
   const menuItems = Object.keys(EVENTS_DATA);
 
   return (
+    <>
+    {loading && <GridScanLoader onFinish={()=>false} pageName="Events"/>}
     <div className="min-h-screen bg-black text-white">
       {/* HEADER */}
       <div className="w-full min-h-[160px] sm:min-h-[200px] lg:min-h-[250px] flex items-center justify-center overflow-visible">
@@ -233,5 +240,6 @@ export default function Events() {
         </div>
       </div>
     </div>
+    </>
   );
 }

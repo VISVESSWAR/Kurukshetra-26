@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useFullNavbar from "@/hooks/useFullNavbar";
 import workshopBg from "@/assets/workshop/Workshop.png";
 import { WORKSHOPS_DATA } from "@/constants/workshopsData";
+import GridScanLoader from "@/components/Loader/Loader";
 
 export default function Workshops() {
   useFullNavbar();
@@ -12,6 +13,7 @@ export default function Workshops() {
   const [index, setIndex] = useState(0);
   const [glitch, setGlitch] = useState(false);
   const [isFading, setIsFading] = useState(false);
+  const [loading,setLoading] = useState(true);
 
   const fadeDuration = 400; // ms
 
@@ -56,6 +58,10 @@ export default function Workshops() {
   };
 
   return (
+    <>
+    {
+      loading && <GridScanLoader onFinish={()=>setLoading(false)} pageName="Workshops" />
+    }
     <div className="relative min-h-screen text-white overflow-hidden font-sans selection:bg-purple-500/30">
       <div className="absolute inset-0 z-0">
         <div
@@ -177,11 +183,11 @@ export default function Workshops() {
                     transition: `opacity ${fadeDuration}ms ease`,
                   }}
                 >
-                  <div className="flex items-center justify-center p-4 h-[80%]">
+                 <div className="flex items-center justify-center p-4 flex-1">
                     <img
                       src={currentWorkshop.image}
                       alt={currentWorkshop.title}
-                      className="w-64 h-52 object-contain"
+                      className="w-40 sm:w-52 md:w-48 h-auto max-h-[55%] object-contain"
                     />
                   </div>
                   <div className="p-2">
@@ -287,5 +293,6 @@ export default function Workshops() {
         </div>
       </div>
     </div>
+    </>
   );
 }

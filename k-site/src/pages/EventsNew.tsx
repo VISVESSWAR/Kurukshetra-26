@@ -8,6 +8,7 @@ import {
   isLinkableContact,
   extractPhoneNumber,
 } from "@/lib/contactUtils";
+
 import {
   FileText,
   Swords,
@@ -24,6 +25,7 @@ import {
   Award,
   Phone,
   Mail,
+  Grid,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { slideInFromLeftStaggered } from "@/lib/animations";
@@ -50,6 +52,9 @@ export default function EventsNew() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [glitch, setGlitch] = useState(false);
 
+  const[loading,setLoading] = useState(true);
+
+
   useEffect(() => {
     const interval = setInterval(
       () => {
@@ -65,6 +70,7 @@ export default function EventsNew() {
   // Render not found page if event doesn't exist
   if (!event || !decodedEventName) {
     return (
+
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -196,6 +202,7 @@ export default function EventsNew() {
   const tabContent: Record<TabKey, React.ReactNode> = {
     description: (
       <>
+    
         {/* IMAGE */}
         {event.image && (
           <motion.div
@@ -312,6 +319,7 @@ export default function EventsNew() {
   };
 
   return (
+   
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* HEADER */}
       <div className="relative overflow-hidden shrink-0">

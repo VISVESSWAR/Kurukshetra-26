@@ -74,7 +74,7 @@ const ButtonGroup = ({ items }: { items: Listing[] }) => {
 export default function Listings() {
   const listings: Listing[] = [
     { title: "Events", path: "/events", image: calendarImg, isExternal: true },
-    { title: "Workshops", path: "https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664", image: screwdriverImg, isExternal: true },
+    { title: "Workshops", path: "/workshops", image: screwdriverImg, isExternal: true },
     { title: "Guest Lectures", path: "/guest-lectures", image: microphoneImg },
     {
       title: "Technovation",
