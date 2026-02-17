@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="relative mt-auto w-full px-3 py-3 sm:px-4 sm:py-4 font-(family-name:--orbitron) text-white/85 z-20">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[78%] -translate-x-1/2 bg-linear-to-r from-transparent via-[#8A05FF]/60 to-transparent" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[78%] -translate-x-1/2 bg-linear-to-r from-transparent to-transparent" />
 
       <div className="mx-auto w-full max-w-6xl rounded-[18px] sm:rounded-[22px] border border-white/20 bg-[#8A05FF]/85 px-3 py-2 text-center text-[12px] md:text-[13px] leading-4 shadow-[0_0_20px_rgba(138,5,255,0.2)] backdrop-blur-lg sm:px-8 sm:py-3 font-semibold">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 sm:gap-3">
