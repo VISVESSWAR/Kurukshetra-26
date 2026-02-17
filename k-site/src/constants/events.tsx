@@ -6,6 +6,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Water Rocketry is an exciting and educational event where participants design, build, and launch rockets made from plastic bottles using water and compressed air as propulsion. This event combines the principles of physics, fluid mechanics, and aerodynamics in a fun and competitive environment. Participants must construct a water rocket using only the permitted materials provided by the organizers. The rocket is partially filled with water and pressurized with air using a pump. When released, the pressurized air forces the water out at high speed, generating thrust that propels the rocket into the air. This event encourages innovation, teamwork, and the practical application of theoretical concepts.",
     participation: "Team of 3",
     image: "/Events/WaterRocketry.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/water-rocketry-kurukshetra-2026-anna-university-ceg-guindy-1638406",
     rounds: [
@@ -44,6 +45,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "This Civil Based Event features two exciting rounds: Round 1 challenges participants to design an egg protection device to prevent breakage from a height, while Round 2 tests their engineering skills by constructing a sturdy bridge using sticks, glue, and paper.",
     participation: "Team of 3",
     image: "/Events/CivilDesignDuel.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/civil-design-duel-kurukshetra-2026-anna-university-ceg-guindy-1637937",
     rounds: [
@@ -70,6 +72,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "This two-round competition allows participants to showcase their expertise in both embedded programming and analog circuit design, effectively bridging gap between code and hardware. The contest challenges students to design, code, and optimize electronic systems, emphasizing practical engineering skills and system-level thinking.",
     participation: "Team of 2",
     image: "/Events/Electrohunt.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/electrohunt-kurukshetra-2026-anna-university-ceg-tech-forum-1637927",
     rounds: [
@@ -97,6 +100,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "AERO RUSH is a high-speed Line of Sight (LOS) drone racing competition featuring sharp turns, steep dives, and challenging obstacles. Participants compete in time-based formats to showcase speed, precision, control, and flying skills. Drone Specs: Max weight 2kg, Frame <= 300mm, Props <= 6 inches, Battery 3S-4S (1500-2200 mAh). No LiDAR/Optical Flow.",
     participation: "Individual",
     image: "/Events/Aero-Rush–DroneRacing.webp",
+    eventType: "Flagship",
     registrationLink: "",
     rounds: [
       "Round 1 – Qualifier: Open to all participants. Format: Time-based (Best of 2 attempts, 3 laps each). Pilots fly one at a time. Top 16 qualify. Penalties: Missing flag (+5s), Skipping gate (+10s).",
@@ -123,6 +127,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Godspeed is a high-adrenaline RC car racing competition that challenges participants to design, build, and race Nitro-powered RC cars on technical track featuring sharp turns, dirt obstacles, and racing challenges. The event brings together engineering students and RC enthusiasts to test speed, precision, and vehicle design, promoting motorsport culture and innovation. In collaboration with WD RACING. Use code 'GSCTF25' for 25% early bird discount!",
     participation: "Team/Individual",
     image: "/Events/Godspeed–RCNitroBuggyRace.webp",
+    eventType: "Flagship",
     registrationLink:
       "https://unstop.com/competitions/godspeed-rc-nitro-buggy-race-kurukshetra-2026-anna-university-ceg-guindy-1636399",
     rounds: [
@@ -148,6 +153,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "This quiz is tribute to engineering fraternity, celebrating monumental contributions across various fields of engineering that have driven development of nations. The quiz covers engineering achievements across decades, spanning Civil Engineering, Mechanical Engineering, Automobile Engineering, Electrical Engineering, Electronics Engineering, Aeronautical Engineering, Computer Engineering, and Ocean and Marine Engineering. Also highlights leading corporates with engineering backgrounds, renowned engineers, and PSU contributions.",
     participation: "Team of 3",
     image: "/Events/Brass&BrainsQuiz.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/brass-brains-the-quiz-kurukshetra-2026-anna-university-ceg-tech-forum-1638330",
     rounds: [
@@ -174,6 +180,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Pitch Arena is dynamic marketing competition that tests participants' creativity, strategic thinking, and business acumen through real-world challenges. Teams craft engaging advertisements, solve real-world problems, and pitch innovative strategies before jury, showcasing skills in branding, analysis, communication, and teamwork.",
     participation: "Team of 3-5",
     image: "/Events/PitchArena.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/pitch-arena-kurukshetra-2026-anna-university-ceg-tech-forum-1638130",
     rounds: [
@@ -201,6 +208,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Shark Tank event designed to encourage innovation, entrepreneurial thinking, and presentation skills among participants. This event provides platform for individuals to present business ideas, receive feedback from potential investors, and compete for winning position through structured two-round evaluation.",
     participation: "Individual",
     image: "/Events/SharkTank.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/shark-tank-kurukshetra-2026-anna-university-ceg-guindy-1637945",
     rounds: [
@@ -228,6 +236,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Chess event designed to test participants' adaptability, strategic thinking, and chess understanding through mix of online chess variants and offline traditional chess. Competition begins with large-scale online rounds to shortlist skilled players and concludes with offline round-robin stage to determine final rankings.",
     participation: "Individual",
     image: "/Events/GrandCheckmate–Chess.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/grand-checkmate-chess-kurukshetra-2026-anna-university-ceg-guindy-1637950",
     rounds: [
@@ -260,6 +269,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Team-based drawing competition designed to test creativity, imagination, and coordination under time constraints. First round: teams connect randomly chosen objects through pencil drawings, encouraging spontaneous visual thinking. Second round: theme-based challenge with auction system, adding strategy to creative process. Team members draw individually without interaction for fixed durations, followed by brief collaborative phase.",
     participation: "Team of 2",
     image: "/Events/ArtistryUnlocked-Drawing.webp",
+    eventType: "General",
     registrationLink: "",
     rounds: [
       "Round 1 - Connect with Pencil Drawing: Time 25 minutes. Mode: Team-based pencil drawing. Each team randomly picks two object slips from jar. Teams must creatively connect both objects and draw single illustration. Only pencil drawing allowed (no colors).",
@@ -287,6 +297,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Poster Making Event designed to encourage creativity, visual communication, and critical thinking. Provides platform for students to express ideas, messages, and themes through visually appealing and meaningful posters. Participants compete for winning position through structured two-round evaluation.",
     participation: "Individual",
     image: "/Events/PosterMaking.webp",
+    eventType: "General",
     registrationLink: "",
     rounds: [
       "Round 1 – Concept Clash: All registered participants. Mode: Software-based (Canva, Adobe). Participants design and present creative posters based on self-chosen themes. Poster should convey concept, message, originality, visual appeal, relevance effectively. Evaluation: Creativity and Originality, Message clarity, Innovation, Neatness and Presentation. Top 8 proceed to Round 2.",
@@ -321,6 +332,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "The Viewport challenges digital artists to build world of tomorrow using machinery of past. In this online 3D animation contest, participants use industry-standard tools (Blender, Maya, Unreal Engine, Houdini, C4D) to create stunning video sequence based on Steampunk, Cyberpunk, and Solarpunk themes. Fuel creativity and let rendering begin!",
     participation: "Team of 1-2",
     image: "/Events/TheViewport–3DRendering.webp",
+    eventType: "Online",
     registrationLink:
       "https://unstop.com/competitions/the-viewport-3d-video-rendering-kurukshetra-2026-anna-university-ceg-tech-forum-1634153",
     rounds: [
@@ -345,6 +357,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Neon Wallstreet provides ultimate opportunity to test financial instincts in hyper-realistic, futuristic stock market simulation. Set in neon-drenched digital metropolis, participants start with base amount of Credits (Eddies) to buy and sell stocks. Goal is to maximize profits and build most valuable portfolio. Market is volatile; stock prices dynamically fluctuate based on live News Flashes and updates, simulating corporate takeovers, cyber-hacks, economic shifts. Analyze updates, make split-second decisions, justify logic to rule market.",
     participation: "Individual",
     image: "/Events/NeonWallstreet.webp",
+    eventType: "Online",
     registrationLink:
       "https://unstop.com/competitions/neon-wallstreet-kurukshetra-2026-anna-university-ceg-tech-forum-1634144",
     rounds: [
@@ -373,6 +386,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Robo Soccer is competitive robotics event where teams design and operate soccer-playing robots to compete in fast-paced match on miniature arena. Participants must demonstrate innovation, mechanical design, control systems, and strategic gameplay to outscore opponents. Event emphasizes precision, teamwork, engineering efficiency, and fair play in dynamic and engaging environment.",
     participation: "Team of 3-4",
     image: "/Events/Robosoccer.webp",
+    eventType: "Iconic",
     registrationLink:
       "https://unstop.com/competitions/robosoccer-kurukshetra-2026-anna-university-ceg-guindy-1637940",
     rounds: [
@@ -407,6 +421,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Micromouse is exciting robotics competition where participants design and build autonomous robot capable of navigating maze in shortest possible time. Robot must independently find way from starting point to destination without external control. Participants apply concepts of robotics, embedded systems, sensors, control algorithms, and programming to create efficient maze-solving robot.",
     participation: "Team of 3",
     image: "/Events/Micromouse–MazeSolver.webp",
+    eventType: "Iconic",
     registrationLink:
       "https://unstop.com/competitions/micromouse-maze-solver-kurukshetra-2026-anna-university-ceg-guindy-1636502",
     rounds: [
@@ -438,6 +453,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "PAC BOT is action-packed robotics challenge inspired by classic arcade maze game. Arena consists of one PAC BOT and two GHOST BOTS. Goal of PAC BOT is to navigate maze strategically and avoid being caught, while GHOST BOTS aim to track and tag PAC BOT as quickly as possible. Event tests agility, control precision, and tactical thinking.",
     participation: "Team of 4",
     image: "/Events/PacBot.webp",
+    eventType: "Iconic",
     registrationLink:
       "https://unstop.com/competitions/pac-bot-kurukshetra-2026-anna-university-ceg-tech-forum-1636464",
     rounds: [
@@ -466,6 +482,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Onsite Strategic Programming Challenge (OSPC) is competitive programming event designed to evaluate how participants think, decide, and adapt while solving algorithmic problems. Instead of focusing only on speed and correctness, OSPC emphasizes reasoning, planning, and strategic choices, similar to real-world programming scenarios where requirements change and resources limited.",
     participation: "Team of 2",
     image: "/Events/OSPC–ProgrammingChallenge.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/onsite-strategic-programming-challenge-ospc-kurukshetra-2026-anna-university-ceg-tech-forum-1637918",
     rounds: [
@@ -493,6 +510,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Ultimate Line Tracer is a competitive robotics event where teams design and build autonomous robots capable of accurately following a predefined line track. This event tests precision, sensor calibration, algorithm optimization, and mechanical design to create robots that can navigate complex path layouts efficiently and accurately.",
     participation: "Team of 3",
     image: "/Events/LineTracer.webp",
+    eventType: "Iconic",
     registrationLink:
       "https://unstop.com/competitions/ultimate-line-tracer-kurukshetra-2026-anna-university-ceg-guindy-1633089",
     rounds: [
@@ -516,6 +534,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Robo Rush is an exciting remote-controlled robotic racing event where participants operate high-speed electric bots. The event tests participants' skills in precise control, design, and innovation in robotic racing. Navigate through challenging tracks with sharp turns and obstacles to complete the race in the fastest time.",
     participation: "Team of 2",
     image: "/Events/RoboRush.webp",
+    eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/robo-rush-kurukshetra-2026-anna-university-ceg-guindy-1633067",
     rounds: [
@@ -539,6 +558,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Steam Quest is an online riddle game set in a world of brass gears and steam engines. Participants must pilot their virtual submersible through water levels while solving intricate puzzles and challenges. Use logic, creativity, and problem-solving skills to navigate through the Steampunk-themed underwater world.",
     participation: "Individual",
     image: "/Events/SteamQuest.webp",
+    eventType: "Online",
     registrationLink:
       "https://unstop.com/competitions/steam-quest-kurukshetra-2026-anna-university-ceg-guindy-1634139",
     rounds: [
@@ -562,6 +582,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
       "Netrunner's Gauntlet is a full-scale Vulnerability Assessment challenge. Your mission is to audit the system, expose the flaws, and report the glitches before the system goes critical. This event tests cybersecurity expertise, ethical hacking skills, and the ability to identify and document security vulnerabilities in a competitive environment.",
     participation: "Individual",
     image: "/Events/NetRunnersGauntlet.webp",
+    eventType: "Online",
     registrationLink:
       "https://unstop.com/hackathons/netrunners-gauntlet-capture-the-flag-kurukshetra-2026-anna-university-ceg-tech-forum-1633006",
     rounds: [
@@ -615,7 +636,6 @@ export const EVENTS_CATEGORIES: EventCategoriesRecord = {
       "Artistry Unlocked - Drawing Event",
       "Poster Making",
       "The Viewport – 3D Video Rendering",
-      "Neon Wallstreet",
     ],
   },
   Robotics: {

@@ -202,6 +202,23 @@ export default function Events() {
                     {/* DARK OVERLAY */}
                     <div className="absolute inset-0 bg-black/20" />
 
+                    {/* EVENT TYPE BADGE */}
+                    {event?.eventType && (
+                      <div
+                        className={`absolute top-3 right-3 z-20 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border ${
+                          event.eventType === "Iconic"
+                            ? "bg-pink-500/30 border-pink-400/60 text-pink-200"
+                            : event.eventType === "Flagship"
+                            ? "bg-rose-500/30 border-rose-400/60 text-rose-200"
+                            : event.eventType === "Online"
+                            ? "bg-blue-500/30 border-blue-400/60 text-blue-200"
+                            : "bg-purple-500/30 border-purple-400/60 text-purple-200"
+                        }`}
+                      >
+                        {event.eventType}
+                      </div>
+                    )}
+
                     {/* TITLE */}
                     <div className="relative z-10 w-full h-full flex items-end justify-center p-3">
                       <span className="bg-purple-600 text-white text-sm font-semibold px-5 py-2 rounded-full w-[90%] text-center">

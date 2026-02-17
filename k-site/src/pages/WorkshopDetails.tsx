@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import useFullNavbar from "@/hooks/useFullNavbar";
 import { useParams, useNavigate } from "react-router-dom";
 import { getWorkshopBySlug } from "@/constants/workshopsData";
+import type { Speaker } from "@/constants/workshopsData";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,6 +14,7 @@ import {
   Users,
   Gift,
   Calendar,
+  HandCoins,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { slideInFromLeftStaggered } from "@/lib/animations";
@@ -61,6 +63,73 @@ export default function WorkshopsDetails() {
       </div>
     );
   }
+
+  // Render speakers with logos
+  const renderSpeakers = (content: unknown) => {
+    if (!Array.isArray(content)) return null;
+
+    // Check if it's Speaker objects or strings
+    const speakers = content as (string | Speaker)[];
+    const isSpeaker =
+      speakers.length > 0 &&
+      typeof speakers[0] === "object" &&
+      "logo" in speakers[0];
+
+    if (!isSpeaker) {
+      return renderListWithIcon(
+        speakers.filter((item): item is string => typeof item === "string"),
+        Users
+      );
+    }
+
+    // Filter speaker objects
+    const speakerObjects = speakers.filter(
+      (item): item is Speaker => typeof item === "object" && "logo" in item
+    );
+    const hasSpeakers = speakerObjects.some((s) => s.logo);
+    if (!hasSpeakers) {
+      return (
+        <motion.p
+          className="text-gray-400 italic mt-4"
+          variants={slideInFromLeftStaggered(0.3)}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          TBD
+        </motion.p>
+      );
+    }
+
+    return (
+      <ul className="mt-4 space-y-3">
+        {speakerObjects.map((speaker, index) => (
+          <motion.li
+            key={index}
+            className="flex gap-3 items-center justify-center"
+            variants={slideInFromLeftStaggered(0.3)}
+            initial="hidden"
+            animate="visible"
+            custom={index}
+          >
+            {speaker.logo ? (
+              <div className="w-48 h-48 rounded-lg overflow-hidden bg-gray-700 flex items-center justify-center">
+                <img
+                  src={speaker.logo}
+                  alt="Speaker logo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-48 h-48 rounded-lg bg-gray-700/50 flex items-center justify-center">
+                <Users size={60} className="text-purple-400" />
+              </div>
+            )}
+          </motion.li>
+        ))}
+      </ul>
+    );
+  };
 
   // Render list with icon
   const renderListWithIcon = (
@@ -114,7 +183,10 @@ export default function WorkshopsDetails() {
               animate="visible"
               custom={index}
             >
-              <span className="flex-1 min-w-0" style={{ wordBreak: "break-word" }}>
+              <span
+                className="flex-1 min-w-0"
+                style={{ wordBreak: "break-word" }}
+              >
                 • {item}
               </span>
             </motion.li>
@@ -159,8 +231,12 @@ export default function WorkshopsDetails() {
               >
                 {isLinkable ? (
                   <span className="flex items-center gap-2 min-w-0">
-                    {isPhone && <Phone size={16} className="text-purple-400 shrink-0" />}
-                    {isEmail && <Mail size={16} className="text-purple-400 shrink-0" />}
+                    {isPhone && (
+                      <Phone size={16} className="text-purple-400 shrink-0" />
+                    )}
+                    {isEmail && (
+                      <Mail size={16} className="text-purple-400 shrink-0" />
+                    )}
                     <a
                       href={href}
                       target={isEmail ? "_blank" : undefined}
@@ -185,7 +261,10 @@ export default function WorkshopsDetails() {
 
   // Map section IDs to lucide icons
   const getIconComponent = (sectionId: string) => {
-    const iconMap: Record<string, React.ComponentType<{ size: number; className: string }>> = {
+    const iconMap: Record<
+      string,
+      React.ComponentType<{ size: number; className: string }>
+    > = {
       description: FileText,
       prerequisites: CheckCircle,
       speakers: Users,
@@ -196,12 +275,25 @@ export default function WorkshopsDetails() {
     return iconMap[sectionId] || FileText;
   };
 
-  // Create tabs from sections
-  const tabs = workshop.sections.map((section) => ({
-    key: section.id,
-    name: section.label,
-    icon: getIconComponent(section.id),
-  }));
+  // Create tabs from sections - filter out empty speaker sections
+  const tabs = workshop.sections
+    .filter((section) => {
+      // Hide speakers tab if no speakers
+      if (section.id === "speakers" && Array.isArray(section.content)) {
+        const speakers = section.content as (string | Speaker)[];
+        const speakerObjects = speakers.filter(
+          (item): item is Speaker => typeof item === "object" && "logo" in item
+        );
+        const hasSpeakers = speakerObjects.some((s) => s.logo);
+        if (!hasSpeakers) return false;
+      }
+      return true;
+    })
+    .map((section) => ({
+      key: section.id,
+      name: section.label,
+      icon: getIconComponent(section.id),
+    }));
 
   const activeTab = tabs[activeIndex];
 
@@ -255,23 +347,95 @@ export default function WorkshopsDetails() {
     }
 
     if (sectionId === "contact") {
-      return renderContacts(section.content);
+      if (
+        typeof section.content === "string" ||
+        Array.isArray(section.content)
+      ) {
+        return renderContacts(section.content as string | string[]);
+      }
     }
 
     // Use icons for different section types
     if (Array.isArray(section.content)) {
       if (sectionId === "prerequisites") {
-        return renderListWithIcon(section.content, CheckCircle);
+        // Filter out Speaker objects, only pass strings
+        const items = section.content.filter(
+          (item): item is string => typeof item === "string"
+        );
+        return renderListWithIcon(items, CheckCircle);
       } else if (sectionId === "speakers") {
-        return renderListWithIcon(section.content, Users);
+        return renderSpeakers(section.content);
       } else if (sectionId === "takeaways") {
-        return renderListWithIcon(section.content, Gift);
+        // Filter out Speaker objects, only pass strings
+        const items = section.content.filter(
+          (item): item is string => typeof item === "string"
+        );
+        return renderListWithIcon(items, Gift);
       } else if (sectionId === "schedule") {
-        return renderListWithIcon(section.content, Calendar);
+        const venue =
+          Array.isArray(section.content) && section.content.length > 0
+            ? section.content
+                .filter((item): item is string => typeof item === "string")
+                .join(", ")
+            : null;
+
+        const fee =
+          workshop.fees !== undefined &&
+          workshop.fees !== null &&
+          String(workshop.fees).trim() !== ""
+            ? typeof workshop.fees === "number"
+              ? `₹${workshop.fees}`
+              : workshop.fees
+            : "TBD";
+
+        const date =
+          workshop.date && workshop.date.trim() !== "" ? workshop.date : "TBD";
+
+        const venueText = venue && venue.trim() !== "" ? venue : "TBD";
+
+        const scheduleRows = [
+          { label: "Fee", value: fee, icon: HandCoins },
+          { label: "Date", value: date, icon: Calendar },
+          { label: "Venue", value: venueText, icon: Users },
+        ];
+
+        return (
+          <div className="mt-4 space-y-3 text-sm md:text-base text-gray-300">
+            {scheduleRows.map((row, index) => {
+              const IconComponent = row.icon;
+
+              return (
+                <motion.div
+                  key={row.label}
+                  className="flex items-start gap-2"
+                  variants={slideInFromLeftStaggered(0.3)}
+                  initial="hidden"
+                  animate="visible"
+                  custom={index}
+                >
+                  <IconComponent
+                    size={18}
+                    className="text-purple-400 mt-0.5 shrink-0"
+                  />
+
+                  <span className="font-medium text-purple-300">
+                    {row.label} -
+                  </span>
+
+                  <span className="break-words">{row.value}</span>
+                </motion.div>
+              );
+            })}
+          </div>
+        );
       }
     }
 
-    return renderListContent(section.content);
+    if (typeof section.content === "string" || Array.isArray(section.content)) {
+      return renderListContent(section.content as string | string[]);
+    }
+
+    return null;
   };
 
   const nextTab = () => {
@@ -324,7 +488,9 @@ export default function WorkshopsDetails() {
                               shadow-[0_0_25px_#a855f7]
                               font-semibold tracking-wide text-sm md:text-base"
               >
-                <span className="text-center">{workshop.title.toUpperCase()}</span>
+                <span className="text-center">
+                  {workshop.title.toUpperCase()}
+                </span>
               </div>
             </motion.div>
 
@@ -351,7 +517,12 @@ export default function WorkshopsDetails() {
                       >
                         {(() => {
                           const IconComponent = tab.icon;
-                          return <IconComponent size={16} className="text-purple-300" />;
+                          return (
+                            <IconComponent
+                              size={16}
+                              className="text-purple-300"
+                            />
+                          );
                         })()}
                         {tab.name}
                       </button>

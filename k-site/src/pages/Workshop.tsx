@@ -88,16 +88,15 @@ export default function Workshops() {
             </div>
           </div>
 
-          <div className="relative w-full max-w-6xl h-80 mb-16">
+          <div className="relative w-full max-w-6xl h-80 mb-16" style={{ perspective: "1000px" }}>
             <div
-              className="hidden lg:block lg:w-[42%] absolute top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
+              className="hidden lg:block lg:w-[42%] absolute top-1/2 left-1/2 cursor-pointer"
               onClick={() => setIndex(getLeftIndex())}
               style={{
-                // width: "550px",
-                // height: "360px",
                 transform: "translate(calc(-50% - 400px), -50%) scale(0.85)",
                 opacity: 1,
                 zIndex: 10,
+                transition: "all 1500ms cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div
@@ -140,14 +139,13 @@ export default function Workshops() {
             </div>
 
             <div
-              className="absolute w-full h-full lg:w-[42%] top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
+              className="absolute w-full h-full lg:w-[42%] top-1/2 left-1/2 cursor-pointer"
               onClick={handleCenterCardClick}
               style={{
-                // width: "600px",
-                // height: "380px",
                 transform: "translate(-50%, -50%) scale(1.05)",
                 opacity: 1,
                 zIndex: 20,
+                transition: "all 1500ms cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div
@@ -187,14 +185,13 @@ export default function Workshops() {
             </div>
 
             <div
-              className="hidden lg:block lg:w-[42%] absolute top-1/2 left-1/2 transition-all duration-700 ease-out cursor-pointer"
+              className="hidden lg:block lg:w-[42%] absolute top-1/2 left-1/2 cursor-pointer"
               onClick={() => setIndex(getRightIndex())}
               style={{
-                // width: "550px",
-                // height: "360px",
                 transform: "translate(calc(-50% + 400px), -50%) scale(0.85)",
                 opacity: 1,
                 zIndex: 10,
+                transition: "all 1500ms cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div

@@ -5,11 +5,15 @@ import scIcon from "@/assets/workshop/svgs/shedule 2.svg";
 import spIcon from "@/assets/workshop/svgs/speakers 1.svg";
 import takIcon from "@/assets/workshop/svgs/takeways.svg";
 
+export interface Speaker {
+  logo: string;
+}
+
 export interface WorkshopSection {
   id: string;
   label: string;
   icon: string;
-  content: string[] | string;
+  content: string[] | string | Speaker[];
 }
 
 export interface Workshop {
@@ -51,7 +55,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "7010643624",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/modern-aiml-llms-genai-future-technologies-kurukshetra-2026-anna-university-ceg-tech-forum-1632380",
+      "https://unstop.com/Workshops-webinars/modern-aiml-llms-genai-future-technologies-kurukshetra-2026-anna-university-ceg-tech-forum-1632380",
     sections: [
       {
         id: "description",
@@ -74,7 +78,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Navinesharan S - Workshop Lead"],
+        content: [
+          {
+            logo: "/Workshops/IBM-Logo.jpg",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -143,7 +151,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Janani S - Full Stack Developer"],
+        content: [
+          {
+            logo: "/Workshops/HCL_logo.jpg",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -191,7 +203,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "9944039984",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/ansys-apdl-a-practical-approach-kurukshetra-2026-anna-university-ceg-guindy-1632428",
+      "https://unstop.com/Workshops-webinars/ansys-apdl-a-practical-approach-kurukshetra-2026-anna-university-ceg-guindy-1632428",
     sections: [
       {
         id: "description",
@@ -215,8 +227,9 @@ export const WORKSHOPS_DATA: Workshop[] = [
         label: "Speakers",
         icon: spIcon,
         content: [
-          "Sandiep Lakshman B A - Lead",
-          "Jaya Sree Yadhav B - Co-lead",
+          {
+            logo: "/Workshops/ANSYS.jpg",
+          },
         ],
       },
       {
@@ -265,7 +278,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "7397095005",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/unmanned-aerial-systems-uas-design-build-applications-kurukshetra-2026-anna-university-ceg-guindy-1632748",
+      "https://unstop.com/Workshops-webinars/unmanned-aerial-systems-uas-design-build-applications-kurukshetra-2026-anna-university-ceg-guindy-1632748",
     sections: [
       {
         id: "description",
@@ -288,7 +301,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Kavitha R - Lead", "Eshaanjana S - Co-lead"],
+        content: [
+          {
+            logo: "/Workshops/flytutor_logo.png",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -333,7 +350,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "8220541367",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/fuelscape-hydrogen-fuel-cell-kurukshetra-2026-anna-university-ceg-tech-forum-1632438",
+      "https://unstop.com/Workshops-webinars/fuelscape-hydrogen-fuel-cell-kurukshetra-2026-anna-university-ceg-tech-forum-1632438",
     sections: [
       {
         id: "description",
@@ -356,7 +373,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Naveena Bharathi T - Lead", "Diffrin Benu R - Co-lead"],
+        content: [
+          {
+            logo: "/Workshops/fuel cell ccm_logo.png",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -426,7 +447,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Shruthi N - Workshop Coordinator"],
+        content: [
+          {
+            logo: "/NIOT.png",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -471,7 +496,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "9597469681",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/liveqc-tool-real-time-quality-control-systems-kurukshetra-2026-anna-university-ceg-guindy-1643160",
+      "https://unstop.com/Workshops-webinars/liveqc-tool-real-time-quality-control-systems-kurukshetra-2026-anna-university-ceg-guindy-1643160",
     sections: [
       {
         id: "description",
@@ -494,7 +519,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["R Tharun - Lead Instructor"],
+        content: [
+          {
+            logo: "/Workshops/.jpg",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -561,7 +590,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Anu V P - Lead", "Mohamed Shameer M - Co-lead"],
+        content: [
+          {
+            logo: "/Workshops/Startup.jpg",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -606,7 +639,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "9160219080",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/reverse-engineering-engineering-the-unknown-kurukshetra-2026-anna-university-ceg-guindy-1632435",
+      "https://unstop.com/Workshops-webinars/reverse-engineering-engineering-the-unknown-kurukshetra-2026-anna-university-ceg-guindy-1632435",
     sections: [
       {
         id: "description",
@@ -629,7 +662,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Sivabalan SS - Lead", "Dhivya Bharathi M - Co-lead"],
+        content: [
+          {
+            logo: "/Workshops/ReverseEngineering.jpg",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -673,7 +710,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     rightText: "INTERACTIVE DEVELOPMENT",
     contactPhone: "8122670372",
     contactEmail: "workshop@cegtechforum.in",
-    registrationLink: "",
+    registrationLink: "https://unstop.com/Workshops-webinars/gamesmiths-crafting-interactive-experiences-worldwide-kurukshetra-2026-anna-university-ceg-guindy-1632440",
     sections: [
       {
         id: "description",
@@ -696,7 +733,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Vishnu Dev A R - Lead Instructor"],
+        content: [
+          {
+            logo: "/Workshops/GameSmiths.webp",
+          },
+        ],
       },
       {
         id: "takeaways",
@@ -741,7 +782,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     contactPhone: "9042780835",
     contactEmail: "workshop@cegtechforum.in",
     registrationLink:
-      "https://unstop.com/workshops-webinars/cubecomm-cubesat-antenna-systems-in-action-kurukshetra-2026-anna-university-ceg-tech-forum-1632443",
+      "https://unstop.com/Workshops-webinars/cubecomm-cubesat-antenna-systems-in-action-kurukshetra-2026-anna-university-ceg-tech-forum-1632443",
     sections: [
       {
         id: "description",
@@ -764,7 +805,11 @@ export const WORKSHOPS_DATA: Workshop[] = [
         id: "speakers",
         label: "Speakers",
         icon: spIcon,
-        content: ["Sadhana S - Workshop Lead"],
+        content: [
+          {
+            logo: "/Workshops/CubeComm.jpg",
+          },
+        ],
       },
       {
         id: "takeaways",

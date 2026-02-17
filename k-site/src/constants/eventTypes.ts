@@ -68,6 +68,7 @@ export interface EventDetail {
   prize: string[];
   schedule: string[];
   contact: string[];
+  eventType?: "General" | "Iconic" | "Flagship" | "Online";
 }
 export type EventDetailsRecord = Record<string, EventDetail>;
 export interface EventCategory {
