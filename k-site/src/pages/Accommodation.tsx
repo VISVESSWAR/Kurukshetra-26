@@ -53,7 +53,7 @@ export default function Accommodation() {
     >
       {/* Animated background gradients */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-violet-900/10 via-transparent to-purple-900/10"
+        className="absolute inset-0 bg-linear-to-br from-violet-900/10 via-transparent to-purple-900/10"
         animate={breathe}
       />
       <motion.div
@@ -94,7 +94,7 @@ export default function Accommodation() {
         >
           {/* Inner animated background */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-purple-500/5 pointer-events-none"
+            className="absolute inset-0 bg-linear-to-br from-violet-500/5 via-transparent to-purple-500/5 pointer-events-none"
             animate={breathe}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">

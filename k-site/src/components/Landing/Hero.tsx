@@ -27,7 +27,7 @@ export default function Hero() {
     >
       {/* Animated background gradients */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-fuchsia-900/20"
+        className="absolute inset-0 bg-linear-to-br from-purple-900/20 via-transparent to-fuchsia-900/20"
         animate={breathe}
       />
       <motion.div

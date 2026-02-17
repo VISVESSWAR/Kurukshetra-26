@@ -6,6 +6,7 @@ import {
   parseContact,
   getContactHref,
   isLinkableContact,
+  extractPhoneNumber,
 } from "@/lib/contactUtils";
 import {
   FileText,
@@ -114,24 +115,48 @@ export default function EventsNew() {
         const isLinkable = isLinkableContact(parsed);
         const href = isLinkable ? getContactHref(parsed) : "#";
 
-        const content = isLinkable ? (
-          <span className="flex items-center gap-2 min-w-0">
-            {parsed.type === "phone" && <Phone size={16} className="text-purple-400 shrink-0" />}
-            {parsed.type === "email" && <Mail size={16} className="text-purple-400 shrink-0" />}
-            <a
-              href={href}
-              target={parsed.type === "email" ? "_blank" : undefined}
-              rel={parsed.type === "email" ? "noopener noreferrer" : undefined}
-              className="text-purple-400 hover:text-purple-300 hover:underline transition min-w-0"
-            >
+        let content;
+        if (isLinkable) {
+          if (parsed.type === "phone") {
+            // Extract just the phone number to underline
+            const phoneNumber = extractPhoneNumber(parsed.displayText);
+            const namePart = phoneNumber ? parsed.displayText.replace(phoneNumber, "").trim() : parsed.displayText;
+            
+            content = (
+              <span className="flex items-center gap-2 min-w-0">
+                <Phone size={16} className="text-purple-400 shrink-0" />
+                <a
+                  href={href}
+                  className="text-purple-400 hover:text-purple-300 transition min-w-0 flex items-center gap-1"
+                >
+                  <span>{namePart}</span>
+                  {phoneNumber && <u className="text-purple-400">{phoneNumber}</u>}
+                </a>
+              </span>
+            );
+          } else {
+            // Email - underline entire email
+            content = (
+              <span className="flex items-center gap-2 min-w-0">
+                <Mail size={16} className="text-purple-400 shrink-0" />
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-purple-400 hover:text-purple-300 hover:underline transition min-w-0"
+                >
+                  {parsed.displayText}
+                </a>
+              </span>
+            );
+          }
+        } else {
+          content = (
+            <span className="min-w-0" style={{ wordBreak: "break-word" }}>
               {parsed.displayText}
-            </a>
-          </span>
-        ) : (
-          <span className="min-w-0" style={{ wordBreak: "break-word" }}>
-            {parsed.displayText}
-          </span>
-        );
+            </span>
+          );
+        }
 
         return (
           <motion.li

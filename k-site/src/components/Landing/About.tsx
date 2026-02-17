@@ -69,7 +69,7 @@ export default function About() {
             <article className="relative w-full rounded-xl lg:p-12 p-6 bg-white/5 border border-white/50 backdrop-blur-xs overflow-hidden">
               {/* Animated background gradient */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-fuchsia-500/5 pointer-events-none"
+                className="absolute inset-0 bg-linear-to-br from-purple-500/5 via-transparent to-fuchsia-500/5 pointer-events-none"
                 animate={breathe}
               />
 

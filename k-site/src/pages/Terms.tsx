@@ -83,7 +83,7 @@ export default function Terms() {
     >
       {/* Animated background gradients */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-fuchsia-900/10 pointer-events-none"
+        className="absolute inset-0 bg-linear-to-br from-purple-900/10 via-transparent to-fuchsia-900/10 pointer-events-none"
         animate={breathe}
       />
       <motion.div

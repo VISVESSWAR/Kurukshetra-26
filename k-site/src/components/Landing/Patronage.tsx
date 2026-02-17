@@ -86,7 +86,7 @@ export default function Patronage() {
             >
               {/* Animated background gradient */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-fuchsia-600/10 pointer-events-none"
+                className="absolute inset-0 bg-linear-to-br from-purple-600/10 via-transparent to-fuchsia-600/10 pointer-events-none"
                 animate={breathe}
               />
 

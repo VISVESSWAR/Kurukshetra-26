@@ -108,7 +108,7 @@ const Contact = () => {
     >
       {/* Animated background gradients */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-fuchsia-900/10"
+        className="absolute inset-0 bg-linear-to-br from-purple-900/10 via-transparent to-fuchsia-900/10"
         animate={breathe}
       />
       <motion.div
@@ -132,7 +132,7 @@ const Contact = () => {
         >
           {/* Inner animated background */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-fuchsia-500/5 pointer-events-none"
+            className="absolute inset-0 bg-linear-to-br from-purple-500/5 via-transparent to-fuchsia-500/5 pointer-events-none"
             animate={breathe}
           />
           <div className="flex flex-col gap-4 h-full relative z-10">
@@ -261,7 +261,7 @@ const Contact = () => {
         >
           {/* Inner animated background */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-purple-500/5 pointer-events-none"
+            className="absolute inset-0 bg-linear-to-br from-fuchsia-500/5 via-transparent to-purple-500/5 pointer-events-none"
             animate={breathe}
           />
           <motion.div

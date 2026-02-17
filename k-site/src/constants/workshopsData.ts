@@ -111,80 +111,80 @@ export const WORKSHOPS_DATA: Workshop[] = [
       },
     ],
   },
-  {
-    id: "full-stack",
-    slug: "full-stack",
-    title: "Full Stack Development: From Interface to Infrastructure",
-    subtitle: "Build complete web applications",
-    description:
-      "Build scalable full-stack systems with modern tools. Learn React, Node.js, databases, and deployment strategies.",
-    image: "/Workshops/FullStack.webp",
-    participants: "Individual",
-    date: "March 7, 2026",
-    days: 1,
-    dayLabel: "SAT",
-    fees: 599,
-    leftText: "FRONTEND DEVELOPMENT",
-    rightText: "BACKEND & DEPLOYMENT",
-    contactPhone: "8870976210",
-    contactEmail: "workshop@cegtechforum.in",
-    registrationLink: "",
-    sections: [
-      {
-        id: "description",
-        label: "Description",
-        icon: descIcon,
-        content:
-          "Comprehensive full-stack development workshop. Learn React for frontend, Node.js for backend, database design, authentication, and deployment strategies.",
-      },
-      {
-        id: "prerequisites",
-        label: "Prerequisites",
-        icon: preIcon,
-        content: [
-          "JavaScript fundamentals",
-          "HTML/CSS basics",
-          "Laptop with Node.js",
-        ],
-      },
-      {
-        id: "speakers",
-        label: "Speakers",
-        icon: spIcon,
-        content: [
-          {
-            logo: "/Workshops/HCL_logo.jpg",
-          },
-        ],
-      },
-      {
-        id: "takeaways",
-        label: "Takeaways",
-        icon: takIcon,
-        content: [
-          "Full-stack project",
-          "Deployment knowledge",
-          "Best practices",
-          "Certificate",
-        ],
-      },
-      {
-        id: "schedule",
-        label: "Schedule",
-        icon: scIcon,
-        content: [
-          "Ramanujan Hall, Mathematics Department",
-          "Hall of Guines, Mechanical Department",
-        ],
-      },
-      {
-        id: "contact",
-        label: "Contact",
-        icon: conIcon,
-        content: ["Janani S: 8870976210"],
-      },
-    ],
-  },
+  // {
+  //   id: "full-stack",
+  //   slug: "full-stack",
+  //   title: "Full Stack Development: From Interface to Infrastructure",
+  //   subtitle: "Build complete web applications",
+  //   description:
+  //     "Build scalable full-stack systems with modern tools. Learn React, Node.js, databases, and deployment strategies.",
+  //   image: "/Workshops/FullStack.webp",
+  //   participants: "Individual",
+  //   date: "March 7, 2026",
+  //   days: 1,
+  //   dayLabel: "SAT",
+  //   fees: 599,
+  //   leftText: "FRONTEND DEVELOPMENT",
+  //   rightText: "BACKEND & DEPLOYMENT",
+  //   contactPhone: "8870976210",
+  //   contactEmail: "workshop@cegtechforum.in",
+  //   registrationLink: "",
+  //   sections: [
+  //     {
+  //       id: "description",
+  //       label: "Description",
+  //       icon: descIcon,
+  //       content:
+  //         "Comprehensive full-stack development workshop. Learn React for frontend, Node.js for backend, database design, authentication, and deployment strategies.",
+  //     },
+  //     {
+  //       id: "prerequisites",
+  //       label: "Prerequisites",
+  //       icon: preIcon,
+  //       content: [
+  //         "JavaScript fundamentals",
+  //         "HTML/CSS basics",
+  //         "Laptop with Node.js",
+  //       ],
+  //     },
+  //     {
+  //       id: "speakers",
+  //       label: "Speakers",
+  //       icon: spIcon,
+  //       content: [
+  //         {
+  //           logo: "/Workshops/HCL_logo.jpg",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       id: "takeaways",
+  //       label: "Takeaways",
+  //       icon: takIcon,
+  //       content: [
+  //         "Full-stack project",
+  //         "Deployment knowledge",
+  //         "Best practices",
+  //         "Certificate",
+  //       ],
+  //     },
+  //     {
+  //       id: "schedule",
+  //       label: "Schedule",
+  //       icon: scIcon,
+  //       content: [
+  //         "Ramanujan Hall, Mathematics Department",
+  //         "Hall of Guines, Mechanical Department",
+  //       ],
+  //     },
+  //     {
+  //       id: "contact",
+  //       label: "Contact",
+  //       icon: conIcon,
+  //       content: ["Janani S: 8870976210"],
+  //     },
+  //   ],
+  // },
   {
     id: "ansys-apdl",
     slug: "ansys-apdl",
@@ -407,77 +407,77 @@ export const WORKSHOPS_DATA: Workshop[] = [
       },
     ],
   },
-  {
-    id: "niot",
-    slug: "niot",
-    title: "NIOT",
-    subtitle: "National Institute of Ocean Technology",
-    description:
-      "Advanced marine and oceanographic technologies workshop with industry applications.",
-    image: "/Workshops/NIOT.webp",
-    participants: "Individual",
-    date: "March 8-9, 2026",
-    days: 2,
-    dayLabel: "SUN-MON",
-    fees: 699,
-    leftText: "MARINE TECHNOLOGY",
-    rightText: "OCEAN APPLICATIONS",
-    contactPhone: "6369197954",
-    contactEmail: "workshop@cegtechforum.in",
-    registrationLink: "",
-    sections: [
-      {
-        id: "description",
-        label: "Description",
-        icon: descIcon,
-        content:
-          "NIOT workshop covering advanced marine and oceanographic technologies, offshore engineering, and ocean resource management.",
-      },
-      {
-        id: "prerequisites",
-        label: "Prerequisites",
-        icon: preIcon,
-        content: [
-          "Engineering fundamentals",
-          "Interest in marine technology",
-          "Technical aptitude",
-        ],
-      },
-      {
-        id: "speakers",
-        label: "Speakers",
-        icon: spIcon,
-        content: [
-          {
-            logo: "/NIOT.png",
-          },
-        ],
-      },
-      {
-        id: "takeaways",
-        label: "Takeaways",
-        icon: takIcon,
-        content: [
-          "Marine technology insights",
-          "Industry exposure",
-          "Research opportunities",
-          "Certificate",
-        ],
-      },
-      {
-        id: "schedule",
-        label: "Schedule",
-        icon: scIcon,
-        content: ["TBD"],
-      },
-      {
-        id: "contact",
-        label: "Contact",
-        icon: conIcon,
-        content: ["Shruthi N: 6369197954"],
-      },
-    ],
-  },
+  // {
+  //   id: "niot",
+  //   slug: "niot",
+  //   title: "NIOT",
+  //   subtitle: "National Institute of Ocean Technology",
+  //   description:
+  //     "Advanced marine and oceanographic technologies workshop with industry applications.",
+  //   image: "/Workshops/NIOT.webp",
+  //   participants: "Individual",
+  //   date: "March 8-9, 2026",
+  //   days: 2,
+  //   dayLabel: "SUN-MON",
+  //   fees: 699,
+  //   leftText: "MARINE TECHNOLOGY",
+  //   rightText: "OCEAN APPLICATIONS",
+  //   contactPhone: "6369197954",
+  //   contactEmail: "workshop@cegtechforum.in",
+  //   registrationLink: "",
+  //   sections: [
+  //     {
+  //       id: "description",
+  //       label: "Description",
+  //       icon: descIcon,
+  //       content:
+  //         "NIOT workshop covering advanced marine and oceanographic technologies, offshore engineering, and ocean resource management.",
+  //     },
+  //     {
+  //       id: "prerequisites",
+  //       label: "Prerequisites",
+  //       icon: preIcon,
+  //       content: [
+  //         "Engineering fundamentals",
+  //         "Interest in marine technology",
+  //         "Technical aptitude",
+  //       ],
+  //     },
+  //     {
+  //       id: "speakers",
+  //       label: "Speakers",
+  //       icon: spIcon,
+  //       content: [
+  //         {
+  //           logo: "/NIOT.png",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       id: "takeaways",
+  //       label: "Takeaways",
+  //       icon: takIcon,
+  //       content: [
+  //         "Marine technology insights",
+  //         "Industry exposure",
+  //         "Research opportunities",
+  //         "Certificate",
+  //       ],
+  //     },
+  //     {
+  //       id: "schedule",
+  //       label: "Schedule",
+  //       icon: scIcon,
+  //       content: ["TBD"],
+  //     },
+  //     {
+  //       id: "contact",
+  //       label: "Contact",
+  //       icon: conIcon,
+  //       content: ["Shruthi N: 6369197954"],
+  //     },
+  //   ],
+  // },
   {
     id: "live-qc",
     slug: "live-qc",
@@ -550,77 +550,77 @@ export const WORKSHOPS_DATA: Workshop[] = [
       },
     ],
   },
-  {
-    id: "startup",
-    slug: "startup",
-    title: "Startup",
-    subtitle: "Entrepreneurship and business development",
-    description:
-      "Entrepreneurship and startup ecosystem workshop with industry experts and business mentorship.",
-    image: "/Workshops/Startup.webp",
-    participants: "Individual",
-    date: "March 9, 2026",
-    days: 1,
-    dayLabel: "SUN",
-    fees: 549,
-    leftText: "STARTUP ECOSYSTEM",
-    rightText: "BUSINESS STRATEGY",
-    contactPhone: "9566238699",
-    contactEmail: "workshop@cegtechforum.in",
-    registrationLink: "",
-    sections: [
-      {
-        id: "description",
-        label: "Description",
-        icon: descIcon,
-        content:
-          "Startup workshop covering entrepreneurship fundamentals, business planning, funding strategies, and real-world startup experiences.",
-      },
-      {
-        id: "prerequisites",
-        label: "Prerequisites",
-        icon: preIcon,
-        content: [
-          "Business acumen",
-          "Entrepreneurial spirit",
-          "Problem-solving mindset",
-        ],
-      },
-      {
-        id: "speakers",
-        label: "Speakers",
-        icon: spIcon,
-        content: [
-          {
-            logo: "/Workshops/Startup.jpg",
-          },
-        ],
-      },
-      {
-        id: "takeaways",
-        label: "Takeaways",
-        icon: takIcon,
-        content: [
-          "Business planning skills",
-          "Fundraising knowledge",
-          "Mentorship access",
-          "Certificate",
-        ],
-      },
-      {
-        id: "schedule",
-        label: "Schedule",
-        icon: scIcon,
-        content: ["Seminar Hall, Power System, EEE Department"],
-      },
-      {
-        id: "contact",
-        label: "Contact",
-        icon: conIcon,
-        content: ["Anu V P: 9566238699", "Mohamed Shameer M: 6380652935"],
-      },
-    ],
-  },
+  // {
+  //   id: "startup",
+  //   slug: "startup",
+  //   title: "Startup",
+  //   subtitle: "Entrepreneurship and business development",
+  //   description:
+  //     "Entrepreneurship and startup ecosystem workshop with industry experts and business mentorship.",
+  //   image: "/Workshops/Startup.webp",
+  //   participants: "Individual",
+  //   date: "March 9, 2026",
+  //   days: 1,
+  //   dayLabel: "SUN",
+  //   fees: 549,
+  //   leftText: "STARTUP ECOSYSTEM",
+  //   rightText: "BUSINESS STRATEGY",
+  //   contactPhone: "9566238699",
+  //   contactEmail: "workshop@cegtechforum.in",
+  //   registrationLink: "",
+  //   sections: [
+  //     {
+  //       id: "description",
+  //       label: "Description",
+  //       icon: descIcon,
+  //       content:
+  //         "Startup workshop covering entrepreneurship fundamentals, business planning, funding strategies, and real-world startup experiences.",
+  //     },
+  //     {
+  //       id: "prerequisites",
+  //       label: "Prerequisites",
+  //       icon: preIcon,
+  //       content: [
+  //         "Business acumen",
+  //         "Entrepreneurial spirit",
+  //         "Problem-solving mindset",
+  //       ],
+  //     },
+  //     {
+  //       id: "speakers",
+  //       label: "Speakers",
+  //       icon: spIcon,
+  //       content: [
+  //         {
+  //           logo: "/Workshops/Startup.jpg",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       id: "takeaways",
+  //       label: "Takeaways",
+  //       icon: takIcon,
+  //       content: [
+  //         "Business planning skills",
+  //         "Fundraising knowledge",
+  //         "Mentorship access",
+  //         "Certificate",
+  //       ],
+  //     },
+  //     {
+  //       id: "schedule",
+  //       label: "Schedule",
+  //       icon: scIcon,
+  //       content: ["Seminar Hall, Power System, EEE Department"],
+  //     },
+  //     {
+  //       id: "contact",
+  //       label: "Contact",
+  //       icon: conIcon,
+  //       content: ["Anu V P: 9566238699", "Mohamed Shameer M: 6380652935"],
+  //     },
+  //   ],
+  // },
   {
     id: "reverse-engineering",
     slug: "reverse-engineering",
@@ -710,7 +710,8 @@ export const WORKSHOPS_DATA: Workshop[] = [
     rightText: "INTERACTIVE DEVELOPMENT",
     contactPhone: "8122670372",
     contactEmail: "workshop@cegtechforum.in",
-    registrationLink: "https://unstop.com/Workshops-webinars/gamesmiths-crafting-interactive-experiences-worldwide-kurukshetra-2026-anna-university-ceg-guindy-1632440",
+    registrationLink:
+      "https://unstop.com/Workshops-webinars/gamesmiths-crafting-interactive-experiences-worldwide-kurukshetra-2026-anna-university-ceg-guindy-1632440",
     sections: [
       {
         id: "description",
@@ -771,7 +772,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     subtitle: "Satellite systems and communications",
     description:
       "Explore CubeSat technology and antenna systems design with practical demonstrations.",
-    image: "/Workshops/CubeComm.webp",
+    image: "/Workshops/Cubecomm.webp",
     participants: "Individual",
     date: "March 9, 2026",
     days: 1,

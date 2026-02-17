@@ -29,14 +29,14 @@ const sponsors: Sponsor[] = [
     src: NIOT,
     alt: "NIOT",
     url: "https://www.niot.res.in",
-    title: "Co Sponsor",
+    title: "Title Sponsor",
     desc: "The National Institute of Ocean Technology (NIOT) is an autonomous organization under the Ministry of Earth Sciences, Government of India, established in 1993 and headquartered in Chennai. It focuses on developing indigenous technologies for ocean exploration, deep-sea mining, underwater vehicles, desalination, marine renewable energy, and coastal protection. NIOT plays a vital role in advancing India’s ocean research and supports the country’s Deep Ocean Mission.",
   },
   {
     src: ShankarIAS,
     alt: "ShankarIAS",
     url: "https://www.shankariasacademy.com",
-    title: "Associate Sponsor",
+    title: "Education Sponsor",
   },
   {
     src: Zentropy,
@@ -65,7 +65,7 @@ export default function Sponsors() {
     >
       {/* Animated background gradients */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-fuchsia-900/10"
+        className="absolute inset-0 bg-linear-to-br from-purple-900/10 via-transparent to-fuchsia-900/10"
         animate={breathe}
       />
       <motion.div
@@ -123,7 +123,7 @@ export default function Sponsors() {
                 <div className="relative bg-white/10 backdrop-blur-[5px] border border-white/20 h-80 flex flex-col items-center justify-center overflow-hidden rounded-xl">
                   {/* Animated background */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-fuchsia-500/5 pointer-events-none"
+                    className="absolute inset-0 bg-linear-to-br from-purple-500/5 via-transparent to-fuchsia-500/5 pointer-events-none"
                     animate={breathe}
                   />
                   {/* TITLE */}

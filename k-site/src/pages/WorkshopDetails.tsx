@@ -3,6 +3,7 @@ import useFullNavbar from "@/hooks/useFullNavbar";
 import { useParams, useNavigate } from "react-router-dom";
 import { getWorkshopBySlug } from "@/constants/workshopsData";
 import type { Speaker } from "@/constants/workshopsData";
+import { extractPhoneNumber, parseContact, isLinkableContact, getContactHref } from "@/lib/contactUtils";
 import {
   ChevronLeft,
   ChevronRight,
@@ -206,19 +207,52 @@ export default function WorkshopsDetails() {
       return (
         <ul className="mt-4 text-gray-300 space-y-2 text-sm md:text-base overflow-x-hidden lg:text-left text-justify">
           {content.map((item, index) => {
-            // Check if it's a phone number or email
-            const isPhone = item.includes(workshop.contactPhone);
-            const isEmail = item.includes(workshop.contactEmail);
+            const parsed = parseContact(item);
+            const isLinkable = isLinkableContact(parsed);
+            const href = isLinkable ? getContactHref(parsed) : "#";
 
-            let href = "#";
-            if (isPhone) {
-              href = `tel:${workshop.contactPhone}`;
-            } else if (isEmail) {
-              href = `mailto:${workshop.contactEmail}`;
+            let contactContent;
+            if (isLinkable) {
+              if (parsed.type === "phone") {
+                // Extract just the phone number to underline
+                const phoneNumber = extractPhoneNumber(parsed.displayText);
+                const namePart = phoneNumber ? parsed.displayText.replace(phoneNumber, "").trim() : parsed.displayText;
+                
+                contactContent = (
+                  <span className="flex items-center gap-2 min-w-0">
+                    <Phone size={16} className="text-purple-400 shrink-0" />
+                    <a
+                      href={href}
+                      className="text-purple-400 hover:text-purple-300 transition min-w-0 flex items-center gap-1"
+                    >
+                      <span>{namePart}</span>
+                      {phoneNumber && <u className="text-purple-400">{phoneNumber}</u>}
+                    </a>
+                  </span>
+                );
+              } else {
+                // Email - underline entire email
+                contactContent = (
+                  <span className="flex items-center gap-2 min-w-0">
+                    <Mail size={16} className="text-purple-400 shrink-0" />
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-400 hover:text-purple-300 hover:underline transition min-w-0"
+                    >
+                      {parsed.displayText}
+                    </a>
+                  </span>
+                );
+              }
+            } else {
+              contactContent = (
+                <span className="min-w-0" style={{ wordBreak: "break-word" }}>
+                  {parsed.displayText}
+                </span>
+              );
             }
-
-            const isLinkable = isPhone || isEmail;
-            const displayText = item;
 
             return (
               <motion.li
@@ -229,28 +263,7 @@ export default function WorkshopsDetails() {
                 animate="visible"
                 custom={index}
               >
-                {isLinkable ? (
-                  <span className="flex items-center gap-2 min-w-0">
-                    {isPhone && (
-                      <Phone size={16} className="text-purple-400 shrink-0" />
-                    )}
-                    {isEmail && (
-                      <Mail size={16} className="text-purple-400 shrink-0" />
-                    )}
-                    <a
-                      href={href}
-                      target={isEmail ? "_blank" : undefined}
-                      rel={isEmail ? "noopener noreferrer" : undefined}
-                      className="text-purple-400 hover:text-purple-300 hover:underline transition min-w-0"
-                    >
-                      {displayText}
-                    </a>
-                  </span>
-                ) : (
-                  <span className="min-w-0" style={{ wordBreak: "break-word" }}>
-                    {displayText}
-                  </span>
-                )}
+                {contactContent}
               </motion.li>
             );
           })}

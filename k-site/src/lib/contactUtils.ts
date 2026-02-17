@@ -61,3 +61,11 @@ export function getContactHref(parsed: ParsedContact): string {
 export function isLinkableContact(parsed: ParsedContact): boolean {
   return parsed.type === 'phone' || parsed.type === 'email';
 }
+
+/**
+ * Extract phone number from contact string
+ */
+export function extractPhoneNumber(contact: string): string | null {
+  const match = contact.match(/[\d\s\-+()]+/);
+  return match ? match[0].trim() : null;
+}

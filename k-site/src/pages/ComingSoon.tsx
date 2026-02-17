@@ -23,7 +23,7 @@ export default function ComingSoon() {
     >
       {/* Animated background gradients */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-fuchsia-900/10 via-transparent to-cyan-900/10 pointer-events-none"
+        className="absolute inset-0 bg-linear-to-br from-fuchsia-900/10 via-transparent to-cyan-900/10 pointer-events-none"
         animate={breathe}
       />
       <motion.div

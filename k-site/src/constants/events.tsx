@@ -101,7 +101,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     participation: "Individual",
     image: "/Events/Aero-Rush–DroneRacing.webp",
     eventType: "Flagship",
-    registrationLink: "",
+    registrationLink: "https://unstop.com/competitions/aero-rush-drone-racing-kurukshetra-2026-anna-university-ceg-guindy-1636578",
     rounds: [
       "Round 1 – Qualifier: Open to all participants. Format: Time-based (Best of 2 attempts, 3 laps each). Pilots fly one at a time. Top 16 qualify. Penalties: Missing flag (+5s), Skipping gate (+10s).",
       "Round 2 – Final: Top 16 divided into groups of 4. Format: 1 attempt, 3 laps. Fastest timings decide top 3. Penalties: Missing flag (+10s), Missing gate (+15s).",
@@ -270,7 +270,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     participation: "Team of 2",
     image: "/Events/ArtistryUnlocked-Drawing.webp",
     eventType: "General",
-    registrationLink: "",
+    registrationLink: "https://unstop.com/competitions/artistry-unlocked-drawing-event-kurukshetra-2026-anna-university-ceg-guindy-1637935",
     rounds: [
       "Round 1 - Connect with Pencil Drawing: Time 25 minutes. Mode: Team-based pencil drawing. Each team randomly picks two object slips from jar. Teams must creatively connect both objects and draw single illustration. Only pencil drawing allowed (no colors).",
       "Round 2 - Bid, Draw, Collaborate: Total teams 10. Each team allotted 50 points initially. 7 themes displayed. Auction: Base price 30 points. Highest bidder wins theme. Teams without theme receive random theme at 40 points. Drawing: Remaining points converted to extra time. Conversion: 1 point = 1 extra minute. Base time: 50 minutes. One member draws 10 minutes. Other waits separately. Last 5 minutes: both draw together.",
@@ -298,7 +298,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     participation: "Individual",
     image: "/Events/PosterMaking.webp",
     eventType: "General",
-    registrationLink: "",
+    registrationLink: "https://unstop.com/competitions/poster-making-kurukshetra-2026-anna-university-ceg-guindy-1637932",
     rounds: [
       "Round 1 – Concept Clash: All registered participants. Mode: Software-based (Canva, Adobe). Participants design and present creative posters based on self-chosen themes. Poster should convey concept, message, originality, visual appeal, relevance effectively. Evaluation: Creativity and Originality, Message clarity, Innovation, Neatness and Presentation. Top 8 proceed to Round 2.",
       "Round 2 – Decode and Design (Final): 8 participants. Mode: Software-based (Canva, Adobe).Design poster based on given theme, effectively conveying message using creative visuals, colours, minimal text. Evaluation: Adherence to topic, Design accuracy and completeness, Time management, Technical accuracy. Winners: Winner, Runner-up, Second Runner-up.",
@@ -600,6 +600,158 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     schedule: ["March 1-10, 2026 - Online"],
     contact: ["TBD"],
   },
+  "Paper Presentation": {
+    title: "Paper Presentation",
+    description:
+      "The Paper Presentation event provides a platform for participants to present their research work, innovative ideas, or technical solutions on a chosen topic. This event encourages intellectual exchange, creativity, and critical thinking by allowing participants to transform complex ideas into clear, impactful presentations.",
+    participation: "Team of 2",
+    image: "/Events/PaperPresentation.webp",
+    eventType: "Iconic",
+    registrationLink: "",
+    rounds: [
+      "Round 1 - Abstract Submission: This round focuses on assessing the originality, clarity, and relevance of the proposed idea or research work. Each team must submit an abstract (maximum 500 words). The abstract should include Problem statement, Objective, Methodology, Key findings, and Potential impact.",
+      "Round 2 - Presentation Round: Shortlisted teams will deliver a live presentation before a panel of judges. Presentation Time: 10 minutes. Question & Answer Session: 5 minutes. Presentation should cover Introduction, Problem definition, Methodology, Results, and Conclusion.",
+    ],
+    rules: [
+      "A team may consist of a maximum of 2 participants.",
+      "Participants must submit their abstract, full paper, and PPT via email.",
+      "Participants from different institutions may form a team.",
+      "Use of pre-made templates is allowed, but plagiarism will lead to disqualification.",
+      "The presentation must be prepared in English.",
+      "Maximum number of slides: 30.",
+    ],
+    prize: ["Prize Pool: 30000 INR", "Entry Fee: TBD"],
+    schedule: [
+      "Round 2 - Presentation Round: March 8, 2026, TBD - TBD",
+    ],
+    contact: [
+      "Sri Aishwarya M - 8825775704",
+      "Makikishore - 9003846533",
+      "Yuvika V - 8778343723",
+    ],
+  },
+  "The Gaia Protocol": {
+    title: "The Gaia Protocol",
+    description:
+      "The Gaia Protocol challenges participants to use AI and machine learning to solve real-world sustainability problems. Given an environmental or resource based dataset, competitors must build and optimize predictive or classification models. The contest evaluates data understanding, feature engineering, and model performance—not just coding skills.",
+    participation: "Team of 3",
+    image: "/Events/GaiaProtocol.webp",
+    eventType: "Online",
+    registrationLink: "",
+    rounds: [
+      "Data Analysis: Participants clean and visualize the provided data.",
+      "Model Building: Teams build ML models to solve the specific classification or regression task.",
+      "Optimization: Tuning hyperparameters to improve accuracy/F1 score.",
+      "Submission: Teams submit their predictions (CSV file) and their Notebook (code) for evaluation.",
+    ],
+    rules: [
+      "Open to all students. Teams must not exceed 3 members.",
+      "Plagiarism of code or using pre-trained models (unless explicitly allowed) is strictly prohibited.",
+      "All solutions must be submitted via the designated Kaggle competition page before the deadline.",
+      "Participants are free to use Python, R, or any standard ML libraries.",
+      "The leaderboard ranking will be automated based on a specific metric.",
+    ],
+    prize: ["Prize Pool: 10000 INR", "Entry Fee: Free"],
+    schedule: [
+      "Event Duration: Feb 24 - March 3, 2026 - Online on Kaggle",
+    ],
+    contact: [
+      "Lakshmi Praba R - 9025394304",
+      "Purushothaman S - 9487022210",
+      "Vijay K G - 8438938916",
+    ],
+  },
+  "Design Decathlon": {
+    title: "Design Decathlon",
+    description:
+      "The Revit–MEP BIM Design Hackathon is a one-day intensive technical competition focused on Building Information Modeling (BIM) for Mechanical, Electrical, and Plumbing (MEP) systems. The event integrates Autodesk Revit as the core platform, with mechanical component innovation using Autodesk Fusion 360. The hackathon aims to bridge academia and industry by promoting practical BIM workflows, interdisciplinary coordination, and digital construction innovation.",
+    participation: "Team of 3-5",
+    image: "/Events/DesignDecathlon.webp",
+    eventType: "Iconic",
+    registrationLink: "",
+    rounds: [
+      "Competition Structure: 8-hour live BIM modelling marathon. Participants will work on a problem statement released on the day of the event. Evaluation based on BIM modelling accuracy, Innovation & sustainability, System coordination, Standards in Design, and Feasibility & presentation.",
+    ],
+    rules: [
+      "Team Size: 3 to 5 members.",
+      "Target Participants: Civil Engineering, Architecture, Mechanical Engineering Students, Construction Management & BIM Professionals.",
+      "Participants must use Autodesk Revit and Fusion 360.",
+      "Submission deadline is strictly enforced.",
+      "Jury evaluation will be final.",
+    ],
+    prize: ["Prize Pool: 56000 INR", "Entry Fee: TBD"],
+    schedule: [
+      "Competition Day: March 4, 2026, 09:30 AM - 08:00 PM - TBD",
+    ],
+    contact: [
+      "Purushothaman S - 9487022210",
+      "Vijay K G - 8438938916",
+      "Lakshmi Praba S - 9025394304",
+    ],
+  },
+  "Byte Bash": {
+    title: "Byte Bash",
+    description:
+      "An event consisting of a dynamic blend of challenges encompassing DBMS, Operating Systems, Computer Architecture, Data Structures, Web Development and Mini Hackathon.",
+    participation: "Team of 2-3",
+    image: "/Events/ByteBash.webp",
+    eventType: "Iconic",
+    registrationLink: "",
+    rounds: [
+      "Round 1 - Pen Paper Test: This is a pen and paper round consisting of 40 questions split into 3 sections (Sections A, B, and C). Section-A carries 1 mark, Section-B carries 2 marks and Section-C carries 3 marks. Covers crossword puzzles, technical questions, MIPS-related queries, Bash code, System calls, Scheduling, and DBMS.",
+      "Round 2 - Competitive Programming and Web Development: 10 teams will be selected. In a team of two, one person attends CP and the other attends Web Dev. Every time a problem is solved in CP, persons swap places. Language selection includes Python/C++/Java. In Web Dev, a website to clone will be given with conditional elements added while swapping.",
+      "Round 3 - Mini-Hackathon: 5 teams will be selected. Participants receive problem statements and must devise a viable solution within a designated timeframe. Hurdles include blind coding, one-hand coding, etc.",
+    ],
+    rules: [
+      "Event consists of 3 rounds with a maximum of 3 members per team.",
+      "Using mobile phones for any assistance is prohibited.",
+      "Participants must register for this event on Unstop.",
+      "Team members cannot be changed after the initiation of round 1.",
+      "Required logistics for the event will be provided.",
+      "Calculators are allowed and participants are required to bring their own laptops for rounds 2 and 3.",
+      "The decision taken by the organizers is final.",
+    ],
+    prize: ["Prize Pool: 27000 INR", "Entry Fee: TBD"],
+    schedule: [
+      "Round 1: March 7, 2026, 10:00 AM - 12:30 PM - CEG Campus",
+      "Round 2: March 7, 2026, 02:00 PM - 11:35 PM - CEG Campus",
+      "Round 3: March 8, 2026, 10:00 AM - 01:00 PM - CEG Campus",
+    ],
+    contact: [
+      "Purushothaman V - 9677257928",
+      "Balakrishnan R - 9363605095",
+      "Vidya gowri - 8056078673",
+    ],
+  },
+  "Web Craft": {
+    title: "Web Craft",
+    description:
+      "Participants must showcase their web design creativity, technical skills, and ability to think on their feet across multiple challenging rounds. Throughout the competition, participants will design innovative and visually compelling web pages, pushing the boundaries of their technical abilities while demonstrating creativity and problem-solving under pressure.",
+    participation: "Team of 2-3",
+    image: "/Events/WebCraft.webp",
+    eventType: "General",
+    registrationLink: "",
+    rounds: [
+      "Round 1 - Creative Sprint: Participants will take an MCQ test assessing their knowledge of web design fundamentals, including design principles and UI/UX concepts. The top 10 teams based on the combined MCQ scores will proceed to Round 2.",
+      "Round 2 - Final Forge: Each team will randomly select a topic to determine the theme of their final design. Teams must finalize their webpage design based on the selected topic. Additional features will be provided on the spot and must be integrated into the design. Teams will have 3 hours to complete the design and feature implementation. 5-Minute Pitch: Each team will present their design.",
+    ],
+    rules: [
+      "Maximum of 3 participants per team.",
+      "Mobile phones or external assistance are not allowed during the event.",
+      "Plagiarism will result in immediate disqualification.",
+      "Participants from different institutions may form a team.",
+      "Team members cannot be changed once the event begins.",
+      "The decision of the judges is final and binding.",
+    ],
+    prize: ["Prize Pool: 12000 INR", "Entry Fee: TBD"],
+    schedule: [
+      "Rounds: March 7, 2026, TBD - TBD",
+    ],
+    contact: [
+      "Ezhil Jeevana S - 6369642347",
+      "Vishnu Priya M - 9345063517",
+    ],
+  },
 };
 
 export const EVENTS_CATEGORIES: EventCategoriesRecord = {
@@ -613,6 +765,7 @@ export const EVENTS_CATEGORIES: EventCategoriesRecord = {
       "Electrohunt",
       "Aero Rush - LOS Drone Racing",
       "Godspeed - RC Nitro Buggy Race",
+      "Design Decathlon",
     ],
   },
   Quiz: {
@@ -625,7 +778,7 @@ export const EVENTS_CATEGORIES: EventCategoriesRecord = {
     label: "MANAGEMENT EVENTS",
     description:
       "Showcase your managerial prowess! Test your skills in strategy, marketing, and leadership through engaging challenges designed for future leaders.",
-    events: ["Pitch Arena", "Shark Tank"],
+    events: ["Pitch Arena", "Shark Tank", "Paper Presentation"],
   },
   Extravaganza: {
     label: "EXTRAVAGANZA EVENTS",
@@ -654,11 +807,11 @@ export const EVENTS_CATEGORIES: EventCategoriesRecord = {
     label: "CODING EVENTS",
     description:
       "Unlock power of code and logic. Dive into world of algorithms, problem-solving, and efficient programming with our competitive coding events.",
-    events: ["Onsite Strategic Programming Challenge - OSPC"],
+    events: ["Onsite Strategic Programming Challenge - OSPC", "Byte Bash", "Web Craft"],
   },
   Online: {
     label: "ONLINE EVENTS",
     description: "Compete from anywhere in these online-only events.",
-    events: ["Neon Wallstreet", "Steam Quest", "Netrunner's Gauntlet"],
+    events: ["Neon Wallstreet", "Steam Quest", "Netrunner's Gauntlet", "The Gaia Protocol"],
   },
 };
