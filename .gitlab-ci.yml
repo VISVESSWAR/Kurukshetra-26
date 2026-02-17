@@ -1,0 +1,36 @@
+image: node:20
+
+stages:
+  - deploy
+
+# ---------- PRODUCTION ----------
+deploy_prod:
+  stage: deploy
+  script:
+    - npm install
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+  environment:
+    name: production
+    url: https://ctf-techops-2026.gitlab.io/kurukshetra-26/
+
+# ---------- TEST / PREVIEW ----------
+deploy_test:
+  stage: deploy
+  script:
+    - npm install
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - test
+  environment:
+    name: test
+    url: https://ctf-techops-2026.gitlab.io/kurukshetra-26/test/
