@@ -93,7 +93,7 @@ export default function Workshops() {
           <div className="text-center mb-12">
             <div className={`relative ${glitch ? "glitch-active" : ""}`}>
               <h1
-                className="sponsor-glitch text-4xl md:text-7xl font-bold tracking-[0.15em] mb-2 font-(family-name:--orbitron)"
+                className="sponsor-glitch text-4xl md:text-7xl font-bold tracking-[0.15em] mb-2 font-(family-name:--wallpoet)"
                 data-text="WORKSHOPS"
               >
                 WORKSHOPS

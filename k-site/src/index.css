@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Stalinist+One&family=Jost:wght@300..900&family=Poppins:wght@300;400;500;600;700;800;900&family=VT323&family=Press+Start+2P&family=Wallpoet&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Modern+Antiqua&family=Stalinist+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -60,6 +61,11 @@ h1, h2, h3, h4, h5, h6, img, button {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+body {
+  user-select: none;
+}
+
+
 :root {
   --radius: 0.625rem;
   --poppins:
@@ -67,12 +73,15 @@ h1, h2, h3, h4, h5, h6, img, button {
     "Helvetica Neue", Arial, sans-serif;
   --stalinist: "Stalinist One", ui-serif, Georgia, serif;
   --wallpoet: "Wallpoet", ui-serif, Georgia, serif;
+  --modern-antiqua: "Modern Antiqua", ui-serif, Georgia, serif;
   --orbitron:
     "Orbitron", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   --jost:
     Jost, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
+  --quantico:
+    "Quantico", ui-serif, Georgia, serif;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);

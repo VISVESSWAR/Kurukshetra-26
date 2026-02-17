@@ -336,7 +336,7 @@ export default function EventsNew() {
       </div>
 
       {/* MAIN CONTENT AREA - CENTERED VERTICALLY */}
-      <div className="grow flex items-center justify-center px-4 py-8">
+      <div className="grow flex items-center justify-center px-4 py-8 font-(family-name:--quantico)">
         <div className="relative w-full max-w-6xl">
           <div
             className="bg-linear-to-b from-[#2d0057]/80 to-[#140024]/90
