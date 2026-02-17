@@ -206,7 +206,7 @@ export default function Accommodation() {
                   Total – Rs.{total}/-
                 </div>
 
-                <a
+                {/* <a
                   href={Instructions}
                   target="_blank"
                   style={{
@@ -217,7 +217,7 @@ export default function Accommodation() {
                   border border-white/70 text-white text-[1rem] cursor-pointer hover:shadow-[0_0_15px_rgba(122,40,255,0.85)] transition"
                 >
                   Instruction
-                </a>
+                </a> */}
               </div>
 
               {/* Submit */}
