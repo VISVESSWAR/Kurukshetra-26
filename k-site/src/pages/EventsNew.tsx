@@ -25,7 +25,7 @@ import {
   Award,
   Phone,
   Mail,
-  Grid,
+  // Grid,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { slideInFromLeftStaggered } from "@/lib/animations";
@@ -39,8 +39,8 @@ type TabKey =
   | "contact";
 
 // Global registration link from App.tsx
-const GLOBAL_REGISTRATION_URL =
-  "https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664";
+// const GLOBAL_REGISTRATION_URL =
+//   "https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664";
 
 export default function EventsNew() {
   useFullNavbar();
@@ -52,7 +52,7 @@ export default function EventsNew() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [glitch, setGlitch] = useState(false);
 
-  const[loading,setLoading] = useState(true);
+  // const[loading,setLoading] = useState(true);
 
 
   useEffect(() => {

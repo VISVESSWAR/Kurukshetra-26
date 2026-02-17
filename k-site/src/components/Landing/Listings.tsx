@@ -73,8 +73,8 @@ const ButtonGroup = ({ items }: { items: Listing[] }) => {
 
 export default function Listings() {
   const listings: Listing[] = [
-    { title: "Events", path: "/events", image: calendarImg, isExternal: true },
-    { title: "Workshops", path: "/workshops", image: screwdriverImg, isExternal: true },
+    { title: "Events", path: "/events", image: calendarImg },
+    { title: "Workshops", path: "/workshops", image: screwdriverImg },
     { title: "Guest Lectures", path: "/guest-lectures", image: microphoneImg },
     {
       title: "Technovation",

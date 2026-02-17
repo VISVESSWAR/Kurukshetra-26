@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy, Suspense,useState } from "react";
+import { lazy, Suspense } from "react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,7 +21,7 @@ const WorkshopsList = lazy(() => import("@/pages/Workshop"));
 const WorkshopsDetails = lazy(() => import("@/pages/WorkshopDetails"));
 
 //loader
-import VideoLoader from "@/components/Loader/VideoLoader";
+// import VideoLoader from "@/components/Loader/VideoLoader";
 
 const COMING_SOON_PATHS = ["/login", "/register", "/guest-lectures"] as const;
 // const LOADER2_PATHS = ["/events","/workshops","/contact","/accommodation","/sponsors","/technovation"] as const;
@@ -48,7 +48,7 @@ function PageLoader() {
 
 function App() {
 
-  const [loading,setLoading]=useState(true);
+  // const [loading,setLoading]=useState(true);
 
   return (
     // <>
