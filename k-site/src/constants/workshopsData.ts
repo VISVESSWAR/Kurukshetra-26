@@ -228,7 +228,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/ANSYS.jpg",
+            logo: "",
           },
         ],
       },
@@ -375,7 +375,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/fuel cell ccm_logo.png",
+            logo: "/Workshops/ccm_logo.png",
           },
         ],
       },
@@ -521,7 +521,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/.jpg",
+            logo: "/Workshops/LiveQC.png",
           },
         ],
       },
@@ -664,7 +664,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/ReverseEngineering.jpg",
+            logo: "",
           },
         ],
       },
@@ -736,7 +736,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/GameSmiths.webp",
+            logo: "/Workshops/Gaming.png",
           },
         ],
       },
@@ -808,7 +808,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/CubeComm.jpg",
+            logo: "",
           },
         ],
       },

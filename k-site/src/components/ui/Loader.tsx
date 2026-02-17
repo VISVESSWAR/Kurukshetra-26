@@ -1,7 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { EffectComposer, RenderPass, EffectPass, BloomEffect, ChromaticAberrationEffect } from 'postprocessing';
 import * as THREE from 'three';
 import * as faceapi from 'face-api.js';
+
+type VideoWithFrameCallback = HTMLVideoElement & {
+  requestVideoFrameCallback?: (
+    callback: VideoFrameRequestCallback
+  ) => number;
+};
+
 
 type GridScanProps = {
   enableWebcam?: boolean;
@@ -336,6 +343,7 @@ export const GridScan: React.FC<GridScanProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const composerRef = useRef<EffectComposer | null>(null);
@@ -379,15 +387,27 @@ export const GridScan: React.FC<GridScanProps> = ({
   const bufT = useRef<number[]>([]);
   const bufYaw = useRef<number[]>([]);
 
+  // const s = THREE.MathUtils.clamp(sensitivity, 0, 1);
+const {
+  skewScale,
+  tiltScale,
+  yawScale,
+  smoothTime,
+  maxSpeed,
+  
+  yBoost
+} = useMemo(() => {
   const s = THREE.MathUtils.clamp(sensitivity, 0, 1);
-  const skewScale = THREE.MathUtils.lerp(0.06, 0.2, s);
-  const tiltScale = THREE.MathUtils.lerp(0.12, 0.3, s);
-  const yawScale = THREE.MathUtils.lerp(0.1, 0.28, s);
-  const depthResponse = THREE.MathUtils.lerp(0.25, 0.45, s);
-  const smoothTime = THREE.MathUtils.lerp(0.45, 0.12, s);
-  const maxSpeed = Infinity;
+  return {
+    skewScale: THREE.MathUtils.lerp(0.06, 0.2, s),
+    tiltScale: THREE.MathUtils.lerp(0.12, 0.3, s),
+    yawScale: THREE.MathUtils.lerp(0.1, 0.28, s),
+    smoothTime: THREE.MathUtils.lerp(0.45, 0.12, s),
+    maxSpeed: Infinity,
+    yBoost: THREE.MathUtils.lerp(1.2, 1.6, s),
+  };
+}, [sensitivity]);
 
-  const yBoost = THREE.MathUtils.lerp(1.2, 1.6, s);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -410,12 +430,14 @@ export const GridScan: React.FC<GridScanProps> = ({
       if (
         enableGyro &&
         typeof window !== 'undefined' &&
-        (window as any).DeviceOrientationEvent &&
-        (DeviceOrientationEvent as any).requestPermission
+        'DeviceOrientationEvent' in window &&
+        typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function'
       ) {
         try {
-          await (DeviceOrientationEvent as any).requestPermission();
-        } catch {}
+          await (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission();
+        } catch {
+          // Permission denied or not supported
+        }
       }
     };
     const onEnter = () => {
@@ -609,7 +631,23 @@ export const GridScan: React.FC<GridScanProps> = ({
     lineStyle,
     lineJitter,
     scanDirection,
-    enablePost
+    enablePost,
+    bloomIntensity,
+    bloomThreshold,
+    bloomSmoothing,
+    chromaticAberration,
+    noiseIntensity,
+    scanGlow,
+    scanSoftness,
+    scanPhaseTaper,
+    scanDuration,
+    scanDelay,
+    skewScale,
+    tiltScale,
+    yBoost,
+    yawScale,
+    smoothTime,
+    maxSpeed
   ]);
 
   useEffect(() => {
@@ -634,8 +672,11 @@ export const GridScan: React.FC<GridScanProps> = ({
     }
     if (bloomRef.current) {
       bloomRef.current.blendMode.opacity.value = Math.max(0, bloomIntensity);
-      (bloomRef.current as any).luminanceMaterial.threshold = bloomThreshold;
-      (bloomRef.current as any).luminanceMaterial.smoothing = bloomSmoothing;
+      const bloomWithLuminance = bloomRef.current as BloomEffect & { luminanceMaterial?: { threshold: number; smoothing: number } };
+      if (bloomWithLuminance.luminanceMaterial) {
+        bloomWithLuminance.luminanceMaterial.threshold = bloomThreshold;
+        bloomWithLuminance.luminanceMaterial.smoothing = bloomSmoothing;
+      }
     }
     if (chromaRef.current) {
       chromaRef.current.offset.set(chromaticAberration, chromaticAberration);
@@ -700,10 +741,12 @@ export const GridScan: React.FC<GridScanProps> = ({
   useEffect(() => {
     let stop = false;
     let lastDetect = 0;
+    const depthResponse = 0.5;
+    const videoEl = videoRef.current;
 
     const start = async () => {
       if (!enableWebcam || !modelsReady) return;
-      const video = videoRef.current;
+      const video = videoEl;
       if (!video) return;
 
       try {
@@ -777,36 +820,36 @@ export const GridScan: React.FC<GridScanProps> = ({
           }
         }
 
-        if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
-          (video as any).requestVideoFrameCallback(() => detect(performance.now()));
+        const v = video as VideoWithFrameCallback;
+        if (v.requestVideoFrameCallback) {
+          v.requestVideoFrameCallback(() => detect(performance.now()));
         } else {
           requestAnimationFrame(detect);
         }
       };
 
-      requestAnimationFrame(detect);
+      detect(performance.now());
     };
 
     start();
 
     return () => {
       stop = true;
-      const video = videoRef.current;
-      if (video) {
-        const stream = video.srcObject as MediaStream | null;
+      if (videoEl) {
+        const stream = videoEl.srcObject as MediaStream | null;
         if (stream) stream.getTracks().forEach(t => t.stop());
-        video.pause();
-        video.srcObject = null;
+        videoEl.pause();
+        videoEl.srcObject = null;
       }
     };
-  }, [enableWebcam, modelsReady, depthResponse]);
+  }, [enableWebcam, modelsReady]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className ?? ''}`} style={style}>
       {showPreview && (
-        <div className="absolute right-3 bottom-3 w-[220px] h-[132px] rounded-lg overflow-hidden border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-black text-white text-[12px] leading-[1.2] font-sans pointer-events-none">
+        <div className="absolute right-3 bottom-3 w-55 h-33 rounded-lg overflow-hidden border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.4)] bg-black text-white text-xs leading-tight font-sans pointer-events-none">
           <video ref={videoRef} muted playsInline autoPlay className="w-full h-full object-cover -scale-x-100" />
-          <div className="absolute left-2 top-2 px-[6px] py-[2px] bg-black/50 rounded-[6px] backdrop-blur-[4px]">
+          <div className="absolute left-2 top-2 px-1.5 py-0.5 bg-black/50 rounded-1.5 backdrop-blur-xs">
             {enableWebcam
               ? modelsReady
                 ? uiFaceActive
@@ -840,7 +883,7 @@ function smoothDampVec2(
   const x = omega * deltaTime;
   const exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
 
-  let change = current.clone().sub(target);
+  const change = current.clone().sub(target);
   const originalTo = target.clone();
 
   const maxChange = maxSpeed * smoothTime;

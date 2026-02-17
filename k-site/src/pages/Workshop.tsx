@@ -137,7 +137,7 @@ export default function Workshops() {
                     <img
                       src={workshops[getLeftIndex()].image}
                       alt={workshops[getLeftIndex()].title}
-                      className="w-56 h-48 object-contain opacity-40"
+                      className="w-56 h-48 object-contain opacity-40 rounded-xl"
                     />
                   </div>
                   <div className="p-6">
@@ -187,7 +187,7 @@ export default function Workshops() {
                     <img
                       src={currentWorkshop.image}
                       alt={currentWorkshop.title}
-                      className="w-40 sm:w-52 md:w-48 h-auto max-h-[55%] object-contain"
+                      className="w-40 sm:w-52 md:w-48 h-auto max-h-[55%] object-contain rounded-xl"
                     />
                   </div>
                   <div className="p-2">
@@ -237,7 +237,7 @@ export default function Workshops() {
                     <img
                       src={workshops[getRightIndex()].image}
                       alt={workshops[getRightIndex()].title}
-                      className="w-56 h-48 object-contain opacity-40"
+                      className="w-56 h-48 object-contain opacity-40 rounded-xl"
                     />
                   </div>
                   <div className="p-6">

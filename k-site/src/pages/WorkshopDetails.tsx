@@ -118,7 +118,7 @@ export default function WorkshopsDetails() {
                 <img
                   src={speaker.logo}
                   alt="Speaker logo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-fit rounded-xl"
                 />
               </div>
             ) : (
@@ -329,7 +329,7 @@ export default function WorkshopsDetails() {
               <img
                 src={workshop.image}
                 alt={workshop.title}
-                className="w-[80%] h-[80%] m-auto object-cover"
+                className="w-[80%] h-[80%] m-auto object-cover rounded-xl"
               />
             </motion.div>
           )}
@@ -573,7 +573,7 @@ export default function WorkshopsDetails() {
                     <img
                       src={workshop.image}
                       alt={workshop.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-xl"
                     />
                   )}
                 </div>
