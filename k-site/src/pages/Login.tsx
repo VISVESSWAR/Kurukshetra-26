@@ -25,7 +25,7 @@ export default function Login() {
       <div className="absolute inset-0 bg-black/30"></div>
       {/* Login Card */}
       <div className="w-full max-w-sm relative z-10">
-        <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-md rounded-xl p-6 border border-slate-700/50 shadow-2xl">
+        <div className="bg-linear-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-md rounded-xl p-6 border border-slate-700/50 shadow-2xl">
           {/* Title */}
           <h1 
             className="text-3xl md:text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-[#6101FE] to-[#FF00B3] bg-clip-text text-transparent"

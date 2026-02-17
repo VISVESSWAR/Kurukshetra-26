@@ -1,0 +1,513 @@
+import { useState, useEffect } from "react";
+import useFullNavbar from "@/hooks/useFullNavbar";
+import { useParams } from "react-router-dom";
+import { EVENT_DETAILS } from "@/constants/events.tsx";
+import {
+  parseContact,
+  getContactHref,
+  isLinkableContact,
+  extractPhoneNumber,
+} from "@/lib/contactUtils";
+
+import {
+  FileText,
+  Swords,
+  ShieldCheck,
+  Trophy,
+  Calendar,
+  User,
+  ChevronLeft,
+  ChevronRight,
+  Bot,
+  ExternalLink,
+  Zap,
+  CheckCircle2,
+  Award,
+  Phone,
+  Mail,
+  Grid,
+} from "lucide-react";
+import { motion } from "motion/react";
+import { slideInFromLeftStaggered } from "@/lib/animations";
+
+type TabKey =
+  | "description"
+  | "rounds"
+  | "rules"
+  | "prize"
+  | "schedule"
+  | "contact";
+
+// Global registration link from App.tsx
+const GLOBAL_REGISTRATION_URL =
+  "https://unstop.com/college-fests/kurukshetra-2026-anna-university-ceg-tech-forum-436664";
+
+export default function EventsNew() {
+  useFullNavbar();
+  const { eventName } = useParams();
+  const decodedEventName = eventName ? decodeURIComponent(eventName) : null;
+
+  const event = decodedEventName ? EVENT_DETAILS[decodedEventName] : null;
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [glitch, setGlitch] = useState(false);
+
+  const[loading,setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => {
+        setGlitch(true);
+        setTimeout(() => setGlitch(false), 500);
+      },
+      3000 + Math.random() * 2000
+    );
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Render not found page if event doesn't exist
+  if (!event || !decodedEventName) {
+    return (
+
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            Event Not Found
+          </h1>
+          <p className="text-xl text-gray-300 mb-8">
+            The event you're looking for doesn't exist or is not available yet.
+          </p>
+          <a
+            href="/events"
+            className="inline-block px-8 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition"
+          >
+            ← Back to Events
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  const renderListWithIcon = (
+    items: string[],
+    Icon: React.ComponentType<{ size: number; className: string }>
+  ) => (
+    <ul className="mt-4 text-gray-300 space-y-2 text-sm md:text-base overflow-x-hidden lg:text-left text-justify">
+      {items.map((item, index) => (
+        <motion.li
+          key={index}
+          className="flex gap-2 items-start justify-start min-w-0"
+          variants={slideInFromLeftStaggered(0.3)}
+          initial="hidden"
+          animate="visible"
+          custom={index}
+        >
+          <Icon size={18} className="text-purple-400 shrink-0 mt-0.5" />
+          <span className="flex-1 min-w-0" style={{ wordBreak: "break-word" }}>
+            {item}
+          </span>
+        </motion.li>
+      ))}
+    </ul>
+  );
+
+  // Render contacts with phone/email links and icons
+  const renderContacts = (contacts: string[]) => (
+    <ul className="mt-4 text-gray-300 space-y-2 text-sm md:text-base overflow-x-hidden lg:text-left text-justify">
+      {contacts.map((contact, index) => {
+        const parsed = parseContact(contact);
+        const isLinkable = isLinkableContact(parsed);
+        const href = isLinkable ? getContactHref(parsed) : "#";
+
+        let content;
+        if (isLinkable) {
+          if (parsed.type === "phone") {
+            // Extract just the phone number to underline
+            const phoneNumber = extractPhoneNumber(parsed.displayText);
+            const namePart = phoneNumber ? parsed.displayText.replace(phoneNumber, "").trim() : parsed.displayText;
+            
+            content = (
+              <span className="flex items-center gap-2 min-w-0">
+                <Phone size={16} className="text-purple-400 shrink-0" />
+                <a
+                  href={href}
+                  className="text-purple-400 hover:text-purple-300 transition min-w-0 flex items-center gap-1"
+                >
+                  <span>{namePart}</span>
+                  {phoneNumber && <u className="text-purple-400">{phoneNumber}</u>}
+                </a>
+              </span>
+            );
+          } else {
+            // Email - underline entire email
+            content = (
+              <span className="flex items-center gap-2 min-w-0">
+                <Mail size={16} className="text-purple-400 shrink-0" />
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-purple-400 hover:text-purple-300 hover:underline transition min-w-0"
+                >
+                  {parsed.displayText}
+                </a>
+              </span>
+            );
+          }
+        } else {
+          content = (
+            <span className="min-w-0" style={{ wordBreak: "break-word" }}>
+              {parsed.displayText}
+            </span>
+          );
+        }
+
+        return (
+          <motion.li
+            key={index}
+            className="flex flex-wrap gap-1 items-center lg:justify-start justify-center min-w-0"
+            variants={slideInFromLeftStaggered(0.3)}
+            initial="hidden"
+            animate="visible"
+            custom={index}
+          >
+            {content}
+          </motion.li>
+        );
+      })}
+    </ul>
+  );
+
+  const tabs = [
+    { key: "description", name: "Description", icon: FileText },
+    { key: "rounds", name: "Rounds", icon: Swords },
+    { key: "rules", name: "Rules", icon: ShieldCheck },
+    { key: "prize", name: "Prize", icon: Trophy },
+    { key: "schedule", name: "Schedule", icon: Calendar },
+    { key: "contact", name: "Contact", icon: User },
+  ];
+
+  const activeTab = tabs[activeIndex].key as TabKey;
+
+  const nextTab = () => {
+    setActiveIndex((prev) => (prev + 1) % tabs.length);
+  };
+
+  const prevTab = () => {
+    setActiveIndex((prev) => (prev === 0 ? tabs.length - 1 : prev - 1));
+  };
+
+  const tabContent: Record<TabKey, React.ReactNode> = {
+    description: (
+      <>
+    
+        {/* IMAGE */}
+        {event.image && (
+          <motion.div
+            className="lg:hidden w-full h-[25vh] rounded-xl overflow-hidden mb-4"
+            variants={slideInFromLeftStaggered(0.2)}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+          >
+            <img
+              src={event.image}
+              alt={event.title}
+              className="w-[80%] h-[80%] m-auto object-cover"
+            />
+          </motion.div>
+        )}
+
+        <motion.h2
+          className="text-md md:text-lg font-normal text-justify"
+          variants={slideInFromLeftStaggered(0.3)}
+          initial="hidden"
+          animate="visible"
+          custom={1}
+        >
+          {event.description}
+        </motion.h2>
+
+        <motion.p
+          className="text-base md:text-lg text-gray-300 mt-4"
+          variants={slideInFromLeftStaggered(0.3)}
+          initial="hidden"
+          animate="visible"
+          custom={2}
+        >
+          Participation: {event.participation}
+        </motion.p>
+      </>
+    ),
+
+    rounds: (
+      <>
+        {/* <motion.h2
+          className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
+          variants={slideInFromLeftStaggered(0.2)}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          Event Rounds
+        </motion.h2> */}
+        {renderListWithIcon(event.rounds, Zap)}
+      </>
+    ),
+
+    rules: (
+      <>
+        {/* <motion.h2
+          className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
+          variants={slideInFromLeftStaggered(0.2)}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          Rules
+        </motion.h2> */}
+        {renderListWithIcon(event.rules, CheckCircle2)}
+      </>
+    ),
+
+    prize: (
+      <>
+        {/* <motion.h2
+          className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
+          variants={slideInFromLeftStaggered(0.2)}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          Prize Pool
+        </motion.h2> */}
+        {renderListWithIcon(event.prize, Award)}
+      </>
+    ),
+
+    schedule: (
+      <>
+        {/* <motion.h2
+          className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
+          variants={slideInFromLeftStaggered(0.2)}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          Schedule
+        </motion.h2> */}
+        {renderListWithIcon(event.schedule, Calendar)}
+      </>
+    ),
+
+    contact: (
+      <>
+        {/* <motion.h2
+          className="text-xl md:text-2xl font-semibold lg:text-left text-justify mb-3"
+          variants={slideInFromLeftStaggered(0.2)}
+          initial="hidden"
+          animate="visible"
+          custom={0}
+        >
+          Contact
+        </motion.h2> */}
+        {renderContacts(event.contact)}
+      </>
+    ),
+  };
+
+  return (
+   
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      {/* HEADER */}
+      <div className="relative overflow-hidden shrink-0">
+        <div className="flex justify-center mt-5">
+          <div className={`relative ${glitch ? "glitch-active" : ""}`}>
+            <h2
+              className="sponsor-glitch text-3xl md:text-5xl lg:mt-20 mt-28 font-medium text-white font-(family-name:--wallpoet)"
+              data-text="EVENTS"
+            >
+              EVENTS
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      {/* MAIN CONTENT AREA - CENTERED VERTICALLY */}
+      <div className="grow flex items-center justify-center px-4 py-8 font-(family-name:--quantico)">
+        <div className="relative w-full max-w-6xl">
+          <div
+            className="bg-linear-to-b from-[#2d0057]/80 to-[#140024]/90
+                          backdrop-blur-xl
+                          border border-purple-500/40
+                          rounded-2xl
+                          shadow-[0_0_40px_#7c3aed]
+                          p-5 md:p-8"
+          >
+            {/* EVENT NAME - JUST ABOVE TABS */}
+            <motion.div
+              className="mb-6 text-center"
+              variants={slideInFromLeftStaggered(0.1)}
+              initial="hidden"
+              animate="visible"
+              custom={0}
+            >
+              <div
+                className="inline-flex items-center gap-3 
+                              bg-linear-to-r from-purple-600 to-fuchsia-500
+                              px-5 py-2 md:px-6 md:py-3 rounded-full
+                              shadow-[0_0_25px_#a855f7]
+                              font-semibold tracking-wide text-sm md:text-base"
+              >
+                <Bot size={18} />
+                <span className="text-center">{event.title.toUpperCase()}</span>
+              </div>
+            </motion.div>
+
+            {/* DESKTOP/LANDSCAPE LAYOUT (lg and above) */}
+            <div className="hidden lg:flex flex-col gap-6">
+              {/* TOP ROW - TABS (CENTERED) */}
+              <div className="flex items-center justify-center gap-3">
+                {/* Tabs */}
+                <div className="flex gap-3 overflow-x-hidden whitespace-nowrap scrollbar-hide mx-auto">
+                  {tabs.map((tab, index) => {
+                    const Icon = tab.icon;
+                    const isActive = index === activeIndex;
+
+                    return (
+                      <button
+                        key={tab.key}
+                        onClick={() => setActiveIndex(index)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm
+                        border transition-all duration-300 shrink-0
+                        ${
+                          isActive
+                            ? "bg-purple-600 border-purple-400 shadow-[0_0_15px_#a855f7]"
+                            : "border-purple-400/40 hover:bg-purple-600 hover:shadow-[0_0_12px_#a855f7]"
+                        }`}
+                      >
+                        <Icon size={14} />
+                        {tab.name}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Arrow Buttons */}
+                <div className="flex gap-3 shrink-0">
+                  <button
+                    onClick={prevTab}
+                    className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
+                              rounded-full border border-purple-400/40
+                              hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+
+                  <button
+                    onClick={nextTab}
+                    className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center
+                              rounded-full border border-purple-400/40
+                              hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              {/* BOTTOM ROW - IMAGE LEFT, CONTENT RIGHT */}
+              <div className="flex gap-6 lg:gap-8">
+                {/* IMAGE - FIXED LEFT */}
+                <div className="w-64 h-64 rounded-2xl overflow-hidden bg-gray-800 shrink-0">
+                  {event.image && (
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+
+                {/* CONTENT - RIGHT */}
+                <div
+                  className="transition-all duration-300 overflow-y-auto overflow-x-hidden text-left scrollbar-hide flex-1"
+                  style={{ maxHeight: "50vh" }}
+                >
+                  <div className="space-y-2">{tabContent[activeTab]}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* MOBILE/TABLET LAYOUT (below lg) */}
+            <div className="lg:hidden flex flex-col">
+              {/* Tab Header with Navigation */}
+              <div className="flex items-center justify-between mb-6">
+                <button
+                  onClick={prevTab}
+                  className="w-9 h-9 flex items-center justify-center
+                            rounded-full border border-purple-400/40
+                            hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+
+                <div className="flex-1 text-center">
+                  <h2 className="text-xl font-semibold text-purple-300">
+                    {tabs[activeIndex].name}
+                  </h2>
+                </div>
+
+                <button
+                  onClick={nextTab}
+                  className="w-9 h-9 flex items-center justify-center
+                            rounded-full border border-purple-400/40
+                            hover:bg-purple-600 hover:shadow-[0_0_10px_#a855f7]"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
+              {/* Content Area - Fixed Height with Internal Scrolling */}
+              <div
+                className="transition-all duration-300 overflow-y-auto overflow-x-hidden text-center scrollbar-hide"
+                style={{ height: "35vh" }}
+              >
+                <div className="pr-4 min-w-0 flex flex-col items-center justify-center lg:items-start space-y-3">
+                  {tabContent[activeTab]}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* REGISTRATION BUTTON - OUTSIDE CARD */}
+          {event.registrationLink && (
+            <motion.div
+              className="mt-6 flex justify-center"
+              variants={slideInFromLeftStaggered(0.5)}
+              initial="hidden"
+              animate="visible"
+              custom={0}
+            >
+              <a
+                href={event.registrationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-linear-to-r from-purple-600 to-fuchsia-500 
+                           text-white font-semibold rounded-full hover:shadow-[0_0_30px_#a855f7] 
+                           transition-all duration-300 hover:scale-105"
+              >
+                Register Now
+                <ExternalLink size={18} />
+              </a>
+            </motion.div>
+          )}
+        </div>
+      </div>
+
+      {/* Footer spacing */}
+      <div className="shrink-0"></div>
+    </div>
+  );
+}
