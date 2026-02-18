@@ -772,7 +772,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
     subtitle: "Satellite systems and communications",
     description:
       "Explore CubeSat technology and antenna systems design with practical demonstrations.",
-    image: "/Workshops/Cubecomm.webp",
+    image: "/Workshops/CubeComm.webp",
     participants: "Individual",
     date: "March 9, 2026",
     days: 1,
