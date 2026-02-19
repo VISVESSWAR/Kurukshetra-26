@@ -42,7 +42,7 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Register attempt:', activeTab === 'cegian' ? cegianForm : othersForm);
+    //console.log('Register attempt:', activeTab === 'cegian' ? cegianForm : othersForm);
   };
 
   const months = [

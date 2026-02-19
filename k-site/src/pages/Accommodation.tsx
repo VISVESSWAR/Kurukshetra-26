@@ -27,7 +27,7 @@ export default function Accommodation() {
 
   const toggleDate = (d: string) => {
     setSelectedDates((prev) =>
-      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
+      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
     );
   };
 
@@ -40,7 +40,7 @@ export default function Accommodation() {
     };
 
     if (import.meta.env.DEV) {
-      console.log("Accommodation Submission:", payload);
+      //console.log("Accommodation Submission:", payload);
     }
   };
 
@@ -110,14 +110,6 @@ export default function Accommodation() {
                 Accommodation Charges
               </h2>
 
-              <p
-                style={{ fontFamily: "Orbitron, sans-serif" }}
-                className="text-[0.9rem] leading-relaxed text-white"
-              >
-                Without food – Rs.300 per day <br />
-                With food – Rs.450 per day
-              </p>
-
               {/* Dates */}
               <div
                 className="flex flex-wrap justify-center gap-4 p-3 rounded-3xl
@@ -177,21 +169,49 @@ export default function Accommodation() {
                   );
                 })}
               </div>
+              <p
+                style={{ fontFamily: "Orbitron, sans-serif" }}
+                className="text-[0.9rem] leading-relaxed text-white"
+              >
+                <span className="font-bold text-lg">Note</span>
+                <br/>
+                Without food – Rs.300 per day <br />
+                With food – Rs.450 per day
+              </p>
 
               {/* Food */}
-              <label
-                style={{ fontFamily: "Orbitron, sans-serif" }}
-                className="flex items-center justify-center gap-3
-                text-[0.7rem] text-white cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  checked={food}
-                  onChange={() => setFood(!food)}
-                  className="w-4 h-4 accent-violet-600"
-                />
-                I require food for the days I had requested accommodation.
-              </label>
+              <div className="flex flex-row justify-around w-full">
+                <label
+                  style={{ fontFamily: "Orbitron, sans-serif" }}
+                  className="flex items-center justify-center gap-2
+                text-md text-white cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="no_food"
+                    value={"no"}
+                    checked={!food}
+                    onChange={() => setFood(false)}
+                    className="w-4 h-4 accent-violet-600"
+                  />
+                  Without food.
+                </label>
+                <label
+                  style={{ fontFamily: "Orbitron, sans-serif" }}
+                  className="flex items-center justify-center gap-2
+                text-md text-white cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="food"
+                    value={"yes"}
+                    checked={food}
+                    onChange={() => setFood(true)}
+                    className="w-4 h-4 accent-violet-600"
+                  />
+                  With food.
+                </label>
+              </div>
 
               {/* Total + Instruction */}
               <div className="flex justify-center flex-wrap gap-4 pt-3">
@@ -300,8 +320,8 @@ export default function Accommodation() {
                 <div className="flex flex-col gap-2.5">
                   {[
                     ["Ajithkumar", "+91 90256 24766"],
-                    ["Mohamed Sahul Hameed H", "+91 90428 50775"],
-                    ["Surekaa S", "+91 63827 77055"],
+                    ["Dharini", "+91 73392 93595"],
+                    ["Jayaram", "+91 63837 48935"],
                   ].map(([n, p]) => (
                     <div
                       key={n}
