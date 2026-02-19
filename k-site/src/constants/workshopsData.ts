@@ -303,7 +303,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/flytutor_logo.png",
+            logo: "/Workshops/flytutor.jpeg",
           },
         ],
       },
@@ -375,7 +375,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/ccm_logo.png",
+            logo: "/Workshops/ccm_logo.jpeg",
           },
         ],
       },
