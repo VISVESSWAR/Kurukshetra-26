@@ -160,17 +160,17 @@ const CegianForm = ({ verifiedEmail }: CegianFormProps) => {
       form.setValue("email", verifiedEmail);
     } else {
       // Set default values
-      form.setValue("email", "amvisvesswar2004@gmail.com");
-      form.setValue("fname", "John");
-      form.setValue("lname", "Doe");
-      form.setValue("mobile", "7418243840");
-      form.setValue("roll", "2022103013");
-      form.setValue("department", "Computer Science");
-      form.setValue("year", "4");
-      form.setValue("dob", new Date(2004, 9, 31));
-      form.setValue("password", "Password123");
-      form.setValue("confirm", "Password123");
-      form.setValue("terms", false);
+      // form.setValue("email", "amvisvesswar2004@gmail.com");
+      // form.setValue("fname", "John");
+      // form.setValue("lname", "Doe");
+      // form.setValue("mobile", "7418243840");
+      // form.setValue("roll", "2022103013");
+      // form.setValue("department", "Computer Science");
+      // form.setValue("year", "4");
+      // form.setValue("dob", new Date(2004, 9, 31));
+      // form.setValue("password", "Password123");
+      // form.setValue("confirm", "Password123");
+      // form.setValue("terms", false);
     }
   }, [verifiedEmail, form]);
 

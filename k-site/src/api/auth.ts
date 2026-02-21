@@ -87,7 +87,7 @@ export const apiGSignin = async (
 ): Promise<RegisterResponse> => {
   try {
     const response = await api.post<RegisterResponse>(
-      `${url}/google-signin`,
+      `${url}/gsignin`,
       data
     );
 

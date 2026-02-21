@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { HelpCircle, Copy, Check } from "lucide-react";
 import useGlitch from "@/hooks/useGlitch";
 import { useAuth } from "@/context/utils/useAuth";
-import Instructions from "@/assets/Instructions.pdf";
 import {
   pageVariants,
   fadeUp,
@@ -22,17 +22,32 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { cn } from "@/lib/utils";
+import { apiGetAccommodation, apiRegisterAccommodation } from "@/api/user";
+import toast from "react-hot-toast";
 import qrCode from "@/assets/Accomodation/upi.jpg";
+import upiRef from "@/assets/Accomodation/upi_id.jpg";
+
 type Gender = "Male" | "Female" | "Others";
 
 const accommodationSchema = z
   .object({
-    upiTransactionId: z.string().min(1, "UPI Transaction ID required"),
-    confirmUpiTransactionId: z.string().min(1, "Confirm UPI Transaction ID required"),
+    upiTransactionId: z
+      .string()
+      .regex(/^\d+$/, { message: "Enter a valid UPI Transaction ID" })
+      .min(1, "UPI Transaction ID required"),
+    confirmUpiTransactionId: z
+      .string()
+      .regex(/^\d+$/, { message: "Enter a valid UPI Transaction ID" })
+      .min(1, "Confirm UPI Transaction ID required"),
   })
   .refine(
     (data) => data.upiTransactionId === data.confirmUpiTransactionId,
@@ -44,13 +59,28 @@ const accommodationSchema = z
 
 type AccommodationFormValues = z.infer<typeof accommodationSchema>;
 
+const ALL_DATES = ["MAR 7", "MAR 8", "MAR 9"];
+
 export default function Accommodation() {
   const { isAuthenticated } = useAuth();
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [gender, setGender] = useState<Gender | null>(null);
   const [food, setFood] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [accommodation, setAccommodation] = useState<{
+    registered: boolean;
+    isPaid: boolean;
+    payid: string | false;
+  }>({
+    registered: false,
+    isPaid: false,
+    payid: false,
+  });
   const glitch = useGlitch();
+
+  const isAlreadyBooked = accommodation.registered && !!accommodation.payid;
 
   const togglePayment = () => {
     setIsOpen((prev) => !prev);
@@ -58,33 +88,91 @@ export default function Accommodation() {
 
   const form = useForm<AccommodationFormValues>({
     resolver: zodResolver(accommodationSchema),
+    defaultValues: {
+      upiTransactionId: "",
+      confirmUpiTransactionId: "",
+    },
   });
 
-  const dates = ["MAR 7", "MAR 8", "MAR 9"];
+  const dates = ALL_DATES;
   const total = selectedDates.length * (food ? 450 : 300);
 
   const toggleDate = (d: string) => {
+    if (isAlreadyBooked) return;
     setSelectedDates((prev) =>
       prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
     );
   };
 
-  const handleSubmit = (formData: AccommodationFormValues) => {
-    const payload = {
-      dates: selectedDates,
-      gender,
-      food,
-      total,
-      upiTransactionId: formData.upiTransactionId,
-    };
-
-    if (import.meta.env.DEV) {
-      //console.log("Accommodation Submission:", payload);
-    }
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+    toast.success("UPI ID copied to clipboard");
   };
 
+  // Map display dates to API keys (MAR 7 → d1, MAR 8 → d2, MAR 9 → d3)
+  const dateToKey: Record<string, "d1" | "d2" | "d3"> = {
+    "MAR 7": "d1",
+    "MAR 8": "d2",
+    "MAR 9": "d3",
+  };
+
+  const handleSubmit = async (formData: AccommodationFormValues) => {
+    if (!isAuthenticated) {
+      toast.error("Please login to register");
+      return;
+    }
+    if (!gender) {
+      toast.error("Please select your gender");
+      return;
+    }
+    if (selectedDates.length === 0) {
+      toast.error("Please select at least one date");
+      return;
+    }
+
+    const payload = {
+      sex: gender.toLowerCase() as "male" | "female" | "others",
+      food,
+      d1: selectedDates.includes("MAR 7"),
+      d2: selectedDates.includes("MAR 8"),
+      d3: selectedDates.includes("MAR 9"),
+      payid: formData.upiTransactionId,
+    };
+
+    setIsPending(true);
+    toast.promise(
+      apiRegisterAccommodation(payload),
+      {
+        loading: "Submitting...",
+        success: (data: { message: string }) => {
+          setIsPending(false);
+          form.reset();
+          setIsOpen(false);
+          return data.message;
+        },
+        error: (err: unknown) => {
+          setIsPending(false);
+          return typeof err === "object" && err !== null && "message" in err
+            ? (err as { message: string }).message
+            : String(err);
+        },
+      }
+    );
+  };
+
+  // Fetch existing accommodation status
+  useEffect(() => {
+    apiGetAccommodation()
+      .then((data: typeof accommodation) => {
+        setAccommodation(data);
+      })
+      .catch(() => {});
+  }, [isPending]);
+
   const inputStyles =
-    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
+    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent backdrop-blur-xs transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
   const labelStyles = "text-white font-medium font-novaSquare text-sm";
 
   return (
@@ -153,6 +241,18 @@ export default function Accommodation() {
                 Accommodation Charges
               </h2>
 
+              {/* Already booked banner */}
+              {isAlreadyBooked && (
+                <div
+                  style={{ fontFamily: "Orbitron, sans-serif" }}
+                  className="w-full px-4 py-2 rounded-2xl bg-green-600/20 border border-green-400/50 text-green-300 text-sm text-center"
+                >
+                  {accommodation.isPaid
+                    ? "✓ Accommodation Registered"
+                    : "⏳ Confirming your payment..."}
+                </div>
+              )}
+
               {/* Dates */}
               <div
                 className="flex flex-wrap justify-center gap-4 p-3 rounded-3xl
@@ -160,11 +260,15 @@ export default function Accommodation() {
               >
                 {dates.map((d) => {
                   const sel = selectedDates.includes(d);
+                  const disabled = isAlreadyBooked || isPending;
                   return (
                     <div
                       key={d}
-                      onClick={() => toggleDate(d)}
-                      className="flex items-center gap-3 cursor-pointer select-none"
+                      onClick={() => !disabled && toggleDate(d)}
+                      className={cn(
+                        "flex items-center gap-3 select-none",
+                        disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+                      )}
                     >
                       <div
                         className={`w-5 h-5 rounded-xs flex items-center justify-center border
@@ -190,11 +294,15 @@ export default function Accommodation() {
               >
                 {(["Male", "Female", "Others"] as Gender[]).map((g) => {
                   const sel = gender === g;
+                  const disabled = isAlreadyBooked || isPending;
                   return (
                     <div
                       key={g}
-                      onClick={() => setGender(g)}
-                      className="flex items-center gap-3 cursor-pointer select-none"
+                      onClick={() => !disabled && setGender(g)}
+                      className={cn(
+                        "flex items-center gap-3 select-none",
+                        disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+                      )}
                     >
                       <div
                         className={`w-5 h-5 rounded-full flex items-center justify-center border
@@ -227,30 +335,36 @@ export default function Accommodation() {
               <div className="flex flex-row justify-around w-full">
                 <label
                   style={{ fontFamily: "Orbitron, sans-serif" }}
-                  className="flex items-center justify-center gap-2
-                text-md text-white cursor-pointer"
+                  className={cn(
+                    "flex items-center justify-center gap-2 text-md text-white",
+                    isAlreadyBooked || isPending ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+                  )}
                 >
                   <input
                     type="radio"
-                    name="no_food"
-                    value={"no"}
+                    name="food_choice"
+                    value="no"
                     checked={!food}
                     onChange={() => setFood(false)}
+                    disabled={isAlreadyBooked || isPending}
                     className="w-4 h-4 accent-violet-600"
                   />
                   Without food.
                 </label>
                 <label
                   style={{ fontFamily: "Orbitron, sans-serif" }}
-                  className="flex items-center justify-center gap-2
-                text-md text-white cursor-pointer"
+                  className={cn(
+                    "flex items-center justify-center gap-2 text-md text-white",
+                    isAlreadyBooked || isPending ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+                  )}
                 >
                   <input
                     type="radio"
-                    name="food"
-                    value={"yes"}
+                    name="food_choice"
+                    value="yes"
                     checked={food}
                     onChange={() => setFood(true)}
+                    disabled={isAlreadyBooked || isPending}
                     className="w-4 h-4 accent-violet-600"
                   />
                   With food.
@@ -282,33 +396,50 @@ export default function Accommodation() {
                   </h3>
                   <div className="flex flex-col items-center gap-4 p-4 rounded-3xl border border-white/70">
                     {/* QR Code */}
-                    <div className="w-48 h-48 bg-white/10 rounded-lg border border-white/50 flex items-center justify-center">
+                    <div className="w-56 h-56 bg-white/10 rounded-lg border border-white/50 flex items-center justify-center">
                       <img
                         src={qrCode}
                         alt="UPI QR Code"
                         className="w-full h-full object-fit rounded-lg"
                       />
                     </div>
-                    <div>
+                    <div className="w-full flex flex-col items-center">
                       <p
                         style={{ fontFamily: "Orbitron, sans-serif" }}
                         className="text-[0.9rem] text-white/70 mb-1"
                       >
                         UPI ID
                       </p>
-                      <p
-                        style={{ fontFamily: "Orbitron, sans-serif", letterSpacing: "0.04em" }}
-                        className="text-[1rem] text-white font-semibold"
-                      >
-                        kurukshetra@upi
-                      </p>
+                      <div className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+                        <p
+                          style={{
+                            fontFamily: "Orbitron, sans-serif",
+                            letterSpacing: "0.04em",
+                          }}
+                          className="text-[1rem] text-white font-semibold"
+                        >
+                          techforum@sbi
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard("techforum@sbi")}
+                          className="text-gray-400 hover:text-white transition-colors flex-shrink-0"
+                          title="Copy UPI ID"
+                        >
+                          {copied ? (
+                            <Check size={16} className="text-green-500" />
+                          ) : (
+                            <Copy size={16} />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
               {/* UPI Transaction ID Fields - Only when isOpen */}
-              {isOpen && (
+              {isOpen && !isAlreadyBooked && (
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(handleSubmit)}
@@ -319,15 +450,34 @@ export default function Accommodation() {
                       name="upiTransactionId"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className={cn(labelStyles)}>
-                            UPI Transaction ID
+                          <FormLabel className={cn(labelStyles, "justify-center flex")}>
+                            <span className="flex items-center gap-x-2">
+                              UPI Transaction ID
+                              <Popover>
+                                <PopoverTrigger className="hover:text-violet-400 transition-colors">
+                                  <HelpCircle size={18} />
+                                </PopoverTrigger>
+                                <PopoverContent
+                                  align="start"
+                                  side="right"
+                                  className="w-64 border-white/20 bg-black/80 backdrop-blur-sm"
+                                >
+                                  <img
+                                    src={upiRef}
+                                    alt="upi_id_image"
+                                    className="rounded-lg w-full"
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                            </span>
                           </FormLabel>
                           <FormControl>
                             <div className={cn(inputStyles)}>
                               <Input
                                 placeholder="Enter UPI Transaction ID"
                                 {...field}
-                                className="border-0 bg-transparent focus:outline-none text-white placeholder:text-gray-400"
+                                disabled={isPending}
+                                className="border-0 bg-transparent focus:outline-none text-white placeholder:text-gray-400 text-center"
                                 type="text"
                               />
                             </div>
@@ -349,8 +499,9 @@ export default function Accommodation() {
                               <Input
                                 placeholder="Confirm UPI Transaction ID"
                                 {...field}
-                                className="border-0 bg-transparent focus:outline-none text-white placeholder:text-gray-400"
-                                type="text"
+                                disabled={isPending}
+                                className="border-0 bg-transparent focus:outline-none text-white placeholder:text-gray-400 text-center"
+                                type="password"
                               />
                             </div>
                           </FormControl>
@@ -366,21 +517,26 @@ export default function Accommodation() {
                         fontFamily: "Orbitron, sans-serif",
                         letterSpacing: "0.04em",
                       }}
-                      disabled={!gender || selectedDates.length === 0}
-                      className="w-full mt-3 px-10 py-3 rounded-3xl
-                    bg-violet-600 text-white
-                    border border-violet-600
-                    cursor-pointer
-                     hover:shadow-[0_0_24px_rgba(122,40,255,0.85)] transition"
+                      disabled={
+                        isPending ||
+                        !gender ||
+                        selectedDates.length === 0
+                      }
+                      className={cn(
+                        "w-full mt-3 px-10 py-3 rounded-3xl bg-violet-600 text-white border border-violet-600 transition",
+                        isPending || !gender || selectedDates.length === 0
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer hover:shadow-[0_0_24px_rgba(122,40,255,0.85)]"
+                      )}
                     >
-                      Submit
+                      {isPending ? "Submitting..." : "Submit"}
                     </button>
                   </form>
                 </Form>
               )}
 
-              {/* Payment Button - Only when logged in */}
-              {!isAuthenticated && !isOpen && (
+              {/* Payment Button - Only when logged in and not already booked */}
+              {isAuthenticated && !isOpen && !isAlreadyBooked && (
                 <button
                   onClick={togglePayment}
                   style={{
@@ -398,7 +554,7 @@ export default function Accommodation() {
               )}
 
               {/* Close Payment Button - Only when logged in and payment open */}
-              {!isAuthenticated && isOpen && (
+              {isAuthenticated && isOpen && !isAlreadyBooked && (
                 <button
                   onClick={togglePayment}
                   style={{
@@ -416,7 +572,7 @@ export default function Accommodation() {
               )}
 
               {/* Not Logged In Message */}
-              {!!isAuthenticated && (
+              {!isAuthenticated && (
                 <div
                   style={{
                     fontFamily: "Orbitron, sans-serif",
@@ -494,7 +650,7 @@ export default function Accommodation() {
                         >
                           <span className="text-left text-white">{n}</span>
                           <a
-                            href={`tel:${p.replace(/\s+/g, "")}`}
+                            href={`tel:${p!.replace(/\s+/g, "")}`}
                             className="text-white/90 whitespace-nowrap hover:text-white transition-colors"
                           >
                             {p}

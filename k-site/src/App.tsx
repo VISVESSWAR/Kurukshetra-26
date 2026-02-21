@@ -143,10 +143,10 @@ function App() {
         glowColor="132, 0, 255"
       />
 
-      <Navbar />
       <Background />
       <AppProvider>
         <AuthProvider>
+          <Navbar />
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -172,10 +172,9 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          <Footer />
         </AuthProvider>
       </AppProvider>
-
-      <Footer />
       </Router>
       </GoogleReCaptchaProvider>
     </GoogleOAuthProvider>

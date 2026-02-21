@@ -90,21 +90,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const handleKLogin = (data: LoginPayload) => {
     refreshCaptcha();
 
-    toast.promise(
-      apiKLogin({ ...data, captcha: captchaToken }),
-      {
-        loading: "Logging in...",
-        success: (response: RegisterResponse) => {
-          dispatch({
-            type: "LOGIN_SUCCESS",
-            payload: response.user,
-          });
-          navigate(DEFAULT_REDIRECT_PATH);
-          return response.message;
-        },
-        error: (err) => getErrorMessage(err),
-      },
-    );
+    const loadingToast = toast.loading("Authenticating credentials...");
+
+    apiKLogin({ ...data, captcha: captchaToken })
+      .then((response: RegisterResponse & { redirectToRegister?: boolean }) => {
+        if (response.redirectToRegister) {
+          toast.dismiss(loadingToast);
+          toast.error(response.message || "Account registration required.");
+          navigate("/register");
+          return;
+        }
+
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: response.user,
+        });
+        toast.dismiss(loadingToast);
+        toast.success(response.message || "Welcome back, authorized user.");
+        navigate(DEFAULT_REDIRECT_PATH);
+      })
+      .catch((err) => {
+        toast.dismiss(loadingToast);
+        dispatch({ type: "LOGOUT" });
+        toast.error(getErrorMessage(err));
+      });
   };
 
   const handleKRegister = (data: RegisterPayload) => {

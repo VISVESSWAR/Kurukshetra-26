@@ -104,6 +104,8 @@ export const apiPutReferenceID = async (code: string, data: Record<string, unkno
 
 export const apiRegisterAccommodation = async (data: Record<string, unknown>) => {
   try {
+    console.log(data);
+    
     const response = await api.post(`${url}/accomodation/register`, data);
     return {
       message: response.data.message,
@@ -121,11 +123,14 @@ export const apiGetAccommodation = async () => {
   try {
     const response = await api.get(`${url}/accomodation`);
     const { registered, registrations } = response.data;
+    
+    console.log(response.data);
     return {
       registered,
       isPaid: registrations.isPaid,
       payid: registrations.payid ? true : false,
     };
+    
   } catch (err) {
     const error = err as AxiosError<ApiErrorResponse>;
     if (error.response) throw error.response.data;

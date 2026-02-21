@@ -6,6 +6,7 @@ import {
   type NavItem,
   type NavbarStore,
 } from "@/store/navbarStore";
+import { useAuth } from "@/context/utils/useAuth";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -18,6 +19,7 @@ const Navbar: React.FC = () => {
     (state: NavbarStore) => state.setHomeNavbar
   );
   const location = useLocation();
+  const { isAuthenticated, handleLogout } = useAuth();
 
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -111,6 +113,34 @@ const Navbar: React.FC = () => {
               </Link>
             )
           )}
+          {!isAuthenticated ? (
+            <>
+              <Link
+                to="/login"
+                className="w-full py-4 px-4 text-white text-base tracking-wider font-(family-name:--wallpoet) hover:bg-white/5 transition-colors block"
+                onClick={handleMenuClose}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="w-full py-4 px-4 text-white text-base tracking-wider font-(family-name:--wallpoet) hover:bg-white/5 transition-colors block"
+                onClick={handleMenuClose}
+              >
+                Register
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                handleLogout();
+                handleMenuClose();
+              }}
+              className="w-full py-4 px-4 text-white text-base tracking-wider font-(family-name:--wallpoet) hover:bg-white/5 transition-colors text-left"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
 
@@ -163,6 +193,58 @@ const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             )
+          )}
+          {!isAuthenticated ? (
+            <>
+              <Link
+                to="/login"
+                className={`
+                  relative px-3 xl:px-5 py-1.5
+                  text-center rounded-full
+                  text-xs tracking-wider
+                  font-(family-name:--orbitron)
+                  transition-all duration-300
+                  ${
+                    isActive("/login")
+                      ? "bg-violet-600 text-white"
+                      : "text-white hover:bg-violet-600/50 hover:text-white"
+                  }
+                `}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className={`
+                  relative px-3 xl:px-5 py-1.5
+                  text-center rounded-full
+                  text-xs tracking-wider
+                  font-(family-name:--orbitron)
+                  transition-all duration-300
+                  ${
+                    isActive("/register")
+                      ? "bg-violet-600 text-white"
+                      : "text-white hover:bg-violet-600/50 hover:text-white"
+                  }
+                `}
+              >
+                Register
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className={`
+                relative px-3 xl:px-5 py-1.5
+                text-center rounded-full
+                text-xs tracking-wider
+                font-(family-name:--orbitron)
+                transition-all duration-300
+                text-white hover:bg-violet-600/50 hover:text-white
+              `}
+            >
+              Logout
+            </button>
           )}
         </div>
       </div>
