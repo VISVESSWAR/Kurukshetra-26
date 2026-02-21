@@ -303,7 +303,7 @@ export const WORKSHOPS_DATA: Workshop[] = [
         icon: spIcon,
         content: [
           {
-            logo: "/Workshops/flytutor.jpeg",
+            logo: "/Workshops/fly_tutor.jpeg",
           },
         ],
       },
