@@ -4,7 +4,10 @@ import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useSearchParams } from "react-router-dom";
-import { CustomSelect, type SelectOption } from "@/components/Forms/CustomSelect";
+import {
+  CustomSelect,
+  type SelectOption,
+} from "@/components/Forms/CustomSelect";
 import {
   Form,
   FormControl,
@@ -22,7 +25,7 @@ import {
   LuEyeOff,
   LuUser,
   LuPhone,
-//   LuGraduationCap,
+  //   LuGraduationCap,
 } from "react-icons/lu";
 import { HiOutlineIdentification } from "react-icons/hi2";
 import { PhoneCode } from "@/components/Forms/PhoneCode";
@@ -117,13 +120,11 @@ const CegianForm = ({ verifiedEmail }: CegianFormProps) => {
   const [country, setCountry] = useState("India");
   const [showPassword, setShowPassword] = useState(false);
   const inputStyles =
-    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent backdrop-blur-xs transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
+    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
   const iconStyles = "h-5 w-5 text-white shrink-0";
   const labelStyles = "text-white font-medium font-novaSquare text-sm";
   const form = useForm<CegianFormValues>({
-    resolver: zodResolver(
-      verifiedEmail ? cegianFormSchemaG : cegianFormSchema
-    ),
+    resolver: zodResolver(verifiedEmail ? cegianFormSchemaG : cegianFormSchema),
   });
 
   const convertDate = (date: Date) => {
@@ -302,33 +303,8 @@ const CegianForm = ({ verifiedEmail }: CegianFormProps) => {
           />
         </div>
 
-        {/* Section 2b: Roll Number Field */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="roll"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className={cn(labelStyles)}>Roll Number</FormLabel>
-                <FormControl>
-                  <div className={cn(inputStyles)}>
-                    <HiOutlineIdentification className={cn(iconStyles)} />
-                    <Input
-                      placeholder="Registration Number"
-                      {...field}
-                      className="border-0 bg-transparent focus:outline-none"
-                      type="text"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
         {/* Section 3: DOB and Year Fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1  gap-6">
           <FormField
             control={form.control}
             name="dob"
@@ -345,27 +321,53 @@ const CegianForm = ({ verifiedEmail }: CegianFormProps) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="year"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel className={cn(labelStyles)}>Year of Study</FormLabel>
-                <FormControl>
-                  <div className={cn(inputStyles)}>
-                    <HiOutlineIdentification className={cn(iconStyles)} />
-                    <CustomSelect
-                      value={field.value}
-                      onChange={field.onChange}
-                      options={yearOptions}
-                      placeholder="Select Year Of Study"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {/* Section 2b: Roll Number Field */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="roll"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className={cn(labelStyles)}>Roll Number</FormLabel>
+                  <FormControl>
+                    <div className={cn(inputStyles)}>
+                      <HiOutlineIdentification className={cn(iconStyles)} />
+                      <Input
+                        placeholder="Registration Number"
+                        {...field}
+                        className="border-0 bg-transparent focus:outline-none"
+                        type="text"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="year"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel className={cn(labelStyles)}>
+                    Year of Study
+                  </FormLabel>
+                  <FormControl>
+                    <div className={cn(inputStyles, "relative")}>
+                      <HiOutlineIdentification className={cn(iconStyles)} />
+                      <CustomSelect
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={yearOptions}
+                        placeholder="Select Year Of Study"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         {/* Section 4: Password Fields (when not verified email) */}
@@ -410,7 +412,9 @@ const CegianForm = ({ verifiedEmail }: CegianFormProps) => {
               name="confirm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={cn(labelStyles)}>Confirm Password</FormLabel>
+                  <FormLabel className={cn(labelStyles)}>
+                    Confirm Password
+                  </FormLabel>
                   <FormControl>
                     <div className={cn(inputStyles, "relative")}>
                       <LuLock className={cn(iconStyles)} />

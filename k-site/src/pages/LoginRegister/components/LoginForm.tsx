@@ -32,7 +32,7 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const inputStyles =
-    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent backdrop-blur-xs transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
+    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
   const iconStyles = "h-5 w-5 text-white shrink-0";
   const labelStyles = "text-white font-medium font-novaSquare text-sm";
   const form = useForm<LoginFormValues>({

@@ -60,12 +60,12 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
     }));
 
     return (
-      <div ref={ref} className={cn("flex items-center gap-1", className)}>
+      <div ref={ref} className={cn("flex items-center w-full", className)}>
         <div className="hidden place-content-center xs:grid">
           <LuCalendar className={cn(iconStyles, "h-5 w-[40px] py-[0.1rem]")} />
         </div>
-        <div className="grid w-full grid-cols-9 space-x-2 pt-1">
-          <div className={cn(inputStyles, "col-span-2 pl-0")}>
+        <div className="grid flex-1 grid-cols-9 gap-x-2 ">
+          <div className={cn(inputStyles, "col-span-2  ")}>
             <CustomSelect
               options={dayOptions}
               value={date}
@@ -73,7 +73,7 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
               placeholder="Day"
             />
           </div>
-          <div className={cn(inputStyles, "col-span-4 pl-0")}>
+          <div className={cn(inputStyles, "col-span-4  ")}>
             <CustomSelect
               options={monthOptions}
               value={month}
@@ -81,7 +81,7 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
               placeholder="Month"
             />
           </div>
-          <div className={cn(inputStyles, "col-span-3 pl-0")}>
+          <div className={cn(inputStyles, "col-span-3  ")}>
             <CustomSelect
               options={yearOptions}
               value={year}

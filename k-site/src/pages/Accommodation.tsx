@@ -26,7 +26,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { cn } from "@/lib/utils";
-
+import qrCode from "@/assets/Accomodation/upi.jpg";
 type Gender = "Male" | "Female" | "Others";
 
 const accommodationSchema = z
@@ -84,7 +84,7 @@ export default function Accommodation() {
   };
 
   const inputStyles =
-    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent backdrop-blur-xs transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
+    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
   const labelStyles = "text-white font-medium font-novaSquare text-sm";
 
   return (
@@ -282,11 +282,11 @@ export default function Accommodation() {
                   </h3>
                   <div className="flex flex-col items-center gap-4 p-4 rounded-3xl border border-white/70">
                     {/* QR Code */}
-                    <div className="w-40 h-40 bg-white/10 rounded-lg border border-white/50 flex items-center justify-center">
+                    <div className="w-48 h-48 bg-white/10 rounded-lg border border-white/50 flex items-center justify-center">
                       <img
-                        src="/path-to-qr-code.png"
+                        src={qrCode}
                         alt="UPI QR Code"
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-fit rounded-lg"
                       />
                     </div>
                     <div>

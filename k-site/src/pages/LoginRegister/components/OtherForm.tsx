@@ -42,7 +42,7 @@ const convertNameToValue = (
   states: Array<{ code: string; name: string }>
 ): SelectOption[] => {
   return states.map((state) => ({
-    value: state.code,
+    value: state.name,
     label: state.name,
   }));
 };
@@ -113,7 +113,7 @@ const OtherForm = ({ verifiedEmail }: OtherFormProps) => {
   const [country, setCountry] = useState("India");
   const [showPassword, setShowPassword] = useState(false);
   const inputStyles =
-    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent backdrop-blur-xs transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
+    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
   const iconStyles = "h-5 w-5 text-white shrink-0";
   const labelStyles = "text-white font-medium font-novaSquare text-sm";
   const form = useForm<OtherFormValues>({
@@ -344,16 +344,15 @@ const OtherForm = ({ verifiedEmail }: OtherFormProps) => {
               <FormItem>
                 <FormLabel className={cn(labelStyles)}>State</FormLabel>
                 <FormControl>
-                  <div className={cn(inputStyles)}>
+                  <div className={cn(inputStyles, "relative")}>
                     <LuMap className={cn(iconStyles)} />
                     <CustomSelect
                       value={field.value}
                       onChange={(selectedState) => {
-                        field.onChange(selectedState);
+                        const stateName = String(selectedState);
+                        field.onChange(stateName);
                         const citiesForState =
-                          cities[
-                            String(selectedState) as keyof typeof cities
-                          ] || [];
+                          cities[stateName as keyof typeof cities] || [];
                         if (citiesForState.length > 0) {
                           form.setValue("city", citiesForState[0]);
                         }
@@ -374,7 +373,7 @@ const OtherForm = ({ verifiedEmail }: OtherFormProps) => {
               <FormItem>
                 <FormLabel className={cn(labelStyles)}>City</FormLabel>
                 <FormControl>
-                  <div className={cn(inputStyles)}>
+                  <div className={cn(inputStyles, "relative")}>
                     <LuMapPin className={cn(iconStyles)} />
                     <CustomSelect
                       value={field.value}
