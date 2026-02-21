@@ -1,17 +1,17 @@
 import Cookies from "js-cookie";
 import api from "./axios";
 import { AxiosError } from "axios";
+import type {
+  LoginPayload,
+  RegisterPayload,
+  GooglePayload,
+  ForgotPasswordPayload,
+  ResetPasswordPayload,
+} from "@/context/utils/auth_types";
 
 const url = "/auth";
 
 /* ---------- TYPES ---------- */
-
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  captcha: string | null;
-}
 
 export interface AuthUser {
   id: string;
@@ -29,13 +29,10 @@ export interface ApiError {
   message: string;
 }
 
-export type LoginPayload = Record<string, unknown>;
-export type AuthPayload = Record<string, unknown>;
-
 /* ---------- API FUNCTION ---------- */
 
 export const apiKRegister = async (
-  data: RegisterPayload
+  data: RegisterPayload & { captcha: string | null }
 ): Promise<RegisterResponse> => {
   try {
     const response = await api.post<RegisterResponse>(
@@ -61,7 +58,9 @@ export const apiKRegister = async (
   }
 };
 
-export const apiKLogin = async (data: LoginPayload): Promise<RegisterResponse> => {
+export const apiKLogin = async (
+  data: LoginPayload & { captcha: string | null }
+): Promise<RegisterResponse> => {
   try {
     const response = await api.post<RegisterResponse>(`${url}/login`, data);
 
@@ -83,7 +82,9 @@ export const apiKLogin = async (data: LoginPayload): Promise<RegisterResponse> =
   }
 };
 
-export const apiGSignin = async (data: AuthPayload): Promise<RegisterResponse> => {
+export const apiGSignin = async (
+  data: GooglePayload & { captcha: string | null }
+): Promise<RegisterResponse> => {
   try {
     const response = await api.post<RegisterResponse>(
       `${url}/google-signin`,
@@ -108,10 +109,33 @@ export const apiGSignin = async (data: AuthPayload): Promise<RegisterResponse> =
   }
 };
 
-export const apiForgotPassword = async (data: AuthPayload): Promise<{ message: string }> => {
+export const apiForgotPassword = async (
+  data: ForgotPasswordPayload & { captcha: string | null }
+): Promise<{ message: string }> => {
   try {
     const response = await api.post<{ message: string }>(
       `${url}/forgot-password`,
+      data
+    );
+
+    return { message: response.data.message };
+  } catch (err) {
+    const error = err as AxiosError<ApiError>;
+
+    if (error.response?.data) {
+      throw error.response.data;
+    }
+
+    throw { message: "Something went wrong" } as ApiError;
+  }
+};
+
+export const apiResetPassword = async (
+  data: ResetPasswordPayload & { captcha: string | null }
+): Promise<{ message: string }> => {
+  try {
+    const response = await api.post<{ message: string }>(
+      `${url}/reset-password`,
       data
     );
 

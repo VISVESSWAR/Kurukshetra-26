@@ -17,6 +17,7 @@ import {
   apiGSignin,
   apiKLogin,
   apiKRegister,
+  apiResetPassword,
   type RegisterResponse,
 } from "../api/auth";
 
@@ -27,6 +28,7 @@ import type {
   RegisterPayload,
   GooglePayload,
   ForgotPasswordPayload,
+  ResetPasswordPayload,
 } from "@/context/utils/auth_types.ts";
 import { AuthContext } from "./AuthContextObject";
 
@@ -161,6 +163,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const handleResetPassword = (data: ResetPasswordPayload) => {
+    refreshCaptcha();
+
+    toast.promise(
+      apiResetPassword({ ...data, captcha: captchaToken }),
+      {
+        loading: "Resetting password...",
+        success: (response: { message: string }) => {
+          navigate("/login");
+          return response.message;
+        },
+        error: (err) => getErrorMessage(err),
+      },
+    );
+  };
+
   const handleLogout = useCallback(() => {
     Cookies.remove("token");
     dispatch({ type: "LOGOUT" });
@@ -182,6 +200,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         handleKRegister,
         handleGoogleOAuth,
         handleForgotPassword,
+        handleResetPassword,
         handleLogout,
       }}
     >
@@ -189,3 +208,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     </AuthContext.Provider>
   );
 }
+

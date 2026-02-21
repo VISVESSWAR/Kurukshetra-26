@@ -6,21 +6,43 @@ export interface AuthUser {
 
 export interface LoginPayload {
   email: string;
-  password: string;
+  pwd: string;
+  captcha?: string | null;
 }
 
 export interface RegisterPayload {
-  name: string;
+  firstname: string;
+  lastname?: string;
   email: string;
-  password: string;
+  phone: string;
+  college: string;
+  city: string;
+  state: string;
+  dept: string;
+  roll?: string;
+  dob?: string;
+  year?: number;
+  pwd?: string;
+  gauthToken?: string;
+  code?: string;
+  captcha?: string | null;
 }
 
 export interface GooglePayload {
-  credential: string;
+  accessId: string;
+  captcha?: string | null;
 }
 
 export interface ForgotPasswordPayload {
   email: string;
+  captcha?: string | null;
+}
+
+export interface ResetPasswordPayload {
+  pwd: string;
+  user?: string;
+  key?: string;
+  captcha?: string | null;
 }
 
 export interface AuthContextType {
@@ -30,5 +52,6 @@ export interface AuthContextType {
   handleKRegister: (data: RegisterPayload) => void;
   handleGoogleOAuth: (data: GooglePayload) => void;
   handleForgotPassword: (data: ForgotPasswordPayload) => void;
+  handleResetPassword: (data: ResetPasswordPayload) => void;
   handleLogout: () => void;
 }

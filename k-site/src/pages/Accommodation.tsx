@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import useGlitch from "@/hooks/useGlitch";
+import { useAuth } from "@/context/utils/useAuth";
+import Instructions from "@/assets/Instructions.pdf";
 import {
   pageVariants,
   fadeUp,
@@ -11,96 +13,79 @@ import {
   floatSlow,
   hoverLift,
 } from "@/lib/animations";
-import { useAuth } from "@/context/utils/useAuth";
-import { apiRegisterAccommodation } from "@/api/user.ts";
-import toast from "react-hot-toast";
-
-import qr from "@/assets/Accomodation/upi.jpg";
-import upi from "@/assets/Accomodation/upi.svg";
-import upiId from "@/assets/Accomodation/upi_id.jpg";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { cn } from "@/lib/utils";
 
 type Gender = "Male" | "Female" | "Others";
 
+const accommodationSchema = z
+  .object({
+    upiTransactionId: z.string().min(1, "UPI Transaction ID required"),
+    confirmUpiTransactionId: z.string().min(1, "Confirm UPI Transaction ID required"),
+  })
+  .refine(
+    (data) => data.upiTransactionId === data.confirmUpiTransactionId,
+    {
+      message: "UPI Transaction IDs do not match",
+      path: ["confirmUpiTransactionId"],
+    }
+  );
+
+type AccommodationFormValues = z.infer<typeof accommodationSchema>;
+
 export default function Accommodation() {
+  const { isAuthenticated } = useAuth();
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [gender, setGender] = useState<Gender | null>(null);
   const [food, setFood] = useState(false);
-  const [isOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const glitch = useGlitch();
 
-  const { isAuthenticated } = useAuth();
+  const togglePayment = () => {
+    setIsOpen((prev) => !prev);
+  };
 
-  const [transactionId, setTransactionId] = useState("");
-  const [confirmTransactionId, setConfirmTransactionId] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const form = useForm<AccommodationFormValues>({
+    resolver: zodResolver(accommodationSchema),
+  });
 
   const dates = ["MAR 7", "MAR 8", "MAR 9"];
   const total = selectedDates.length * (food ? 450 : 300);
 
   const toggleDate = (d: string) => {
     setSelectedDates((prev) =>
-      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
+      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
     );
   };
 
-  // const handleSubmit = () => {
-  //   const payload = {
-  //     dates: selectedDates,
-  //     gender,
-  //     food,
-  //     total,
-  //   };
+  const handleSubmit = (formData: AccommodationFormValues) => {
+    const payload = {
+      dates: selectedDates,
+      gender,
+      food,
+      total,
+      upiTransactionId: formData.upiTransactionId,
+    };
 
-  //   if (import.meta.env.DEV) {
-  //     console.log("Accommodation Submission:", payload);
-  //   }
-  // };
-
-  const handleSubmit = async () => {
-    if (!isAuthenticated) {
-      toast.error("Please login to register");
-      return;
+    if (import.meta.env.DEV) {
+      //console.log("Accommodation Submission:", payload);
     }
-
-    if (!gender || selectedDates.length === 0) {
-      toast.error("Select dates and gender");
-      return;
-    }
-
-    if (!transactionId || !confirmTransactionId) {
-      toast.error("Enter Transaction ID");
-      return;
-    }
-
-    if (transactionId !== confirmTransactionId) {
-      toast.error("Transaction IDs do not match");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    toast.promise(
-      apiRegisterAccommodation({
-        sex: gender.toLowerCase(),
-        food,
-        d1: selectedDates.includes("MAR 7"),
-        d2: selectedDates.includes("MAR 8"),
-        d3: selectedDates.includes("MAR 9"),
-        payid: transactionId,
-      }),
-      {
-        loading: "Submitting...",
-        success: (res: { message?: string }) => {
-          setIsSubmitting(false);
-          return res?.message || "Registered successfully";
-        },
-        error: (err: { message?: string }) => {
-          setIsSubmitting(false);
-          return err?.message || "Something went wrong";
-        },
-      },
-    );
   };
+
+  const inputStyles =
+    "flex items-center rounded-full px-4 py-2.5 border border-white/50 bg-transparent backdrop-blur-xs transition-all duration-300 focus-within:border-[#7a28ff] focus-within:shadow-[0_0_12px_rgba(122,40,255,0.4)]";
+  const labelStyles = "text-white font-medium font-novaSquare text-sm";
 
   return (
     <motion.section
@@ -168,18 +153,10 @@ export default function Accommodation() {
                 Accommodation Charges
               </h2>
 
-              <p
-                style={{ fontFamily: "Orbitron, sans-serif" }}
-                className="text-[0.9rem] leading-relaxed text-white"
-              >
-                Without food – Rs.300 per day <br />
-                With food – Rs.450 per day
-              </p>
-
               {/* Dates */}
               <div
                 className="flex flex-wrap justify-center gap-4 p-3 rounded-3xl
-               border border-white/70 ]"
+               border border-white/70"
               >
                 {dates.map((d) => {
                   const sel = selectedDates.includes(d);
@@ -209,7 +186,7 @@ export default function Accommodation() {
               {/* Gender */}
               <div
                 className="flex justify-center gap-6 p-3 rounded-3xl
-               border border-white/70 "
+               border border-white/70"
               >
                 {(["Male", "Female", "Others"] as Gender[]).map((g) => {
                   const sel = gender === g;
@@ -236,22 +213,51 @@ export default function Accommodation() {
                 })}
               </div>
 
-              {/* Food */}
-              <label
+              <p
                 style={{ fontFamily: "Orbitron, sans-serif" }}
-                className="flex items-center justify-center gap-3
-                text-[0.7rem] text-white cursor-pointer"
+                className="text-[0.9rem] leading-relaxed text-white"
               >
-                <input
-                  type="checkbox"
-                  checked={food}
-                  onChange={() => setFood(!food)}
-                  className="w-4 h-4 accent-violet-600"
-                />
-                I require food for the days I had requested accommodation.
-              </label>
+                <span className="font-bold text-lg">Note</span>
+                <br />
+                Without food – Rs.300 per day <br />
+                With food – Rs.450 per day
+              </p>
 
-              {/* Total + Instruction */}
+              {/* Food */}
+              <div className="flex flex-row justify-around w-full">
+                <label
+                  style={{ fontFamily: "Orbitron, sans-serif" }}
+                  className="flex items-center justify-center gap-2
+                text-md text-white cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="no_food"
+                    value={"no"}
+                    checked={!food}
+                    onChange={() => setFood(false)}
+                    className="w-4 h-4 accent-violet-600"
+                  />
+                  Without food.
+                </label>
+                <label
+                  style={{ fontFamily: "Orbitron, sans-serif" }}
+                  className="flex items-center justify-center gap-2
+                text-md text-white cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="food"
+                    value={"yes"}
+                    checked={food}
+                    onChange={() => setFood(true)}
+                    className="w-4 h-4 accent-violet-600"
+                  />
+                  With food.
+                </label>
+              </div>
+
+              {/* Total */}
               <div className="flex justify-center flex-wrap gap-4 pt-3">
                 <div
                   style={{
@@ -259,109 +265,169 @@ export default function Accommodation() {
                     letterSpacing: "0.04em",
                   }}
                   className="px-6 py-2.5 rounded-3xl
-                  border border-white/70 text-white text-[1rem]"
+                border border-white/70 text-white text-[1rem]"
                 >
                   Total – Rs.{total}/-
                 </div>
-
-                {/* <a
-                  href={Instructions}
-                  target="_blank"
-                  style={{
-                    fontFamily: "Orbitron, sans-serif",
-                    letterSpacing: "0.04em",
-                  }}
-                  className="px-6 py-2.5 rounded-3xl
-                  border border-white/70 text-white text-[1rem] cursor-pointer hover:shadow-[0_0_15px_rgba(122,40,255,0.85)] transition"
-                >
-                  Instruction
-                </a> */}
               </div>
 
-              {/* UPI SECTION */}
-              <div className="flex flex-col items-center gap-4 pt-4 w-full">
-                {/* Show QR Button */}
-                <details className="w-full text-center">
-                  <summary
+              {/* Payment Reference Section - Only when isOpen */}
+              {isOpen && (
+                <div className="w-full">
+                  <h3
                     style={{ fontFamily: "Orbitron, sans-serif" }}
-                    className="cursor-pointer px-6 py-2.5 rounded-3xl border border-white/70 text-white text-[0.9rem]"
+                    className="text-[1.2rem] tracking-wide text-white mb-3 text-center"
                   >
-                    Show UPI QR
-                  </summary>
-
-                  <div className="flex flex-col items-center gap-4 mt-4">
-                    <img src={qr} alt="qr" className="w-48 rounded-lg" />
-
-                    <div className="flex items-center gap-3 border border-white/70 rounded-3xl px-6 py-2">
-                      <img src={upi} alt="upi" className="w-10" />
-                      <span className="text-white tracking-wide">
-                        techforum@sbi
-                      </span>
+                    Payment Reference
+                  </h3>
+                  <div className="flex flex-col items-center gap-4 p-4 rounded-3xl border border-white/70">
+                    {/* QR Code */}
+                    <div className="w-40 h-40 bg-white/10 rounded-lg border border-white/50 flex items-center justify-center">
+                      <img
+                        src="/path-to-qr-code.png"
+                        alt="UPI QR Code"
+                        className="w-full h-full object-cover rounded-lg"
+                      />
                     </div>
-
-                    <img
-                      src={upiId}
-                      alt="upi-id-help"
-                      className="w-52 rounded-lg"
-                    />
+                    <div>
+                      <p
+                        style={{ fontFamily: "Orbitron, sans-serif" }}
+                        className="text-[0.9rem] text-white/70 mb-1"
+                      >
+                        UPI ID
+                      </p>
+                      <p
+                        style={{ fontFamily: "Orbitron, sans-serif", letterSpacing: "0.04em" }}
+                        className="text-[1rem] text-white font-semibold"
+                      >
+                        kurukshetra@upi
+                      </p>
+                    </div>
                   </div>
-                </details>
-
-                {/* Transaction Inputs */}
-                <div className="flex flex-col gap-3 w-full max-w-xs">
-                  <input
-                    type="text"
-                    placeholder="UPI Transaction ID"
-                    value={transactionId}
-                    onChange={(e) => setTransactionId(e.target.value)}
-                    className="px-4 py-2 rounded-2xl border border-white/70 bg-transparent text-white text-sm outline-none"
-                  />
-
-                  <input
-                    type="password"
-                    placeholder="Confirm Transaction ID"
-                    value={confirmTransactionId}
-                    onChange={(e) => setConfirmTransactionId(e.target.value)}
-                    className="px-4 py-2 rounded-2xl border border-white/70 bg-transparent text-white text-sm outline-none"
-                  />
                 </div>
-              </div>
+              )}
 
-              {/* Submit */}
-              {isOpen ? (
+              {/* UPI Transaction ID Fields - Only when isOpen */}
+              {isOpen && (
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(handleSubmit)}
+                    className="w-full space-y-3"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="upiTransactionId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className={cn(labelStyles)}>
+                            UPI Transaction ID
+                          </FormLabel>
+                          <FormControl>
+                            <div className={cn(inputStyles)}>
+                              <Input
+                                placeholder="Enter UPI Transaction ID"
+                                {...field}
+                                className="border-0 bg-transparent focus:outline-none text-white placeholder:text-gray-400"
+                                type="text"
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="confirmUpiTransactionId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className={cn(labelStyles)}>
+                            Confirm UPI Transaction ID
+                          </FormLabel>
+                          <FormControl>
+                            <div className={cn(inputStyles)}>
+                              <Input
+                                placeholder="Confirm UPI Transaction ID"
+                                {...field}
+                                className="border-0 bg-transparent focus:outline-none text-white placeholder:text-gray-400"
+                                type="text"
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      style={{
+                        fontFamily: "Orbitron, sans-serif",
+                        letterSpacing: "0.04em",
+                      }}
+                      disabled={!gender || selectedDates.length === 0}
+                      className="w-full mt-3 px-10 py-3 rounded-3xl
+                    bg-violet-600 text-white
+                    border border-violet-600
+                    cursor-pointer
+                     hover:shadow-[0_0_24px_rgba(122,40,255,0.85)] transition"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </Form>
+              )}
+
+              {/* Payment Button - Only when logged in */}
+              {!isAuthenticated && !isOpen && (
                 <button
+                  onClick={togglePayment}
                   style={{
                     fontFamily: "Orbitron, sans-serif",
                     letterSpacing: "0.04em",
                   }}
-                  disabled={
-                    !gender ||
-                    selectedDates.length === 0 ||
-                    !transactionId ||
-                    !confirmTransactionId ||
-                    isSubmitting
-                  }
-                  onClick={handleSubmit}
-                  className="mt-3 px-10 py-3 rounded-3xl
-    bg-violet-600 text-white
-    border border-violet-600
-    cursor-pointer
-    disabled:opacity-50 hover:shadow-[0_0_24px_rgba(122,40,255,0.85)] transition"
+                  className="w-full mt-3 px-10 py-3 rounded-3xl
+                bg-violet-600 text-white
+                border border-violet-600
+                cursor-pointer
+                hover:shadow-[0_0_24px_rgba(122,40,255,0.85)] transition"
                 >
-                  {isSubmitting ? "Submitting..." : "Register Accommodation"}
+                  Pay Amount
                 </button>
-              ) : (
+              )}
+
+              {/* Close Payment Button - Only when logged in and payment open */}
+              {!isAuthenticated && isOpen && (
+                <button
+                  onClick={togglePayment}
+                  style={{
+                    fontFamily: "Orbitron, sans-serif",
+                    letterSpacing: "0.04em",
+                  }}
+                  className="w-full mt-3 px-10 py-3 rounded-3xl
+                bg-red-600/80 text-white
+                border border-red-600
+                cursor-pointer
+                hover:shadow-[0_0_24px_rgba(220,38,38,0.85)] transition"
+                >
+                  Close Payment
+                </button>
+              )}
+
+              {/* Not Logged In Message */}
+              {!!isAuthenticated && (
                 <div
                   style={{
                     fontFamily: "Orbitron, sans-serif",
                     letterSpacing: "0.04em",
                   }}
-                  className="mt-3 px-10 py-3 rounded-3xl
-    bg-violet-600/50 text-white
-    border border-violet-600
-    text-center"
+                  className="w-full mt-3 px-10 py-3 rounded-3xl
+                bg-violet-600/50 text-white
+                border border-violet-600
+                text-center"
                 >
-                  Accommodation opens soon
+                  Login to proceed with accommodation
                 </div>
               )}
             </motion.div>
@@ -375,63 +441,68 @@ export default function Accommodation() {
             flex flex-col items-center text-center"
               variants={slideRight}
             >
-              <h2
-                style={{ fontFamily: "Orbitron, sans-serif" }}
-                className="text-[1.55rem] tracking-wide text-white"
-              >
-                Got queries?
-              </h2>
-
-              <div>
-                <p
+              {/* Got queries section */}
+              <div className="w-full">
+                <h2
                   style={{ fontFamily: "Orbitron, sans-serif" }}
-                  className="text-[1rem] text-white mb-2"
+                  className="text-[1.55rem] tracking-wide text-white mb-4"
                 >
-                  Drop a mail at
-                </p>
-                <a
-                  href="mailto:hospitality@cegtechforum.in"
-                  style={{
-                    fontFamily: "Orbitron, sans-serif",
-                    letterSpacing: "0.08em",
-                  }}
-                  className="inline-block px-5 py-2.5 rounded-3xl
-                    bg-violet-600
-                  text-white text-[0.8rem] hover:shadow-[0_0_24px_rgba(122,40,255,0.85)] transition"
-                >
-                  hospitality@cegtechforum.in
-                </a>
-              </div>
+                  Got queries?
+                </h2>
 
-              <div>
-                <p
-                  style={{ fontFamily: "Orbitron, sans-serif" }}
-                  className="text-[1rem] text-white mb-2"
-                >
-                  Call our team
-                </p>
-                <div className="flex flex-col gap-2.5">
-                  {[
-                    ["Ajithkumar", "+91 90256 24766"],
-                    ["Mohamed Sahul Hameed H", "+91 90428 50775"],
-                    ["Surekaa S", "+91 63827 77055"],
-                  ].map(([n, p]) => (
-                    <div
-                      key={n}
+                <div className="space-y-4">
+                  <div>
+                    <p
                       style={{ fontFamily: "Orbitron, sans-serif" }}
-                      className="px-5 py-2.5 rounded-lg 
-                      border border-white/70 text-[0.8rem] 
-                      grid grid-cols-[1fr_auto] items-center gap-6"
+                      className="text-[1rem] text-white mb-2"
                     >
-                      <span className="text-left text-white">{n}</span>
-                      <a
-                        href={`tel:${p.replace(/\s+/g, "")}`}
-                        className="text-white/90 whitespace-nowrap hover:text-white transition-colors"
-                      >
-                        {p}
-                      </a>
+                      Drop a mail at
+                    </p>
+                    <a
+                      href="mailto:hospitality@cegtechforum.in"
+                      style={{
+                        fontFamily: "Orbitron, sans-serif",
+                        letterSpacing: "0.08em",
+                      }}
+                      className="inline-block px-5 py-2.5 rounded-3xl
+                        bg-violet-600
+                      text-white text-[0.8rem] hover:shadow-[0_0_24px_rgba(122,40,255,0.85)] transition"
+                    >
+                      hospitality@cegtechforum.in
+                    </a>
+                  </div>
+
+                  <div>
+                    <p
+                      style={{ fontFamily: "Orbitron, sans-serif" }}
+                      className="text-[1rem] text-white mb-2"
+                    >
+                      Call our team
+                    </p>
+                    <div className="flex flex-col gap-2.5">
+                      {[
+                        ["Ajithkumar", "+91 90256 24766"],
+                        ["Dharini", "+91 73392 93595"],
+                        ["Jayaram", "+91 63837 48935"],
+                      ].map(([n, p]) => (
+                        <div
+                          key={n}
+                          style={{ fontFamily: "Orbitron, sans-serif" }}
+                          className="px-5 py-2.5 rounded-lg 
+                        border border-white/70 text-[0.8rem] 
+                        grid grid-cols-[1fr_auto] items-center gap-6"
+                        >
+                          <span className="text-left text-white">{n}</span>
+                          <a
+                            href={`tel:${p.replace(/\s+/g, "")}`}
+                            className="text-white/90 whitespace-nowrap hover:text-white transition-colors"
+                          >
+                            {p}
+                          </a>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
             </motion.div>

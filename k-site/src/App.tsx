@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,14 +22,13 @@ const NotFound = lazy(() => import("@/pages/NotFound"));
 const WorkshopsList = lazy(() => import("@/pages/Workshop"));
 const WorkshopsDetails = lazy(() => import("@/pages/WorkshopDetails"));
 
-
 import Register from "./pages/Register";
+import Login from "./pages/LoginRegister/Login";
 import ForgotPassword from "./pages/ForgotPassword";
-import Profile from "./pages/Profile"; // Import the new Profile page
+import Profile from "./pages/Profile";
 import { Toaster } from "react-hot-toast";
 import { AppProvider } from "./context/AppContext";
 import { AuthProvider } from "./context/AuthContext";
-// import Login from "./pages/Login";
 
 //loader
 // import VideoLoader from "@/components/Loader/VideoLoader";
@@ -49,8 +50,8 @@ const COMING_SOON_PATHS = ["/guest-lectures"] as const;
 /** Minimal loading fallback while lazy chunks load. */
 function PageLoader() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
+    <div className="flex min-h-screen items-center justify-center bg-black">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#7a28ff] border-t-transparent" />
     </div>
   );
 }
@@ -62,40 +63,74 @@ function App() {
     // <>
     // {loading  && <VideoLoader onFinish={()=>setLoading(false)} />}
 
-    <Router>
-      <Toaster
-        containerStyle={{ zIndex: 500001 }}
-        toastOptions={{
-           duration: 2000, 
-          success: {
-            style: {
-              background: "rgb(22, 101, 52, 0.80)",
-              border: "1px solid rgb(76, 175, 80)",
-              backdropFilter: "blur(10px)",
-              color: "white",
-              fontFamily: "EuroStyle",
-            },
-          },
-          error: {
-            style: {
-              background: "rgb(159, 18, 57, 0.80)",
-              border: "1px solid rgb(244, 67, 54)",
-              backdropFilter: "blur(10px)",
-              color: "white",
-              fontFamily: "EuroStyle",
-            },
-          },
-          loading: {
-            style: {
-              background: "rgb(124, 45, 18, 0.80)",
-              border: "1px solid rgb(124, 45, 18)",
-              backdropFilter: "blur(10px)",
-              color: "white",
-              fontFamily: "EuroStyle",
-            },
-          },
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+      <GoogleReCaptchaProvider
+        reCaptchaKey={import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY}
+        useEnterprise={false}
+        scriptProps={{
+          async: true,
+          defer: true,
+          appendTo: "head",
         }}
-      />
+      >
+      <Router>
+        <Toaster
+          containerStyle={{ zIndex: 500001 }}
+          toastOptions={{
+            duration: 3000,
+            success: {
+              style: {
+                background: "linear-gradient(135deg, rgba(0, 255, 200, 0.15) 0%, rgba(0, 200, 255, 0.15) 100%)",
+                border: "2px solid #00FFC8",
+                backdropFilter: "blur(20px)",
+                color: "#00FFC8",
+                fontFamily: "EuroStyle",
+                boxShadow: "0 0 20px rgba(0, 255, 200, 0.5), inset 0 0 20px rgba(0, 255, 200, 0.1)",
+                borderRadius: "12px",
+                fontSize: "14px",
+                fontWeight: "600",
+              },
+              iconTheme: {
+                primary: "#00FFC8",
+                secondary: "#000000",
+              },
+            },
+            error: {
+              style: {
+                background: "linear-gradient(135deg, rgba(255, 0, 150, 0.15) 0%, rgba(255, 0, 100, 0.15) 100%)",
+                border: "2px solid #FF0096",
+                backdropFilter: "blur(20px)",
+                color: "#FF69D7",
+                fontFamily: "EuroStyle",
+                boxShadow: "0 0 20px rgba(255, 0, 150, 0.5), inset 0 0 20px rgba(255, 0, 150, 0.1)",
+                borderRadius: "12px",
+                fontSize: "14px",
+                fontWeight: "600",
+              },
+              iconTheme: {
+                primary: "#FF0096",
+                secondary: "#000000",
+              },
+            },
+            loading: {
+              style: {
+                background: "linear-gradient(135deg, rgba(122, 40, 255, 0.15) 0%, rgba(0, 150, 255, 0.15) 100%)",
+                border: "2px solid #7A28FF",
+                backdropFilter: "blur(20px)",
+                color: "#B8A7FF",
+                fontFamily: "EuroStyle",
+                boxShadow: "0 0 20px rgba(122, 40, 255, 0.5), inset 0 0 20px rgba(122, 40, 255, 0.1)",
+                borderRadius: "12px",
+                fontSize: "14px",
+                fontWeight: "600",
+              },
+              iconTheme: {
+                primary: "#7A28FF",
+                secondary: "#000000",
+              },
+            },
+          }}
+        />
       <MagicBento
         className="z-2"
         textAutoHide
@@ -130,23 +165,10 @@ function App() {
               <Route path="/workshops" element={<WorkshopsList />} />
               <Route path="/workshops/:slug" element={<WorkshopsDetails />} />
 
+              <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
-              {/* Forgot Password Page */}
               <Route path="/forgot-password" element={<ForgotPassword />} />
-
-              {/* Profile Page */}
               <Route path="/profile" element={<Profile />} />
-
-              {/* Login Page Placeholder */}
-              <Route
-                path="/login"
-                element={
-                  <div className="text-white flex h-screen items-center justify-center">
-                    Login Page coming soon...
-                  </div>
-                }
-              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
@@ -154,8 +176,9 @@ function App() {
       </AppProvider>
 
       <Footer />
-    </Router>
-    // </>
+      </Router>
+      </GoogleReCaptchaProvider>
+    </GoogleOAuthProvider>
   );
 }
 
