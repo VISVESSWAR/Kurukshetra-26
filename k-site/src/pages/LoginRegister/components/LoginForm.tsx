@@ -62,7 +62,7 @@ const LoginForm = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="max-w-xs space-y-4 min-[500px]:w-[100vw]"
+            className="max-w-xs space-y-4 min-[500px]:w-[100vw] mx-auto flex flex-col  "
           >
             <FormField
               control={form.control}
@@ -120,7 +120,7 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <div className="flex justify-end">
+            {/* <div className="flex justify-end">
               <Link
                 to="/forgotpassword"
                 className={cn(
@@ -129,7 +129,7 @@ const LoginForm = () => {
               >
                 Forgot Password?
               </Link>
-            </div>
+            </div> */}
             <div className="w-full">
               <button
                 type="submit"
@@ -144,7 +144,7 @@ const LoginForm = () => {
               </span>
               <Link
                 to="/register"
-                className="ml-3 cursor-pointer text-sm text-[#7a28ff] underline-offset-4 transition-colors hover:text-[#8A05FF] hover:underline"
+                className="relative ml-3 text-sm font-semibold text-white after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
               >
                 Register now
               </Link>

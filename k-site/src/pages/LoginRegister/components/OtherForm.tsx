@@ -495,7 +495,7 @@ const OtherForm = ({ verifiedEmail }: OtherFormProps) => {
                   <p className="text-sm text-white/70">Accept</p>
                   <Link
                     to={"/terms"}
-                    className="ml-2 cursor-pointer text-sm text-[#7a28ff] underline-offset-4 transition-colors hover:text-[#8A05FF] hover:underline"
+                    className="relative ml-3 text-sm font-semibold text-white after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
                   >
                     Terms&nbsp;&amp;&nbsp;Conditions
                   </Link>

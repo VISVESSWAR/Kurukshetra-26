@@ -19,6 +19,7 @@ import {
   apiKRegister,
   apiResetPassword,
   type RegisterResponse,
+  type GoogleAuthResponse,
 } from "../api/auth";
 
 import { getErrorMessage } from "@/context/utils/auth_utils.ts";
@@ -32,19 +33,10 @@ import type {
 } from "@/context/utils/auth_types.ts";
 import { AuthContext } from "./AuthContextObject";
 
-/* ========================= */
-
-
-// const initialState = {
-//   user: null,
-//   isAuthenticated: false,
-// };
-
 interface AuthState {
   user: AuthUser | null;
   isAuthenticated: boolean;
 }
-
 
 const initialState: AuthState = {
   user: null,
@@ -55,10 +47,7 @@ type AuthAction =
   | { type: "LOGIN_SUCCESS"; payload: AuthUser }
   | { type: "LOGOUT" };
 
-function reducer(
-  state: AuthState,
-  action: AuthAction,
-): AuthState {
+function reducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       return {
@@ -73,8 +62,6 @@ function reducer(
       return state;
   }
 }
-
-/* ========================= */
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [{ user, isAuthenticated }, dispatch] = useReducer(
@@ -119,73 +106,90 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const handleKRegister = (data: RegisterPayload) => {
     refreshCaptcha();
 
-    toast.promise(
-      apiKRegister({ ...data, captcha: captchaToken }),
-      {
-        loading: "Creating account...",
-        success: (response: RegisterResponse) => {
-          dispatch({
-            type: "LOGIN_SUCCESS",
-            payload: response.user,
-          });
-          navigate(DEFAULT_REDIRECT_PATH);
-          return response.message;
-        },
-        error: (err) => getErrorMessage(err),
+    toast.promise(apiKRegister({ ...data, captcha: captchaToken }), {
+      loading: "Creating account...",
+      success: (response: RegisterResponse) => {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: response.user,
+        });
+        navigate(DEFAULT_REDIRECT_PATH);
+        return response.message;
       },
-    );
+      error: (err) => getErrorMessage(err),
+    });
   };
+
 
   const handleGoogleOAuth = (data: GooglePayload) => {
     refreshCaptcha();
 
-    toast.promise(
-      apiGSignin({ ...data, captcha: captchaToken }),
-      {
-        loading: "Signing in...",
-        success: (response: RegisterResponse) => {
+    const loadingToast = toast.loading("Authorizing identity...");
+
+    apiGSignin({ ...data, captcha: captchaToken })
+      .then(
+        (
+          response: GoogleAuthResponse & {
+            redirect?: { path: string; state?: unknown };
+          },
+        ) => {
+          toast.dismiss(loadingToast);
+          // console.log("Google OAuth response:", response);
+          if (response.redirect) {
+            toast.error(
+              response.message ||
+                "Registration required to complete authentication.",
+            );
+            // console.log("Redirecting to:", response.redirect);
+            navigate(response.redirect.path, {
+              replace: true,
+              state: response.redirect.state,
+            });
+
+            return;
+          }
+
           dispatch({
             type: "LOGIN_SUCCESS",
             payload: response.user,
           });
+
+          toast.success(response.message || "Authentication successful.");
+
           navigate(DEFAULT_REDIRECT_PATH);
-          return response.message;
         },
-        error: (err) => getErrorMessage(err),
-      },
-    );
+      )
+      .catch((err) => {
+        toast.dismiss(loadingToast);
+        dispatch({ type: "LOGOUT" });
+        toast.error(getErrorMessage(err));
+      });
   };
 
   const handleForgotPassword = (data: ForgotPasswordPayload) => {
     refreshCaptcha();
 
-    toast.promise(
-      apiForgotPassword({ ...data, captcha: captchaToken }),
-      {
-        loading: "Sending reset link...",
-        success: (response: { message: string }) => {
-          navigate("/");
-          return response.message;
-        },
-        error: (err) => getErrorMessage(err),
+    toast.promise(apiForgotPassword({ ...data, captcha: captchaToken }), {
+      loading: "Sending reset link...",
+      success: (response: { message: string }) => {
+        navigate("/");
+        return response.message;
       },
-    );
+      error: (err) => getErrorMessage(err),
+    });
   };
 
   const handleResetPassword = (data: ResetPasswordPayload) => {
     refreshCaptcha();
 
-    toast.promise(
-      apiResetPassword({ ...data, captcha: captchaToken }),
-      {
-        loading: "Resetting password...",
-        success: (response: { message: string }) => {
-          navigate("/login");
-          return response.message;
-        },
-        error: (err) => getErrorMessage(err),
+    toast.promise(apiResetPassword({ ...data, captcha: captchaToken }), {
+      loading: "Resetting password...",
+      success: (response: { message: string }) => {
+        navigate("/login");
+        return response.message;
       },
-    );
+      error: (err) => getErrorMessage(err),
+    });
   };
 
   const handleLogout = useCallback(() => {
@@ -217,4 +221,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     </AuthContext.Provider>
   );
 }
-

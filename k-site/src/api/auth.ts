@@ -29,6 +29,17 @@ export interface ApiError {
   message: string;
 }
 
+ export interface GoogleAuthResponse {
+  message: string;
+  token?: string;
+  user?: AuthUser;
+  redirect?: {
+    path: string;
+    state?: unknown;
+  };
+}
+    
+
 /* ---------- API FUNCTION ---------- */
 
 export const apiKRegister = async (
@@ -84,20 +95,20 @@ export const apiKLogin = async (
 
 export const apiGSignin = async (
   data: GooglePayload & { captcha: string | null }
-): Promise<RegisterResponse> => {
+): Promise<GoogleAuthResponse> => {
   try {
-    const response = await api.post<RegisterResponse>(
+    const response = await api.post<GoogleAuthResponse>(
       `${url}/gsignin`,
       data
     );
 
-    const { message, token, user } = response.data;
+    const { message, redirect, token, user } = response.data;
 
     if (token) {
       Cookies.set("token", token);
     }
 
-    return { message, token, user };
+    return { message, redirect, token, user };
   } catch (err) {
     const error = err as AxiosError<ApiError>;
 

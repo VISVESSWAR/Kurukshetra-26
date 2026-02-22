@@ -122,13 +122,6 @@ const Navbar: React.FC = () => {
               >
                 Login
               </Link>
-              <Link
-                to="/register"
-                className="w-full py-4 px-4 text-white text-base tracking-wider font-(family-name:--wallpoet) hover:bg-white/5 transition-colors block"
-                onClick={handleMenuClose}
-              >
-                Register
-              </Link>
             </>
           ) : (
             <button
@@ -212,23 +205,6 @@ const Navbar: React.FC = () => {
                 `}
               >
                 Login
-              </Link>
-              <Link
-                to="/register"
-                className={`
-                  relative px-3 xl:px-5 py-1.5
-                  text-center rounded-full
-                  text-xs tracking-wider
-                  font-(family-name:--orbitron)
-                  transition-all duration-300
-                  ${
-                    isActive("/register")
-                      ? "bg-violet-600 text-white"
-                      : "text-white hover:bg-violet-600/50 hover:text-white"
-                  }
-                `}
-              >
-                Register
               </Link>
             </>
           ) : (
