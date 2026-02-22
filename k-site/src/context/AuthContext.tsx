@@ -148,10 +148,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             return;
           }
-
+          if(!response.user) {
+            toast.error(
+              response.message ||
+                "Authentication failed. No user data received.",
+            );
+            return;
+          }
           dispatch({
             type: "LOGIN_SUCCESS",
-            payload: response.user,
+            payload: response?.user,
           });
 
           toast.success(response.message || "Authentication successful.");
@@ -201,7 +207,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    if (!token) dispatch({ type: "LOGOUT" });
+    if (token) {
+      // Token exists, set authenticated state with minimal user info
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          id: "",
+          name: "",
+          email: "",
+        },
+      });
+    } else {
+      dispatch({ type: "LOGOUT" });
+    }
   }, []);
 
   return (

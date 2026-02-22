@@ -118,19 +118,6 @@ export default function Accommodation() {
     "MAR 9": "d3",
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-    toast.success("UPI ID copied to clipboard");
-  };
-
-  // Map display dates to API keys (MAR 7 → d1, MAR 8 → d2, MAR 9 → d3)
-  const dateToKey: Record<string, "d1" | "d2" | "d3"> = {
-    "MAR 7": "d1",
-    "MAR 8": "d2",
-    "MAR 9": "d3",
-  };
 
   const handleSubmit = async (formData: AccommodationFormValues) => {
     if (!isAuthenticated) {
@@ -334,16 +321,7 @@ export default function Accommodation() {
                   );
                 })}
               </div>
-              <p
-                style={{ fontFamily: "Orbitron, sans-serif" }}
-                className="text-[0.9rem] leading-relaxed text-white"
-              >
-                <span className="font-bold text-lg">Note</span>
-                <br/>
-                Without food – Rs.300 per day <br />
-                With food – Rs.450 per day
-              </p>
-
+              
               <p
                 style={{ fontFamily: "Orbitron, sans-serif" }}
                 className="text-[0.9rem] leading-relaxed text-white"
@@ -651,39 +629,39 @@ export default function Accommodation() {
                     </a>
                   </div>
 
-                  <div>
-                    <p
+              <div>
+                <p
+                  style={{ fontFamily: "Orbitron, sans-serif" }}
+                  className="text-[1rem] text-white mb-2"
+                >
+                  Call our team
+                </p>
+                <div className="flex flex-col gap-2.5">
+                  {[
+                    ["Ajithkumar", "+91 90256 24766"],
+                    ["Mohamed Sahul Hameed H", "+91 90428 50775"],
+                    ["Surekaa S", "+91 63827 77055"],
+                  ].map(([n, p]) => (
+                    <div
+                      key={n}
                       style={{ fontFamily: "Orbitron, sans-serif" }}
-                      className="text-[1rem] text-white mb-2"
+                      className="px-5 py-2.5 rounded-lg 
+                      border border-white/70 text-[0.8rem] 
+                      grid grid-cols-[1fr_auto] items-center gap-6"
                     >
-                      Call our team
-                    </p>
-                    <div className="flex flex-col gap-2.5">
-                      {[
-                        ["Ajithkumar", "+91 90256 24766"],
-                        ["Dharini", "+91 73392 93595"],
-                        ["Jayaram", "+91 63837 48935"],
-                      ].map(([n, p]) => (
-                        <div
-                          key={n}
-                          style={{ fontFamily: "Orbitron, sans-serif" }}
-                          className="px-5 py-2.5 rounded-lg 
-                        border border-white/70 text-[0.8rem] 
-                        grid grid-cols-[1fr_auto] items-center gap-6"
-                        >
-                          <span className="text-left text-white">{n}</span>
-                          <a
-                            href={`tel:${p!.replace(/\s+/g, "")}`}
-                            className="text-white/90 whitespace-nowrap hover:text-white transition-colors"
-                          >
-                            {p}
-                          </a>
-                        </div>
-                      ))}
+                      <span className="text-left text-white">{n}</span>
+                      <a
+                        href={`tel:${p.replace(/\s+/g, "")}`}
+                        className="text-white/90 whitespace-nowrap hover:text-white transition-colors"
+                      >
+                        {p}
+                      </a>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
+            </div>
+          </div>
             </motion.div>
           </div>
         </motion.div>
