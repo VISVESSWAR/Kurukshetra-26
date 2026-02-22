@@ -100,8 +100,22 @@ export default function Accommodation() {
   const toggleDate = (d: string) => {
     if (isAlreadyBooked) return;
     setSelectedDates((prev) =>
-      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
+      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
     );
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+    toast.success("UPI ID copied to clipboard");
+  };
+
+  // Map display dates to API keys (MAR 7 → d1, MAR 8 → d2, MAR 9 → d3)
+  const dateToKey: Record<string, "d1" | "d2" | "d3"> = {
+    "MAR 7": "d1",
+    "MAR 8": "d2",
+    "MAR 9": "d3",
   };
 
   const copyToClipboard = (text: string) => {
@@ -320,6 +334,15 @@ export default function Accommodation() {
                   );
                 })}
               </div>
+              <p
+                style={{ fontFamily: "Orbitron, sans-serif" }}
+                className="text-[0.9rem] leading-relaxed text-white"
+              >
+                <span className="font-bold text-lg">Note</span>
+                <br/>
+                Without food – Rs.300 per day <br />
+                With food – Rs.450 per day
+              </p>
 
               <p
                 style={{ fontFamily: "Orbitron, sans-serif" }}

@@ -71,7 +71,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     description:
       "This two-round competition allows participants to showcase their expertise in both embedded programming and analog circuit design, effectively bridging gap between code and hardware. The contest challenges students to design, code, and optimize electronic systems, emphasizing practical engineering skills and system-level thinking.",
     participation: "Team of 2",
-    image: "/Events/Electrohunt.webp",
+    image: "/Events/ElectroHunt.webp",
     eventType: "General",
     registrationLink:
       "https://unstop.com/competitions/electrohunt-kurukshetra-2026-anna-university-ceg-tech-forum-1637927",
@@ -99,7 +99,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     description:
       "AERO RUSH is a high-speed Line of Sight (LOS) drone racing competition featuring sharp turns, steep dives, and challenging obstacles. Participants compete in time-based formats to showcase speed, precision, control, and flying skills. Drone Specs: Max weight 2kg, Frame <= 300mm, Props <= 6 inches, Battery 3S-4S (1500-2200 mAh). No LiDAR/Optical Flow.",
     participation: "Individual",
-    image: "/Events/Aero-Rush–DroneRacing.webp",
+    image: "/Events/AeroRushDroneRacing.webp",
     eventType: "Flagship",
     registrationLink: "https://unstop.com/competitions/aero-rush-drone-racing-kurukshetra-2026-anna-university-ceg-guindy-1636578",
     rounds: [
@@ -126,7 +126,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     description:
       "Godspeed is a high-adrenaline RC car racing competition that challenges participants to design, build, and race Nitro-powered RC cars on technical track featuring sharp turns, dirt obstacles, and racing challenges. The event brings together engineering students and RC enthusiasts to test speed, precision, and vehicle design, promoting motorsport culture and innovation. In collaboration with WD RACING. Use code 'GSCTF25' for 25% early bird discount!",
     participation: "Team/Individual",
-    image: "/Events/Godspeed–RCNitroBuggyRace.webp",
+    image: "/Events/NitroBuggy.webp",
     eventType: "Flagship",
     registrationLink:
       "https://unstop.com/competitions/godspeed-rc-nitro-buggy-race-kurukshetra-2026-anna-university-ceg-guindy-1636399",
@@ -331,7 +331,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     description:
       "The Viewport challenges digital artists to build world of tomorrow using machinery of past. In this online 3D animation contest, participants use industry-standard tools (Blender, Maya, Unreal Engine, Houdini, C4D) to create stunning video sequence based on Steampunk, Cyberpunk, and Solarpunk themes. Fuel creativity and let rendering begin!",
     participation: "Team of 1-2",
-    image: "/Events/TheViewport–3DRendering.webp",
+    image: "/Events/Viewport.webp",
     eventType: "Online",
     registrationLink:
       "https://unstop.com/competitions/the-viewport-3d-video-rendering-kurukshetra-2026-anna-university-ceg-tech-forum-1634153",
@@ -581,7 +581,7 @@ export const EVENT_DETAILS: EventDetailsRecord = {
     description:
       "Netrunner's Gauntlet is a full-scale Vulnerability Assessment challenge. Your mission is to audit the system, expose the flaws, and report the glitches before the system goes critical. This event tests cybersecurity expertise, ethical hacking skills, and the ability to identify and document security vulnerabilities in a competitive environment.",
     participation: "Individual",
-    image: "/Events/NetRunnersGauntlet.webp",
+    image: "/Events/NetrunnersGauntlet.webp",
     eventType: "Online",
     registrationLink:
       "https://unstop.com/hackathons/netrunners-gauntlet-capture-the-flag-kurukshetra-2026-anna-university-ceg-tech-forum-1633006",

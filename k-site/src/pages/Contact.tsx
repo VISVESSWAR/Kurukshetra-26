@@ -68,7 +68,7 @@ const Contact = () => {
     };
 
     if (import.meta.env.DEV) {
-      console.log("Form Data:", JSON.stringify(output, null, 2));
+      //console.log("Form Data:", JSON.stringify(output, null, 2));
     }
 
     // Submit to FormSubmit
@@ -82,7 +82,7 @@ const Contact = () => {
       });
     } catch (error) {
       if (import.meta.env.DEV) {
-        console.error("Form submission error:", error);
+        //console.error("Form submission error:", error);
       }
     } finally {
       setSubmitting(false);
