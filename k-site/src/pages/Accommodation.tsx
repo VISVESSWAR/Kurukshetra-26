@@ -166,8 +166,8 @@ export default function Accommodation() {
   // Fetch existing accommodation status
   useEffect(() => {
     apiGetAccommodation()
-      .then((data: typeof accommodation) => {
-        setAccommodation(data);
+      .then((data) => {
+        setAccommodation(data as typeof accommodation);
       })
       .catch(() => {});
   }, [isPending]);

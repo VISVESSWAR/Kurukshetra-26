@@ -124,11 +124,11 @@ export const apiGetAccommodation = async () => {
     const response = await api.get(`${url}/accomodation`);
     const { registered, registrations } = response.data;
     
-    console.log(response.data);
+    // console.log(response.data);
     return {
       registered,
       isPaid: registrations.isPaid,
-      payid: registrations.payid ? true : false,
+      payid: registrations.payid || false,
     };
     
   } catch (err) {
