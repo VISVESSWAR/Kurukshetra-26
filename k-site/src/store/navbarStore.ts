@@ -17,6 +17,7 @@ export interface NavbarStore {
 
 const baseNavItems: NavItem[] = [
   { label: "Home", url: "/" },
+  { label: "Sponsors", url: "/sponsors" },
   { label: "Projects", url: "https://www.projects.cegtechforum.in/", isExternal: true },
   { label: "Accommodation", url: "/accommodation" },
   { label: "Contacts", url: "/contact" },

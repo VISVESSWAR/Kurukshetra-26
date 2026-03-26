@@ -6,5 +6,5 @@ export default function useFullNavbar() {
 
   useEffect(() => {
     setFullNavbar();
-  }, []);
+  }, [setFullNavbar]);
 }
